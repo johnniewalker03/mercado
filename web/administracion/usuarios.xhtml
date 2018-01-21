@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+
+    <style type="text/css">
+        .canc{
+            background-image: url("../resources/images/ajax_small.gif");
+        }        
+        .foot{
+            text-align: left;            
+        }
+    </style> 
+    <body>
+        <ui:composition template="../plantilla/Plantilla_1.xhtml">
+            <ui:define name="top">
+                <ui:include src="../plantilla/top.xhtml" />
+            </ui:define>    
+            <ui:define name="left">
+                <ui:include src="../plantilla/left.xhtml" />
+            </ui:define>
+            <ui:define name="content">                
+
+                <table width="547" border="0" align="center" cellspacing="0" cellpadding="0" background="../resources/images/3_26.gif">
+                    <tr>
+                        <td width="360" valign="top"> 
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="background-image:url(../resources/images/3_121.gif)" width="279" height="41">
+                                        <center><b><h:outputText style="color: #ffffff; font-size: 13px" value="Usuarios"/></b></center>
+                                        <!--width="279" height="41" alt=""/-->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><img src="../resources/images/3_15.jpg" width="279" height="38" alt=""/></td>
+                                </tr>
+                            </table>
+                            <table width="279" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td width="12"></td>
+                                    <td width="255"><div align="justify"><span>          
+                                                <br/>                                          
+                                            </span></div></td>
+                                    <td width="12"></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td width="187" valign="top"><img src="../resources/images/3_13.png" width="268" height="38" alt=""/></td>
+                    </tr>
+                    <tr>                                                             
+
+
+                        <td colspan="2">
+
+                            <table  border="0" cellspacing="0" cellpadding="0" align="center">
+                                <tr>
+                                    <!--td width="12"></td-->
+                                    <td><div><span>                                                           
+
+
+
+                                                <h:form id="form1">
+                                                    <p:growl id="growl" showDetail="true" />  
+                                                    <p:fieldset legend="&nbsp;" toggleable="true" toggleSpeed="500" style="text-align: left">
+                                                        <p:ajax event="toggle" update="growl" />
+
+                                                        <p:panelGrid id="panel1" columns="2" style="width: 460px">  
+                                                            <f:facet name="header">  
+                                                                Nuevo Usuario                                                       
+                                                            </f:facet>                                                                                                                        
+                                                                                                                        
+                                                            <h:outputLabel value="Nombre de usuario:" />
+                                                            <p:inputText id="nombre1" value="#{usuarioController.itemNuevo.user}" required="true" label="Nombre de usuario"/>
+                                                            <h:outputLabel value="Contraseña:" />
+                                                            <p:password id="contra" value="#{usuarioController.itemNuevo.password}" required="true" label="Contraseña"/>
+                                                            <h:outputLabel value="Contraseña nuevamente:" />  
+                                                            <p:password id="contraa" value="#{usuarioController.itemNuevo.password}" rendered="true" label="Contraseña"/>
+                                                            
+                                                            <h:outputLabel value="Privilegios:" />  
+                                                            <p:selectOneMenu value="#{usuarioController.itemNuevo.rol}" > 
+                                                                <f:selectItem itemLabel="Administrador" itemValue="Administrador" />  
+                                                                <f:selectItem itemLabel="Contabilidad" itemValue="Usuario" />                                                                   
+                                                            </p:selectOneMenu>  
+                                                            <f:facet name="footer">  
+                                                                <p:row>
+                                                                    <p:column style="text-align: left!important">
+                                                                        <p:commandButton id="showDialogButton1" value="Guardar"
+                                                                                         onclick="confirmations.show()" type="button" icon="ui-icon-refresh"/>
+                                                                        
+                                                                        <p:dialog appendTo="false" id="confirmations" width="250px" height="110px" style="text-align: left!important" 
+                                                                                  header="Iniciando proceso..." widgetVar="confirmations" modal="false" resizable="false"
+                                                                                  showEffect="fade">                                                                           
+                                                                            <p:panelGrid id="panelito" style="width: 230px; border: hidden !important;">  
+                                                                                <p:row>
+                                                                                    <p:column style="height: 50px; border: hidden !important;">  
+                                                                                        <h:graphicImage width="20px" height="20px" url="../resources/images/ok2.ico" />                                                                                        
+                                                                                    </p:column>
+                                                                                    <p:column><h:outputLabel value="Desea guardar los datos?" /></p:column> 
+                                                                                </p:row>
+                                                                                <p:row>
+                                                                                    <p:column colspan="2" style="text-align: center; border: hidden !important;">  
+                                                                                        <p:commandButton id="confirm1" value="Si" type="submit" update="form1"  action="#{usuariosController.agregar()}" onsuccess="confirmations.hide()" icon="ui-icon-check"/>  
+                                                                                        <p:commandButton id="decline1" value="No" onclick="confirmations.hide()" type="button" icon="ui-icon-close"/>                                                                            
+                                                                                    </p:column>                                                                                    
+                                                                                </p:row>
+                                                                            </p:panelGrid>
+                                                                        </p:dialog>       
+                                                                        
+                                                                                                                                           
+                                                                    </p:column>
+                                                                </p:row>
+                                                            </f:facet>  
+                                                        </p:panelGrid>
+                                                    </p:fieldset>      
+
+                                                </h:form>
+                                                                                                                                                                                  
+
+
+                                                <br/>
+
+                                            </span></div></td>
+                                    <!--td width="12" height="154">&nbsp;</td-->
+                                </tr>
+                            </table>
+
+
+
+                        </td>
+
+                    </tr>
+                    <tr><td colspan="2">
+
+                            <img   src="../resources/images/3_30.gif" width="547" height="40" alt=""/></td></tr>  
+                    <tr><td style="text-align: left">
+
+
+                        </td></tr>
+                </table>                             
+
+
+            </ui:define>
+            <ui:define name="bottom">
+                <ui:include src="../plantilla/bottom.xhtml" />                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+
+</html>
+
+

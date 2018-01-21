@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"      
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="../plantilla/Plantilla.xhtml">                        
+            <ui:define name="content">   
+         
+                <div class="breadcrumb-holder">
+                    <div class="container-fluid">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active">Forms</li>
+                        </ul>
+                    </div>
+                </div>
+      
+
+                <center>
+                <h:form id="form1">
+                    <p:growl id="growl" showDetail="true" />  
+                    
+
+                        <p:panelGrid id="panel1" columns="2" style="width: 460px">  
+                            <f:facet name="header">  
+                                Nuevo Usuario                                                       
+                            </f:facet>                                                                                                                        
+
+                            <h:outputLabel value="Nombre de usuario:" />
+                            <p:inputText id="nombre1" value="#{usuarioController.itemNuevo.user}" required="true" label="Nombre de usuario"/>
+                            <h:outputLabel value="Contraseña:" />
+                            <p:password id="contra" value="#{usuarioController.itemNuevo.password}" required="true" label="Contraseña"/>
+                            <h:outputLabel value="Contraseña nuevamente:" />  
+                            <p:password id="contraa" value="#{usuarioController.itemNuevo.password}" rendered="true" label="Contraseña"/>
+
+                            <h:outputLabel value="Privilegios:" />  
+                            <p:selectOneMenu value="#{usuarioController.itemNuevo.rol}" > 
+                                <f:selectItem itemLabel="Administrador" itemValue="Administrador" />  
+                                <f:selectItem itemLabel="Contabilidad" itemValue="Usuario" />                                                                   
+                            </p:selectOneMenu>  
+
+                            <f:facet name="footer">  
+                                <p:row>
+                                    <p:column style="text-align: left!important">
+                                        <p:growl id="message" showDetail="true" />
+                                        <p:commandButton value="Guardar" actionListener="#{usuarioController.agregar()}" update="message">
+                                            <p:confirm header="Confirmation" message="¿Desea guardar los datos?" icon="ui-icon-alert" />
+                                        </p:commandButton>
+
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" 
+                                                             icon="ui-icon-check" />
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        </p:confirmDialog>
+
+                                    </p:column>
+                                </p:row>
+                            </f:facet>  
+
+
+
+                        </p:panelGrid>
+                       
+
+                </h:form>
+            </center>
+
+            </ui:define>
+            
+
+        </ui:composition>
+
+    </body>
+
+</html>
+
+

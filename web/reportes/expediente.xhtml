@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+    <style type="text/css">       
+        .companyHeaderGrid td {
+            border-style: hidden !important;
+        }
+        .companyHeaderGrid tr, .companyHeaderGrid td {
+            border: none;
+        }
+    </style> 
+
+    <body>
+        <ui:composition template="../plantilla/Plantilla.xhtml">
+            
+            <ui:define name="content">                
+
+                <table id="datos" width="700" border="0" align="center" cellspacing="0" cellpadding="0">
+                    <tr>                                                             
+                        <td colspan="2">
+                            <table  border="0" cellspacing="0" cellpadding="0" align="center">
+                                <tr>
+                                    <td><div><span>                                        
+
+                                                <br/>
+                                                <br/>
+                                                <br/>
+
+
+                                                <br/><br/>
+                                                <p:panelGrid id="productos" style="width:600px" styleClass="companyHeaderGrid">
+                                                    <f:facet name="header"> 
+                                                        <p:row><p:column colspan="2">
+                                                                ASAESCLA DE R.L.
+                                                            </p:column></p:row>
+                                                    </f:facet>
+
+                                                    <p:row>
+                                                        <p:column style="text-align: left">
+                                                            <h:graphicImage url="../resources/images/logo_asaescla.jpg" />
+                                                        </p:column>
+                                                        <p:column style="text-align: center">
+                                                            <h:outputLabel for="registro" value="GARANTIAS DE CREDITOS" />      
+                                                        </p:column>
+                                                    </p:row>
+
+                                                    <f:facet name="footer">                                                              
+                                                        <br/><br/>
+                                                        <p:row><p:column colspan="2">                               
+                                                                <p:dataTable var="cars" value="" style="width:800px">
+                                                                    <p:column>
+                                                                        <f:facet name="header">
+                                                                            <h:outputText value="Comunidad" />
+                                                                        </f:facet>
+                                                                        <h:outputText value="San Jeronimo" /><br/>
+                                                                        <h:outputText value="El Rosario" />
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <f:facet name="header">
+                                                                            <h:outputText value="Escrituras" />
+                                                                        </f:facet>
+                                                                        <h:outputText value="1" /><br/>
+                                                                        <h:outputText value="9" />
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <f:facet name="header">
+                                                                            <h:outputText value="Maiz QQ" />
+                                                                        </f:facet>
+                                                                        <h:outputText value="7" /><br/>
+                                                                        <h:outputText value="6" />
+                                                                    </p:column>
+                                                                    <p:column>
+                                                                        <f:facet name="header">
+                                                                            <h:outputText value="Sorgo" />
+                                                                        </f:facet>
+                                                                        <h:outputText value="0" /><br/>
+                                                                        <h:outputText value="12" />
+                                                                    </p:column>
+
+                                                                </p:dataTable>                                           
+                                                            </p:column></p:row>
+                                                    </f:facet> 
+
+                                                </p:panelGrid>  
+                                                <br/>
+                                                <h:outputLabel for="buscar" value="Buscar:  " />  
+                                                <p:inputText id="busqueda" value="" label="Buscar: " size="15" />&nbsp;  
+                                                <p:commandButton type="button" value="Buscar" icon="ui-icon-search"/>  
+                                                <p:commandButton id="btn_imprimir" type="button" value="Imprimir" icon="ui-icon-print"  >                                                                                                                                                                                                                                   
+                                                    <p:printer target="productos" />  
+                                                </p:commandButton>  
+
+
+                                            </span></div></td>                                    
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>                    
+                </table>                             
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+
+</html>

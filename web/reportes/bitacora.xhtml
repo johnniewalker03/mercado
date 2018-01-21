@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+    <style type="text/css">       
+        .companyHeaderGrid td {
+            border-style: hidden !important;
+        }
+        .companyHeaderGrid tr, .companyHeaderGrid td {
+            border: none;
+        }
+    </style> 
+     <body>
+        <ui:composition template="../plantilla/Plantilla.xhtml">
+           
+            <ui:define name="content">                
+
+                <table id="datos" width="700" border="0" align="center" cellspacing="0" cellpadding="0">
+                    <tr>                                                             
+                        <td colspan="2">
+                            <table  border="0" cellspacing="0" cellpadding="0" align="center">
+                                <tr>
+                                    <td><div><span>                                        
+
+                                                <br/>
+                                                <br/>
+                                                <br/>
+
+                                                <br/><br/>
+                                                <h:form id="form1"> 
+                                                    <p:growl id="grow1" showDetail="true" />
+                                                    <p:panelGrid style="width:700px">
+                                                        <p:row>
+                                                            <p:column>
+                                                                <h:outputLabel  value="Usuario:  " />                                                                  
+                                                                
+                                                                <h:selectOneMenu value="#{biitacoraController.busqueda}">
+                                                                    <f:selectItem itemLabel="Seleccione un usuario" itemValue="ninguno" />
+                                                                    <f:selectItems value="#{usuariosController.listaUsuarios}"
+                                                                                   var="cuenta1" itemLabel="#{cuenta1.cnomUsuario}"
+                                                                                   itemValue="#{cuenta1.cnomUsuario}" />                                                                    
+                                                                </h:selectOneMenu>
+                                                                
+                                                                
+                                                                <h:outputLabel  value=" Del: " />  
+                                                                <p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{biitacoraController.fechaInicio}" showButtonPanel="true"  navigator="true" id="trCal1" size="9" required="true" requiredMessage="Ingrese una fecha de inicio"/>
+                                                                <h:outputLabel  value=" Al: " />  
+                                                                <p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{biitacoraController.fechaFin}" showButtonPanel="true"  navigator="true" id="trCal2" size="9" required="true" requiredMessage="Ingrese una fecha de finalización"/>
+                                                                <p:commandButton id="btnB" value="Buscar" update=":form1" action="#{biitacoraController.buscaUsuario()}" icon="ui-icon-search"/>
+                                                                <p:commandButton id="btn_imprimir" type="button" value="Imprimir" icon="ui-icon-print"  >
+                                                                    <p:printer target="empleados" />
+                                                                </p:commandButton>
+                                                            </p:column>
+                                                        </p:row>
+                                                    </p:panelGrid>
+
+                                                    <p:panelGrid id="empleados">                                                     
+
+                                                        <f:facet name="header">  
+                                                            <p:row>
+                                                                <p:column colspan="2">
+                                                                    <h:outputLabel value="ASAESCLA DE R.L." />
+                                                                </p:column>
+                                                            </p:row>
+                                                        </f:facet>  
+                                                        <p:row>
+                                                            <p:column><h:graphicImage url="../resources/images/logo_asaescla.jpg" /></p:column>
+                                                            <p:column><h:outputLabel value="BITACORA DE USUARIOS" /></p:column>                                                                                                                                                                                                                                                                    
+                                                        </p:row>
+                                                        <f:facet name="footer">  
+                                                            <p:row>
+                                                                <p:column colspan="2">
+                                                                    <div align="center">
+                                                                        <br/>
+
+
+                                                                        <p:growl id="messages" showDetail="true" />
+                                                                        <p:dataTable id="cars" var="it" value="#{biitacoraController.listaBitacora}"
+                                                                                     emptyMessage="No se encuentran datos"
+                                                                                     >  
+                                                                            <p:column headerText="Usuario" style="width:300px">  
+                                                                                <h:outputText value="#{it[0]}" />                                                                                  
+                                                                            </p:column>
+                                                                            <p:column headerText="Fecha de ingreso" style="width:300px">
+                                                                                <h:outputText value="#{it[1]}" />
+                                                                            </p:column>                                                            
+                                                                            <p:column headerText="Hora de ingreso" style="width:300px">
+                                                                                <h:outputText value="#{it[2]}" />
+                                                                            </p:column> 
+                                                                             <p:column headerText="Empleado" style="width:300px">
+                                                                                <h:outputText value="#{it[3]}" />
+                                                                            </p:column>                                                                              
+                                                                        </p:dataTable>                                                                      
+                                                                    </div>
+                                                                </p:column>
+                                                            </p:row>
+                                                        </f:facet>  
+                                                        <!--/p:scrollPanel-->
+                                                    </p:panelGrid>  
+
+                                                </h:form>
+                                                <br/>                                                
+                                            </span></div></td>                                    
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>                    
+                </table>                             
+
+
+            </ui:define>
+           
+
+        </ui:composition>
+
+    </body>
+
+</html>

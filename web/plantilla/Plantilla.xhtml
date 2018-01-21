@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>        
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <title>Mercado Municipal</title>
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="../resources/css/style4.css"/>         
+
+        <style type="text/css">
+            /*.navbar-default {
+                height: 50px !important;
+            }
+            .navbar-default .navbar-nav > li > a,
+            .navbar-brand {
+                padding-top: 0;
+                padding-bottom: 0;
+                line-height: 80px !important;
+                height: 50px !important;
+            }
+            .navbar-form {
+                margin-top: 22px;
+            }*/
+
+        </style>
+
+
+    </h:head>
+    <h:body>
+
+        <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>Menú</h3>
+                    <strong>BS</strong>
+                </div>
+
+                <ul class="list-unstyled components">
+                    <li class="active">
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
+                            <i class="glyphicon glyphicon-home"></i>
+                            Inicio
+                        </a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <li><a href="../pages/usuarios.xhtml">Usuarios</a></li>
+                            <li><a href="#">Cerrar sesión</a></li>
+                            <li><a href="#">Salir</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#ArrendatarioSubmenu" data-toggle="collapse" aria-expanded="false">                            
+                            <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+                            Arrendatarios
+                        </a>
+                        <ul class="collapse list-unstyled" id="ArrendatarioSubmenu">
+                            <li><a href="../pages/arrendatarios.xhtml">Registro</a></li>
+                            <li><a href="#">Consulta</a></li>
+                            <li><a href="#">Solvencias</a></li>
+                        </ul>
+                    </li>
+                    <li>                        
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+                            <i class="glyphicon glyphicon-screenshot"></i>
+                            Puestos
+                        </a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li><a href="../pages/puestos.xhtml">Registro</a></li>
+                            <li><a href="#">Traslados</a></li>
+                            <li><a href="#">Consultas</a></li>
+                            <li><a href="#">Sanciones</a></li>
+                        </ul>
+                    </li>
+                    <li>                        
+                        <a href="#pagosSubmenu" data-toggle="collapse" aria-expanded="false">
+                            <i class="glyphicon glyphicon-usd"></i>
+                            Pagos
+                        </a>
+                        <ul class="collapse list-unstyled" id="pagosSubmenu">
+                            <li><a href="#">Pagos diarios</a></li>
+                            <li><a href="#">Pagos mensuales</a></li>
+                            <li><a href="#">Consultas</a></li>
+                            <li><a href="#">Solvencia</a></li>
+                        </ul>
+                    </li>
+                    <li>                        
+                        <a href="#reportesSubmenu" data-toggle="collapse" aria-expanded="false">
+                            <i class="glyphicon glyphicon-send"></i>
+                            Reportes
+                        </a>
+                        <ul class="collapse list-unstyled" id="reportesSubmenu">
+                            <li><a href="../reportes/arrendatarios.xhtml">Arrendatario</a></li>
+                            <li><a href="#">Matrícula de puestos</a></li>
+                            <li><a href="#">Solvencias</a></li>
+                            <li><a href="#">Pagos realizados</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-question-sign "></i>
+                            Ayuda
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="list-unstyled CTAs">
+                    <!--li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li-->
+                    <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Iniciar sesión</a></li>
+                </ul>
+            </nav>
+
+            <!-- Page Content Holder -->
+            <div id="content">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid" style=" box-sizing: border-box;height: 2%;">
+
+                        <div class="navbar-header">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                <span>Menú</span>
+                            </button>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="../reportes/arrendatarios.xhtml">Arrendatario</a></li>
+                                <li><a href="../pages/puestos.xhtml">Puestos</a></li>
+                                <li><a href="#">Consultas</a></li>
+                                <li><a href="#">Pagos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </nav>                             
+
+                <ui:insert name="content">                                                            
+                </ui:insert>
+
+
+                <p style="visibility: hidden">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nost</p>
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+        <!-- Bootstrap Js CDN -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+          <script src="../resources/js/pdfobject.js"></script>
+        <script>PDFObject.embed("../resources/PDF/sample-3pp.pdf", "#example");
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+        </script>
+
+
+
+
+    </h:body>
+</html>

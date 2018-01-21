@@ -1,0 +1,419 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <h:form>
+            <p:menubar autoDisplay="true">
+                <p:submenu label="Administración"  icon="ui-icon-document" >  
+
+                    <p:submenu label="Usuarios" icon="ui-icon-extlink">
+                        <p:menuitem value="Crear usuarios" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../administracion/usuarios.xhtml" />
+                        </p:menuitem>
+
+                        <p:menuitem value="Modificar contraseña" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../administracion/cambiarContra.xhtml" />
+                        </p:menuitem>
+
+                        <p:menuitem value="Bitácora de usuarios" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../administracion/bitacora.xhtml" />
+                        </p:menuitem>                          
+                    </p:submenu>
+
+                    <p:submenu label="Socios" icon="ui-icon ui-icon-star">
+                        <p:menuitem value="Nuevo socio" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../socios/socios.xhtml" />
+                        </p:menuitem>                        
+                        <p:menuitem value="Beneficiarios" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../socios/beneficiarios.xhtml" />
+                        </p:menuitem>
+                        <p:menuitem value="Aportaciones" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../socios/aportaciones.xhtml" />
+                        </p:menuitem>                        
+                        <p:separator />  
+                        <p:submenu label="Informes" icon="ui-icon-contact">
+
+                            <p:menuitem value="Estado de cuenta" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/estadocuentasocioReport.xhtml" />
+                            </p:menuitem>
+                            <p:menuitem value="Recibo de registro" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/sociosBoletaRegistro.xhtml" />
+                            </p:menuitem>                           
+
+                        </p:submenu> 
+                    </p:submenu>                             
+                    <p:submenu label="Maquinaria" icon="ui-icon ui-icon-gear">
+                        <p:menuitem value="Maquinaria" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../maquinaria/maquinaria.xhtml" />
+                        </p:menuitem>
+                        <p:menuitem value="Mantenimiento" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../maquinaria/mantenimiento.xhtml" />
+                        </p:menuitem>
+
+                        <p:menuitem value="Desgranado" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../maquinaria/desgranado.xhtml" />
+                        </p:menuitem>
+
+
+                        <p:submenu label="Préstamos" icon="ui-icon-contact">
+
+                            <p:menuitem value="Préstamo" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../maquinaria/maquinariaprestamo.xhtml" />
+                            </p:menuitem>
+
+                            <p:menuitem value="Devolución" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../maquinaria/maquinariadevolucion.xhtml" />
+                            </p:menuitem>
+                        </p:submenu> 
+                        <p:separator />  
+                        <p:submenu label="Informes" icon="ui-icon-contact">
+                            <p:menuitem value="Mantenimiento" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/mantenimientoReport.xhtml" />
+                            </p:menuitem>
+
+                            <p:menuitem value="Cantidad desgranada" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/quintaldesgranadoReport.xhtml" />
+                            </p:menuitem>
+
+
+                        </p:submenu> 
+                    </p:submenu>
+
+                    <p:menuitem value="Empleados" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../planillas/empleados.xhtml" />
+                    </p:menuitem>
+
+                    <p:menuitem value="Empresa" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../administracion/empresa.xhtml" />
+                    </p:menuitem>
+
+                    <p:menuitem value="Estilo del sistema" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../administracion/themesSwitcher.xhtml" />
+                    </p:menuitem>
+
+
+                    <p:separator />  
+                    <p:menuitem value="Salir" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../login.xhtml" />
+                    </p:menuitem>
+
+
+                </p:submenu>                      
+
+                <p:submenu label="Contabilidad" icon="ui-icon ui-icon-pencil" >  
+                    <p:submenu label="Planilla" icon="ui-icon-check">
+                        <p:menuitem value="Generar planilla" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../planillas/planilla.xhtml" />
+                        </p:menuitem>
+
+
+                        <p:menuitem value="Descuentos" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../planillas/descuentos.xhtml" />
+                        </p:menuitem>
+
+                        <p:separator />  
+                        <p:submenu label="Informes" icon="ui-icon-contact">
+
+                            <p:menuitem value="Planilla" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/planillaReport.xhtml" />
+                            </p:menuitem>
+
+                            <p:menuitem value="Descuentos por empleado" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../reporteados/empleadoDescuentosReport.xhtml" />
+                            </p:menuitem>
+                        </p:submenu>
+                    </p:submenu>
+
+                    <p:menuitem value="Catálogo de cuentas" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../contabilidad/catalogo.xhtml" />
+                    </p:menuitem>
+                    <p:submenu label="Ciclo contable" icon="ui-icon ui-icon-folder-collapsed">
+                        <p:menuitem value="Partidas de diario" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../contabilidad/partida.xhtml" />
+                        </p:menuitem>
+
+                        <p:menuitem value="Libro diario" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../contabilidad/libro_diario.xhtml" />
+                        </p:menuitem>
+
+                        <p:menuitem value="Libro Mayor" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../contabilidad/libro_mayor.xhtml" />
+                        </p:menuitem>
+
+                        <p:menuitem value="Balance de saldos" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reporteados/balanceSaldosReport.xhtml" />
+                        </p:menuitem>
+
+                        <p:menuitem value="Balance general" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reporteados/balanceGeneralReport.xhtml" />
+                        </p:menuitem>
+
+
+                        <p:menuitem value="Estado de resultados" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reporteados/estadoResultReport.xhtml" />
+                        </p:menuitem>
+
+                        <p:submenu label="Informes" icon="ui-icon-contact">
+                            <p:menuitem value="Libro diario" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/partidaegresoReport.xhtml" />
+                            </p:menuitem>
+
+
+
+                        </p:submenu>
+                    </p:submenu>
+                    <p:separator />
+                    <p:submenu label="Libros de iva" icon="ui-icon-document">                                
+
+                        <p:menuitem value="Libro de compras" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/librocompraReport.xhtml" />
+                        </p:menuitem>
+                        <p:menuitem value="Ventas a contribuyente" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/libroventacontribuyenteReport.xhtml" />
+                        </p:menuitem>
+
+                        <p:menuitem value="Ventas a consumidor" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/libroventaconsumidorReport.xhtml" />
+                        </p:menuitem>
+                    </p:submenu>                                                                                                                        
+
+                </p:submenu>  
+
+                <p:submenu label="Proyectos" icon="ui-icon ui-icon-copy">
+                    <p:menuitem value="Comunidad" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../proyectos/comunidad.xhtml" />
+                    </p:menuitem>
+                    <p:menuitem value="Rubros" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../proyectos/rubros.xhtml" />
+                    </p:menuitem>
+                    <p:menuitem value="Cooperantes" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../proyectos/inst_cooperante.xhtml" />
+                    </p:menuitem>
+                    <p:menuitem value="Fondos" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../proyectos/fondos.xhtml" />
+                    </p:menuitem>                                        
+                    <p:menuitem value="Proyectos" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../proyectos/proyecto.xhtml" />
+                    </p:menuitem>
+                    <p:menuitem value="Beneficiarios de proyectos" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../proyectos/proyectoBeneficiarios.xhtml" />
+                    </p:menuitem>
+
+                    <p:menuitem value="Actividades de proyectos" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../proyectos/proyectoActividades.xhtml" />
+                    </p:menuitem>
+
+
+                    <p:menuitem value="Seguimiento a actividades" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../proyectos/proyectoSeguiActiv.xhtml" />
+                    </p:menuitem>
+
+                    <p:menuitem value="Subactividades de proyectos" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../proyectos/proyectoSubActividades.xhtml" />
+                    </p:menuitem>
+
+                    <p:separator />  
+                    <p:submenu label="Informes" icon="ui-icon-contact">                                
+                        <p:menuitem value="Fondos asignados a proyectos" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/estadoproyectoReport.xhtml" />
+                        </p:menuitem>
+                        <p:menuitem value="Seguimiento proyectos" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/estadoSubActividadesReport.xhtml" />
+                        </p:menuitem>
+
+                    </p:submenu>                                                                                                                        
+                </p:submenu> 
+
+                <p:submenu label="Créditos" icon="ui-icon ui-icon-arrow-4" >  
+
+                    <p:menuitem value="Clientes" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../creditos/cliente_credito.xhtml" />
+                    </p:menuitem>
+
+                    <p:menuitem value="Créditos" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../creditos/credito_datos.xhtml" />
+                    </p:menuitem>
+
+                    <p:menuitem value="Pagos" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../creditos/pagos.xhtml" />
+                    </p:menuitem>
+                    <p:separator />  
+                    <p:submenu label="Informes" icon="ui-icon-contact">
+
+                        <p:menuitem value="Clientes morosos" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/ClientesmorososReport.xhtml" />
+                        </p:menuitem>
+                        <p:menuitem value="Créditos otorgados" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/creditosotorgadosReport_1.xhtml" />
+                        </p:menuitem>                        
+                        <p:menuitem value="Cartera de Créditos" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reporteados/creditosFinanciadosReport.xhtml" />
+                        </p:menuitem>
+                        <p:menuitem value="Record de clientes" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/recorclienteReport.xhtml" />
+                        </p:menuitem>
+                        <p:menuitem value="Recibo de créditos" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reporteados/creditosComprobantePrintReport.xhtml" />
+                        </p:menuitem>
+                        <p:menuitem value="Recibo de abono" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/reciboabonoprestamoPrintReport.xhtml" />
+                        </p:menuitem>
+
+                    </p:submenu>                                                                                                                        
+                    <p:separator /> 
+                    <p:menuitem value="Intereses" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../creditos/credito_interes.xhtml" />
+                    </p:menuitem>
+
+                </p:submenu>  
+
+                <p:submenu label="Productos" icon="ui-icon ui-icon-gear" >  
+                    <p:separator />  
+
+                    <p:menuitem value="Clientes" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/clientes.xhtml" />
+                    </p:menuitem>
+
+                    <p:menuitem value="Proveedores" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/proveedores.xhtml" />
+                    </p:menuitem>
+
+                    <p:menuitem value="Categorías" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/categorias.xhtml" />
+                    </p:menuitem>
+
+                    <p:menuitem value="Productos" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/productos.xhtml" />
+                    </p:menuitem>
+
+                    <p:menuitem value="Compras" action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/compras.xhtml" />
+                    </p:menuitem>
+                    <p:submenu label="Ventas" icon="ui-icon-contact">
+
+                        <p:menuitem value="Crédito fiscal" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/ventasCreditoF.xhtml" />
+                        </p:menuitem>
+
+                        <p:menuitem value="Consumidor final" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/ventasConsumiF.xhtml" />
+                        </p:menuitem>
+                        <p:submenu label="Ventas anuladas" icon="ui-icon-contact">
+
+                            <p:menuitem value="Crédito fiscal" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/ventasAnuladasCFBuscar.xhtml" />
+                            </p:menuitem>
+
+                            <p:menuitem value="Consumidor final" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/ventasAnuladasConsumiF.xhtml" />
+                            </p:menuitem>
+                        </p:submenu>
+                        <p:submenu label="Ventas a consignatarios" icon="ui-icon-contact">
+                            
+                            <p:menuitem value="Consumidor final" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/ventasConsignaConsumiFBuscar.xhtml" />
+                            </p:menuitem>
+
+                            <p:menuitem value="Productos Pagado" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/ventasConsignaConsumiPagados.xhtml" />
+                            </p:menuitem>  
+                        </p:submenu>
+                    </p:submenu>
+                    <p:separator />
+                    <p:submenu label="Informes" icon="ui-icon-contact">
+
+                        <p:menuitem value="Kardex" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/KardexReport.xhtml" />
+                        </p:menuitem>
+
+                        <p:menuitem value="Compras" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/comprasBuscar.xhtml" />
+                        </p:menuitem>
+                        <p:submenu label="Ventas" icon="ui-icon-contact">
+                            <p:menuitem value="Crédito fiscal" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/ventasCFBuscar.xhtml" />
+                            </p:menuitem>
+
+                            <p:menuitem value="Consumidor final" action="#{ventasController.irURL()}">
+                                <f:setPropertyActionListener target="#{ventasController.url}" value="../inventario/ventasConsumiFBuscar.xhtml" />
+                            </p:menuitem>
+
+
+                        </p:submenu>
+
+                        <p:menuitem value="Proveedores" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reporteados/proveedoresReport.xhtml" />
+                        </p:menuitem>
+
+                        <p:menuitem value="Egreso de productos" action="#{ventasController.irURL()}">
+                            <f:setPropertyActionListener target="#{ventasController.url}" value="../reportes/egresoProductosReport.xhtml" />
+                        </p:menuitem>
+
+                    </p:submenu>                                                                                                                        
+                </p:submenu> 
+                <p:submenu label="Ayuda" icon="ui-icon-help">
+                    <p:separator />
+                    <p:menuitem value="Ayuda" action="#{ventasController.irURL()}">                        
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../ayuda/indice.html" />
+                    </p:menuitem>
+                    <p:menuitem value="Acerca de..." action="#{ventasController.irURL()}">
+                        <f:setPropertyActionListener target="#{ventasController.url}" value="../administracion/acercade.xhtml" />
+                    </p:menuitem>
+                    <p:separator />
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+        <!--p:submenu label="AdministraciГіn" icon="ui-icon-document" rendered="#//{usuariosController.administrador}">  
+            <p:menuitem value="Empresa" url="administracion/empresa.xhtml" action="#//{ventasController.save()}" />  
+            <p:submenu label="Socios" icon="ui-icon ui-icon-star">
+                <p:menuitem value="Nuevo socio" url="../socios/socios.xhtml" />
+                <p:menuitem value="Aportaciones" url="../socios/aportaciones.xhtml" />
+                <p:menuitem value="Beneficiarios" url="../socios/beneficiarios.xhtml" />  
+                <p:separator />  
+                <p:submenu label="Informes" icon="ui-icon-contact">
+                    <p:menuitem value="Estado de cuenta" url="../reportes/estadocuentasocioReport.xhtml" />
+                    <p:menuitem value="Recibo de registro" url="../reportes/sociosBoletaRegistro.xhtml" />
+                </p:submenu> 
+            </p:submenu>                             
+            <p:submenu label="Maquinaria" icon="ui-icon ui-icon-gear">
+                <p:menuitem value="Maquinaria" url="../maquinaria/maquinaria.xhtml" />                              
+                <p:menuitem value="Mantenimiento" url="../maquinaria/mantenimiento.xhtml" /> 
+                <p:menuitem value="Desgranado" url="../maquinaria/desgranado.xhtml" /> 
+                <p:submenu label="PrГ©stamos" icon="ui-icon-contact">
+                    <p:menuitem value="PrГ©stamo" url="../maquinaria/maquinariaprestamo.xhtml" />                                  
+                    <p:menuitem value="DevoluciГіn" url="../maquinaria/maquinariadevolucion.xhtml"/> 
+                </p:submenu> 
+                <p:separator />  
+                <p:submenu label="Informes" icon="ui-icon-contact">
+                    <p:menuitem value="Mantenimiento" url="../reportes/mantenimientoReport.xhtml" />                                  
+                    <p:menuitem value="Cantidad desgranada" url="../reportes/quintaldesgranadoReport.xhtml"/>                                
+                </p:submenu> 
+            </p:submenu>
+            <p:submenu label="Usuarios" icon="ui-icon-extlink">
+                <p:menuitem value="Crear usuarios" url="../administracion/usuarios.xhtml" />
+                <p:menuitem value="Modificar contraseГ±a" url="../administracion/cambiarContra.xhtml" />    
+                <p:menuitem value="BitГЎcora de usuarios" url="../administracion/bitacora.xhtml" />
+            </p:submenu>
+            <p:menuitem value="Empleados" url="../planillas/empleados.xhtml" />                              
+            <p:menuitem value="Estilo del sistema" url="../administracion/themesSwitcher.xhtml" />
+            <p:separator />  
+            <p:menuitem value="Salir" url="../login.xhtml" />  
+        
+        
+        </p:submenu>                                                                                                                                                                 
+    </p:menubar-->    
+
+
+    </cc:implementation>
+</html>
