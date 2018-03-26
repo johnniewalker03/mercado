@@ -7,20 +7,6 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <style type="text/css">       
-        .ui-datatable.borderless thead th,
-        .ui-datatable.borderless tbody,
-        .ui-datatable.borderless tbody tr,
-        .ui-datatable.borderless tbody td {
-            border-style: none;
-        }
-        .ui-dataScroller {
-            border : 0px !important;
-            border-bottom: 1px solid #A8A8A8;
-            padding: 25px 10px;
-        }
-        .ui-datascroller .ui-datascroller-item {
-            
-        }
         .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
         .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
         .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
@@ -31,9 +17,6 @@
             background: none !important;
             border: none !important;
         }        
-        .pdfobject-container { height: 500px;}
-        .pdfobject { border: 1px solid #666; }
-
     </style>
    
     <h:body>
@@ -75,9 +58,7 @@
 
                             <h:form id="form1" class="form-horizontal">
                                 
-                                <p:panelGrid style="font-size:13px; width:100%; text-indent: 5px;;
-                                             border-style: solid; border-width: 0px" 
-                                        styleClass="ui-panelgrid-blank"   id="panel1">
+                                <p:panelGrid styleClass="ui-panelgrid-blank"   id="panel1">
 
                                                             
                                     <p:row>
@@ -163,8 +144,14 @@
                                      <p:row>                                        
                                         <p:column><h:outputLabel value="Recíbo #:" /></p:column>
                                         <p:column><p:inputText size="8"  value="#{puestosController.itemSeleccionado.numRecibo}" label="No. de recibo"/></p:column>
-                                        <p:column></p:column>
-                                    </p:row>
+                                        <p:column><h:outputLabel value="Energía eléctrica:" /></p:column>
+                                        <p:column>                                            
+                                            <p:selectBooleanCheckbox value="#{puestosController.energia}">
+                                                <p:ajax update="sino" listener="#{puestosController.chequeado()}" />
+                                            </p:selectBooleanCheckbox>
+                                            <h:outputText id="sino" value="&nbsp;#{puestosController.sino}" />
+                                        </p:column> 
+                                     </p:row>
                                     <p:row>
                                         <p:column><h:outputLabel value="Fecha de recibo:" /></p:column>
                                         <p:column colspan="4" style="text-align: left"><p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{puestosController.itemSeleccionado.fechaPago}" showButtonPanel="true" navigator="true"
