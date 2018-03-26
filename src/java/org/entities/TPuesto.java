@@ -6,6 +6,7 @@
 package org.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -32,11 +35,18 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TPuesto.findByCorrelativo", query = "SELECT t FROM TPuesto t WHERE t.correlativo = :correlativo"),
     @NamedQuery(name = "TPuesto.findByUbicacion", query = "SELECT t FROM TPuesto t WHERE t.ubicacion = :ubicacion"),
     @NamedQuery(name = "TPuesto.findByTipo", query = "SELECT t FROM TPuesto t WHERE t.tipo = :tipo"),
-    @NamedQuery(name = "TPuesto.findByMixto", query = "SELECT t FROM TPuesto t WHERE t.mixto = :mixto"),
+    @NamedQuery(name = "TPuesto.findByTipoPuesto", query = "SELECT t FROM TPuesto t WHERE t.tipoPuesto = :tipoPuesto"),
     @NamedQuery(name = "TPuesto.findByMedidaH", query = "SELECT t FROM TPuesto t WHERE t.medidaH = :medidaH"),
     @NamedQuery(name = "TPuesto.findByNumPuesto", query = "SELECT t FROM TPuesto t WHERE t.numPuesto = :numPuesto"),
     @NamedQuery(name = "TPuesto.findByMedidaV", query = "SELECT t FROM TPuesto t WHERE t.medidaV = :medidaV"),
-    @NamedQuery(name = "TPuesto.findByEstructura", query = "SELECT t FROM TPuesto t WHERE t.estructura = :estructura")})
+    @NamedQuery(name = "TPuesto.findByGalera", query = "SELECT t FROM TPuesto t WHERE t.galera = :galera"),
+    @NamedQuery(name = "TPuesto.findByCajon", query = "SELECT t FROM TPuesto t WHERE t.cajon = :cajon"),
+    @NamedQuery(name = "TPuesto.findByMadera", query = "SELECT t FROM TPuesto t WHERE t.madera = :madera"),
+    @NamedQuery(name = "TPuesto.findByMetal", query = "SELECT t FROM TPuesto t WHERE t.metal = :metal"),
+    @NamedQuery(name = "TPuesto.findByMatriculaPagada", query = "SELECT t FROM TPuesto t WHERE t.matriculaPagada = :matriculaPagada"),
+    @NamedQuery(name = "TPuesto.findByNumRecibo", query = "SELECT t FROM TPuesto t WHERE t.numRecibo = :numRecibo"),
+    @NamedQuery(name = "TPuesto.findByEnergia", query = "SELECT t FROM TPuesto t WHERE t.energia = :energia"),
+    @NamedQuery(name = "TPuesto.findByFechaPago", query = "SELECT t FROM TPuesto t WHERE t.fechaPago = :fechaPago")})
 public class TPuesto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,9 +60,9 @@ public class TPuesto implements Serializable {
     @Size(max = 50)
     @Column(name = "Tipo")
     private String tipo;
-    @Size(max = 10)
-    @Column(name = "Mixto")
-    private String mixto;
+    @Size(max = 12)
+    @Column(name = "TipoPuesto")
+    private String tipoPuesto;
     @Size(max = 45)
     @Column(name = "MedidaH")
     private String medidaH;
@@ -62,9 +72,30 @@ public class TPuesto implements Serializable {
     @Size(max = 45)
     @Column(name = "MedidaV")
     private String medidaV;
-    @Size(max = 45)
-    @Column(name = "Estructura")
-    private String estructura;
+    @Size(max = 6)
+    @Column(name = "Galera")
+    private String galera;
+    @Size(max = 6)
+    @Column(name = "Cajon")
+    private String cajon;
+    @Size(max = 6)
+    @Column(name = "Madera")
+    private String madera;
+    @Size(max = 6)
+    @Column(name = "Metal")
+    private String metal;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "MatriculaPagada")
+    private Double matriculaPagada;
+    @Size(max = 12)
+    @Column(name = "NumRecibo")
+    private String numRecibo;
+    @Column(name = "FechaPago")
+    @Temporal(TemporalType.DATE)
+    private Date fechaPago;
+    @Size(max = 6)
+    @Column(name = "energia")
+    private String energia;
     @JoinColumn(name = "EcodArrenda", referencedColumnName = "EcodArrenda")
     @ManyToOne
     private TArrendatario ecodArrenda;
@@ -103,12 +134,12 @@ public class TPuesto implements Serializable {
         this.tipo = tipo;
     }
 
-    public String getMixto() {
-        return mixto;
+    public String getTipoPuesto() {
+        return tipoPuesto;
     }
 
-    public void setMixto(String mixto) {
-        this.mixto = mixto;
+    public void setTipoPuesto(String tipoPuesto) {
+        this.tipoPuesto = tipoPuesto;
     }
 
     public String getMedidaH() {
@@ -135,12 +166,68 @@ public class TPuesto implements Serializable {
         this.medidaV = medidaV;
     }
 
-    public String getEstructura() {
-        return estructura;
+    public String getGalera() {
+        return galera;
     }
 
-    public void setEstructura(String estructura) {
-        this.estructura = estructura;
+    public void setGalera(String galera) {
+        this.galera = galera;
+    }
+
+    public String getCajon() {
+        return cajon;
+    }
+
+    public void setCajon(String cajon) {
+        this.cajon = cajon;
+    }
+
+    public String getMadera() {
+        return madera;
+    }
+
+    public void setMadera(String madera) {
+        this.madera = madera;
+    }
+
+    public String getMetal() {
+        return metal;
+    }
+
+    public void setMetal(String metal) {
+        this.metal = metal;
+    }
+
+    public Double getMatriculaPagada() {
+        return matriculaPagada;
+    }
+
+    public void setMatriculaPagada(Double matriculaPagada) {
+        this.matriculaPagada = matriculaPagada;
+    }
+
+    public String getNumRecibo() {
+        return numRecibo;
+    }
+
+    public void setNumRecibo(String numRecibo) {
+        this.numRecibo = numRecibo;
+    }
+
+    public Date getFechaPago() {
+        return fechaPago;
+    }
+
+    public void setFechaPago(Date fechaPago) {
+        this.fechaPago = fechaPago;
+    }
+
+    public String getEnergia() {
+        return energia;
+    }
+
+    public void setEnergia(String energia) {
+        this.energia = energia;
     }
 
     public TArrendatario getEcodArrenda() {

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -36,14 +38,18 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TArrendatario.findByEcodArrenda", query = "SELECT t FROM TArrendatario t WHERE t.ecodArrenda = :ecodArrenda"),
     @NamedQuery(name = "TArrendatario.findByNoExpediente", query = "SELECT t FROM TArrendatario t WHERE t.noExpediente = :noExpediente"),
     @NamedQuery(name = "TArrendatario.findByNombreCompleto", query = "SELECT t FROM TArrendatario t WHERE t.nombreCompleto = :nombreCompleto"),
-    @NamedQuery(name = "TArrendatario.findByDireccion", query = "SELECT t FROM TArrendatario t WHERE t.direccion = :direccion"),
-    @NamedQuery(name = "TArrendatario.findByDui", query = "SELECT t FROM TArrendatario t WHERE t.dui = :dui"),
+    @NamedQuery(name = "TArrendatario.findByDireccion", query = "SELECT t FROM TArrendatario t WHERE t.direccion = :direccion"),    
+    @NamedQuery(name = "TArrendatario.findByDui", query = "SELECT t FROM TArrendatario t WHERE t.dui LIKE :dui"),    
+    @NamedQuery(name = "TArrendatario.findByTodo", query = "SELECT t FROM TArrendatario t WHERE t.dui LIKE :dui OR t.nombreCompleto LIKE :nombre OR t.noExpediente LIKE :expediente"),
+    @NamedQuery(name = "TArrendatario.findByDuiCompleto", query = "SELECT t FROM TArrendatario t WHERE t.dui = :dui"),
     @NamedQuery(name = "TArrendatario.findByNit", query = "SELECT t FROM TArrendatario t WHERE t.nit = :nit"),
     @NamedQuery(name = "TArrendatario.findByDepartamento", query = "SELECT t FROM TArrendatario t WHERE t.departamento = :departamento"),
     @NamedQuery(name = "TArrendatario.findByMunicipio", query = "SELECT t FROM TArrendatario t WHERE t.municipio = :municipio"),
     @NamedQuery(name = "TArrendatario.findByTelefono", query = "SELECT t FROM TArrendatario t WHERE t.telefono = :telefono"),
     @NamedQuery(name = "TArrendatario.findByFoto", query = "SELECT t FROM TArrendatario t WHERE t.foto = :foto"),
-    @NamedQuery(name = "TArrendatario.findByFechaIngreso", query = "SELECT t FROM TArrendatario t WHERE t.fechaIngreso = :fechaIngreso")})
+    @NamedQuery(name = "TArrendatario.findByFechaIngreso", query = "SELECT t FROM TArrendatario t WHERE t.fechaIngreso = :fechaIngreso"),
+    @NamedQuery(name = "TArrendatario.findByDUIExtendidoEn", query = "SELECT t FROM TArrendatario t WHERE t.dUIExtendidoEn = :dUIExtendidoEn"),
+    @NamedQuery(name = "TArrendatario.findByFechaExpedicion", query = "SELECT t FROM TArrendatario t WHERE t.fechaExpedicion = :fechaExpedicion")})
 public class TArrendatario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -81,14 +87,60 @@ public class TArrendatario implements Serializable {
     @Column(name = "FechaIngreso")
     @Temporal(TemporalType.DATE)
     private Date fechaIngreso;
+    @Size(max = 45)
+    @Column(name = "DUIExtendidoEn")
+    private String dUIExtendidoEn;
+    @Basic(optional = false)
+    @Column(name = "FechaExpedicion")
+    @Temporal(TemporalType.DATE)
+    private Date fechaExpedicion;
+    @Column(name = "FechaNacimiento")
+    @Temporal(TemporalType.DATE)
+    private Date fechaNacimiento;
+    @Size(max = 45)
+    @Column(name = "CorreoElectronico")
+    private String correoElectronico;    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ecodArrendaAnte")
+    private List<TTraslados> tTrasladosList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ecodArrendaNuevo")
+    private List<TTraslados> tTrasladosList1;
     @OneToMany(mappedBy = "ecodArrenda")
     private List<TPuesto> tPuestoList;
 
     public TArrendatario() {
     }
 
+    public String getdUIExtendidoEn() {
+        return dUIExtendidoEn;
+    }
+
+    public void setdUIExtendidoEn(String dUIExtendidoEn) {
+        this.dUIExtendidoEn = dUIExtendidoEn;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+
     public TArrendatario(Integer ecodArrenda) {
         this.ecodArrenda = ecodArrenda;
+    }
+
+    public TArrendatario(Integer ecodArrenda, Date fechaExpedicion) {
+        this.ecodArrenda = ecodArrenda;
+        this.fechaExpedicion = fechaExpedicion;
     }
 
     public Integer getEcodArrenda() {
@@ -177,6 +229,40 @@ public class TArrendatario implements Serializable {
 
     public void setFechaIngreso(Date fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
+    }
+
+    public String getDUIExtendidoEn() {
+        return dUIExtendidoEn;
+    }
+
+    public void setDUIExtendidoEn(String dUIExtendidoEn) {
+        this.dUIExtendidoEn = dUIExtendidoEn;
+    }
+
+    public Date getFechaExpedicion() {
+        return fechaExpedicion;
+    }
+
+    public void setFechaExpedicion(Date fechaExpedicion) {
+        this.fechaExpedicion = fechaExpedicion;
+    }
+
+    @XmlTransient
+    public List<TTraslados> getTTrasladosList() {
+        return tTrasladosList;
+    }
+
+    public void setTTrasladosList(List<TTraslados> tTrasladosList) {
+        this.tTrasladosList = tTrasladosList;
+    }
+
+    @XmlTransient
+    public List<TTraslados> getTTrasladosList1() {
+        return tTrasladosList1;
+    }
+
+    public void setTTrasladosList1(List<TTraslados> tTrasladosList1) {
+        this.tTrasladosList1 = tTrasladosList1;
     }
 
     @XmlTransient

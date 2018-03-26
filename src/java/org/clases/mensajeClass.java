@@ -26,8 +26,17 @@ public class mensajeClass {
         //FacesContext context = FacesContext.getCurrentInstance();         
         //context.addMessage(null, new FacesMessage("Successful",  "Your message: " + message) );
         //context.addMessage(null, new FacesMessage(encabezado, mensaje));
-
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL, encabezado, mensaje);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    //}
+    }
+    public void DatosActualizados() {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Operación completada!", "Información actualizada exitosamente!");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    //}
+    }
+    public void actualizacionError() {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Operación incorrecta!", "No es posible actualizar la información!");
         FacesContext.getCurrentInstance().addMessage(null, message);
     //}
     }

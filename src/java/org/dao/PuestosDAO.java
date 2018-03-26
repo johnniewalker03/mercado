@@ -31,6 +31,9 @@ public class PuestosDAO {
             e.printStackTrace();
         }
     }
+    
+    //select p.*, t2.NombreCompleto, FechaTraslado, t1.NombreCompleto  from t_puesto p, t_traslados tr, t_arrendatario t1, t_arrendatario t2 where Correlativo = EcodPuesto and EcodArrendaAnte = t1.EcodArrenda and EcodArrendaNuevo = t2.EcodArrenda
+            
     public List<TPuesto> getFindByArrendatario(TArrendatario Arrenda) {
         List<TPuesto> lista = null;     //new ArrayList<Address>();
         System.out.println("DAO 1: ");
@@ -41,4 +44,22 @@ public class PuestosDAO {
         lista = q.getResultList();
         return lista;
     }
+    public List<TPuesto> getFindByTodo() {
+        List<TPuesto> lista = null;     //new ArrayList<Address>();                
+        Query q = em.createNamedQuery("TPuesto.findAll");
+        //System.out.println("DAO 2: " + codArrenda);
+        lista = q.getResultList();
+        return lista;
+    }
+    // Metodo para modificar puesto
+    public boolean modificaPuesto(TPuesto puesto) {
+        try {
+            System.out.println("Puestosss" + puesto.getUbicacion());
+            em.merge(puesto);
+            return true;
+        } catch (Exception e) {
+            System.out.println("false");
+            return false;
+        }
+    }   
 }
