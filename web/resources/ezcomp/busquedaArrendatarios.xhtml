@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="actualizar" type="java.lang.String" />
+        <cc:attribute name="item" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        
+        <h:form id="form2">
+
+            <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar arrendatario" widgetVar="dl_arrendatario"  modal="false" resizable="false"
+                      showEffect="clip" width="990px" draggable="true" hideEffect="fold" onShow="PF('dl_arrendatario').initPosition()">
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel  value="Buscar:  " />  
+                            <p:inputText value="#{arrendatarioController.busqueda}" label="Buscar: " size="20">
+                                <p:ajax event="keyup" update="cars" listener="#{arrendatarioController.buscarArrendatario()}" />
+                            </p:inputText>   
+                            <p:commandButton id="btnBus" value="Ver Todo" update="cars" action="#{arrendatarioController.buscar()}"/>
+                        </p:column>
+                    </p:row> 
+                </p:panelGrid>
+                <p:dataTable id="cars" var="car" value="#{arrendatarioController.listaArrendatario}"
+                             emptyMessage="No se encuentran datos"
+                             paginator="true" paginatorPosition="bottom" rows="12">
+                             >
+
+                    <p:column headerText="No. Expediente" style="width:100px">  
+                        <h:outputText value="#{car.noExpediente}" />   
+                    </p:column>
+                    <p:column headerText="Nombre Completo" sortBy="#{car.nombreCompleto}" style="width:280px">
+                        <h:outputText value="#{car.nombreCompleto}"/>  
+                    </p:column>
+                    <p:column headerText="DUI" sortBy="#{car.dui}" style="width:86px">  
+                        <h:outputText value="#{car.dui}"/>  
+                    </p:column>                                                            
+                    <p:column headerText="Departamento" sortBy="#{car.departamento}" style="width:140px">  
+                        <h:outputText value="#{car.departamento}"/>  
+                    </p:column>                                                            
+                    <p:column headerText="Municipio" sortBy="#{car.municipio}" style="width:110px">  
+                        <h:outputText value="#{car.municipio}"/>  
+                    </p:column>
+                    <p:column headerText="Teléfono" style="width:80px">  
+                        <h:outputText value="#{car.telefono}"/>  
+                    </p:column>                                                            
+                    <p:column style="width:30px">
+                        <p:commandButton id="selectButton" action="#{arrendatarioController.actualizar()}" update="#{cc.attrs.actualizar}" onclick="PF('dl_arrendatario').hide();" icon="ui-icon-search" title="View" style="width: 20px; height: 15px">  
+                            <f:setPropertyActionListener value="#{car}" target="#{cc.attrs.item}" />  
+                        </p:commandButton>  
+                    </p:column>                                                              
+
+                </p:dataTable>  
+            </p:dialog>                                                                                                                                                                                                                                                                                                                                                                           
+
+        </h:form>   
+
+    </cc:implementation>
+</html>

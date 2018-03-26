@@ -2,18 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html">
     <h:head>        
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <title>Mercado Municipal</title>
         <!-- Bootstrap CSS CDN -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-        <!-- Our Custom CSS -->
-        <link rel="stylesheet" href="../resources/css/style4.css"/>         
 
+        <link rel="stylesheet" href="../resources/css/bootstrap.min.css"/>
+                <link rel="stylesheet" href="../resources/css/style4.css"/>         
+        <!-- Our Custom CSS -->
         <style type="text/css">
             /*.navbar-default {
                 height: 50px !important;
@@ -40,7 +39,7 @@
             <nav id="sidebar">
                 <div class="sidebar-header">
                     <h3>Menú</h3>
-                    <strong>BS</strong>
+                    <strong></strong>
                 </div>
 
                 <ul class="list-unstyled components">
@@ -51,6 +50,9 @@
                         </a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
                             <li><a href="../pages/usuarios.xhtml">Usuarios</a></li>
+                            <li><a href="../pages/cobradores.xhtml">Cobradores</a></li>
+                            <li><a href="../pages/zonas.xhtml">Zonas</a></li>
+                            <li><a href="../pages/Impuestos.xhtml">Impuestos municipales</a></li>
                             <li><a href="#">Cerrar sesión</a></li>
                             <li><a href="#">Salir</a></li>
                         </ul>
@@ -62,7 +64,7 @@
                         </a>
                         <ul class="collapse list-unstyled" id="ArrendatarioSubmenu">
                             <li><a href="../pages/arrendatarios.xhtml">Registro</a></li>
-                            <li><a href="#">Consulta</a></li>
+                            <li><a href="../pages/arrendatariosConsulta.xhtml">Consulta</a></li>
                             <li><a href="#">Solvencias</a></li>
                         </ul>
                     </li>
@@ -72,10 +74,13 @@
                             Puestos
                         </a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
-                            <li><a href="../pages/puestos.xhtml">Registro</a></li>
-                            <li><a href="#">Traslados</a></li>
-                            <li><a href="#">Consultas</a></li>
-                            <li><a href="#">Sanciones</a></li>
+                            <li><a href="../pages/puestos.xhtml">Registro</a></li>                            
+                            <li><a href="../pages/traslados.xhtml">Reasignación</a></li>
+                            <li><a href="../pages/mejoras.xhtml">Mejoras</a></li>
+                            <li><a href="../pages/sanciones.xhtml">Sanciones</a></li>
+                            <li><a href="../pages/sancionesConsulta.xhtml">Consulta de sanciones</a></li>
+                            <li><a href="../pages/puestosConsulta.xhtml">Consulta de puestos</a></li>                            
+                            <li><a href="#">Consultas</a></li>                            
                         </ul>
                     </li>
                     <li>                        
@@ -96,8 +101,12 @@
                             Reportes
                         </a>
                         <ul class="collapse list-unstyled" id="reportesSubmenu">
-                            <li><a href="../reportes/arrendatarios.xhtml">Arrendatario</a></li>
-                            <li><a href="#">Matrícula de puestos</a></li>
+                            <li><a href="../reportes/arrendatarios.xhtml">Puestos de arrendatario</a></li>
+                            <li><a href="../reportes/expediente.xhtml">Expediente de arrendatario</a></li>
+                            <li><a href="../reportes/matriculapuesto.xhtml">Matrícula de puestos</a></li>
+                            <li><a href="../reportes/reasignacion.xhtml">Reasignación de puestos</a></li>
+                            <li><a href="../reportes/solicitudMejoras.xhtml">Solicitud de mejoras</a></li>
+                            <li><a href="../reportes/autorizacionMejoras.xhtml">Autorización de mejoras</a></li>
                             <li><a href="#">Solvencias</a></li>
                             <li><a href="#">Pagos realizados</a></li>
                         </ul>
@@ -157,10 +166,7 @@
 
 
         <!-- Bootstrap Js CDN -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-          <script src="../resources/js/pdfobject.js"></script>
-        <script>PDFObject.embed("../resources/PDF/sample-3pp.pdf", "#example");
-        </script>
+        <script src="../resources/js/bootstrap.min.js"></script>        
         <script type="text/javascript">
             $(document).ready(function () {
                 $('#sidebarCollapse').on('click', function () {

@@ -1,0 +1,310 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../plantilla/Plantilla.xhtml">
+
+            <ui:define name="content">
+                <h:form id="form3" class="form-horizontal">
+                    <div class="breadcrumb-holder">
+                        <div class="container-fluid">
+                            <ul class="breadcrumb" >                            
+                                <!-- <li class="breadcrumb-item active h4">Arrendatarios</li>!-->
+
+                                <li>
+                                    <p:splitButton
+                                        value="Arrendatarios" icon="ui-icon-arrow-4">                                    
+                                        <p:menuitem>
+                                            <p:commandButton id="iconOnly20" value="Búsqueda" 
+                                                             onclick="PF('dl_arrendatario').show();" icon="ui-icon-search" style="border: none; text-align: left; background: none; width: 180px; margin-left: 0px"/>
+                                        </p:menuitem>
+                                        <p:separator />
+                                        <p:menuitem>
+                                            <p:commandButton id="btn_imprimir" style="border: none; text-align: left; background: none; width: 180px; margin-left: 0px" type="button" value="Imprimir" icon="ui-icon-print"  >
+                                                <p:printer target="form1"/>
+                                            </p:commandButton>                                        
+                                        </p:menuitem>
+                                    </p:splitButton> 
+                                </li>    
+
+                                <li>
+                                    <h:outputLabel value="Fecha de Expedición: &nbsp;&nbsp;"/>
+                                    <p:calendar value="#{puestosController.fecha}" pattern="dd/MM/yyyy" locale="tr" showButtonPanel="true" navigator="true" id="Caldesde" size="8" required="true" label="desde">   
+                                        <p:ajax event="dateSelect" update="form1" listener="#{puestosController.fechaConvierte()}"/>
+                                    </p:calendar>
+
+                                </li> 
+                                <li>
+                                    <h:outputLabel value="Periodo desde: &nbsp;&nbsp;"/>
+                                    <h:inputText size="3" readonly="true" style="font-weight: bold" value="#{puestosController.itemSeleccionado.matriculaPagada}" 
+
+                                                 >
+                                        <f:convertNumber pattern="#0000"></f:convertNumber>
+                                    </h:inputText>
+
+                                    <h:outputLabel value="&nbsp;Hasta: &nbsp;&nbsp;"/>
+                                    <h:selectOneMenu style="width: 80px" value="#{puestosController.hasta}" required="true" requiredMessage="ültima matrícula pagada" >
+                                        <f:selectItem itemLabel="2005" itemValue="2005" />
+                                        <f:selectItem itemLabel="2006" itemValue="2006" />
+                                        <f:selectItem itemLabel="2007" itemValue="2007" />
+                                        <f:selectItem itemLabel="2008" itemValue="2008" />
+                                        <f:selectItem itemLabel="2009" itemValue="2009" />
+                                        <f:selectItem itemLabel="2010" itemValue="2010" />
+                                        <f:selectItem itemLabel="2011" itemValue="2011" />
+                                        <f:selectItem itemLabel="2012" itemValue="2012" />
+                                        <f:selectItem itemLabel="2013" itemValue="2013" />
+                                        <f:selectItem itemLabel="2014" itemValue="2014" />
+                                        <f:selectItem itemLabel="2015" itemValue="2015" />
+                                        <f:selectItem itemLabel="2016" itemValue="2016" />
+                                        <f:selectItem itemLabel="2017" itemValue="2017" />
+                                        <f:selectItem itemLabel="2018" itemValue="2018" />
+                                        <f:selectItem itemLabel="2019" itemValue="2019" />
+                                        <f:selectItem itemLabel="2020" itemValue="2020" />
+                                        <f:selectItem itemLabel="2021" itemValue="2021" />
+                                        <f:selectItem itemLabel="2022" itemValue="2022" />                                                
+                                        <f:selectItem itemLabel="2023" itemValue="2023" />
+                                        <p:ajax event="valueChange"  update="form1,message,anio" listener="#{puestosController.periodoPago()}"/>
+                                    </h:selectOneMenu>    
+                                </li> 
+
+                            </ul>
+                        </div>
+                    </div>
+                </h:form>
+
+                <div class="navbar navbar-default">
+                    <p:messages id="message" showDetail="true" showSummary="false" closable="true">
+
+                    </p:messages>
+                    <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+                    <h:outputText value="Última matrícula pagada: "/>
+                    <h:outputLabel id="anio" style="color: chocolate" value="#{puestosController.itemSeleccionado.matriculaPagada-1}">
+                        <f:convertNumber pattern="#0000"></f:convertNumber>
+                    </h:outputLabel>
+                    <div id="targetPDF" class="card-body">
+                        <h:form id="form1" class="form-horizontal">                             
+                            <p:panelGrid  style="font-size:13px; width:100%; 
+                                          border-style: solid; border-width: 0px" 
+                                          styleClass="ui-panelgrid-blank"  id="panel1">
+
+                                <p:row style="text-align: center">
+                                    <p:column rowspan="2">
+                                        <h:graphicImage id="imgx" url="../resources/images/alcaldiasv.jpg" height="90" width="90"/>
+                                    </p:column>
+                                    <p:column colspan=""><h:outputLabel value="ALCALDIA MUNICIPAL DE SAN VICENTE" /></p:column>
+                                    <p:column rowspan="2">
+                                        <h:graphicImage id="img" url="../resources/images/escudo.png" height="90" width="90"/>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row style="text-align: center">
+                                    <p:column colspan=""><h:outputLabel style="text-decoration: underline" value='"MATRICULA DE PUESTO"' /></p:column>
+                                </p:row> 
+
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3"></p:column>
+                                </p:row> 
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3"></p:column>
+                                </p:row>
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3"></p:column>
+                                </p:row>
+
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3">
+                                        <h:outputText value="HACE CONSTAR QUE: El(la) Señor(a): &nbsp;&nbsp;"/>
+                                        <h:outputText style="font-weight: bold" value="#{arrendatarioController.itemSeleccionado.nombreCompleto}" />
+                                    </p:column>                                        
+                                </p:row> 
+
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3"></p:column>
+                                </p:row>
+
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3" >                                                                                
+                                        <h:outputText style="font-weight: normal" value="Quien se manifiesta con Documento Único de Identidad N°&nbsp;" />
+                                        <h:outputText style="font-weight: bold" value="#{arrendatarioController.itemSeleccionado.dui}" />
+                                        <h:outputText style="font-weight: normal" value="&nbsp;Es arrendatario del puesto N°&nbsp;" />
+                                        <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.numPuesto}" />
+                                        <h:outputText style="font-weight: normal" value="&nbsp;Ubicado en &nbsp;&nbsp;&nbsp;" />
+                                        <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.ubicacion}" />
+                                    </p:column>                                        
+                                </p:row> 
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3">                                                                                
+                                        <h:outputText style="font-weight: normal" value="Para la venta de &nbsp;" />
+                                        <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.tipo}" />
+                                        <h:outputText style="font-weight: normal" value="&nbsp;se encuentra " />
+                                        <h:outputText style="font-weight: bold" value="" />
+                                        <h:outputText style="font-weight: normal" value="&nbsp;solvente de las Especies Municipales de piso plaza" />                                        
+                                    </p:column>                                        
+                                </p:row> 
+
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3"></p:column>
+                                </p:row>
+
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3">                                        
+                                        <h:outputText style="font-weight: normal" value="El puesto N° &nbsp;" />
+                                        <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.numPuesto} &nbsp;" />
+                                        <h:outputText style="font-weight: normal;text-decoration: underline" value="#{puestosController.itemSeleccionado.energia} cuenta " />
+                                        <h:outputText style="font-weight: normal" value="&nbsp;con los servicios de energia electrica y cancelará el periodo de &nbsp;&nbsp; " />
+                                        <h:outputLabel style="font-weight: bold" value="#{puestosController.itemSeleccionado.matriculaPagada}" 
+
+                                                       >
+                                            <f:convertNumber pattern="#0000"></f:convertNumber>
+                                        </h:outputLabel>
+
+                                        <h:outputText style="font-weight: bold; line-height: 200%" value="&nbsp;&nbsp; Hasta &nbsp;&nbsp; #{puestosController.hasta} &nbsp;&nbsp;"/>
+                                    </p:column>                                        
+                                </p:row> 
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3">                                        
+                                        <h:outputText style="font-weight: normal" value="Periodos a cancelar: &nbsp;" />
+                                        <h:outputText style="font-weight: bold" value="#{puestosController.periodopago}" />
+
+                                    </p:column>
+                                </p:row>
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3"></p:column>
+                                </p:row>
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3"></p:column>
+                                </p:row>
+
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3">
+                                        <h:outputLabel style="font-weight: normal; line-height: 200% " value="Se extiende la presente en la Administracion del Mercado Municipal de San Vicente, a los &nbsp;&nbsp;
+                                                       #{puestosController.dia} &nbsp;&nbsp;
+                                                       Dias del Mes de &nbsp;&nbsp;
+                                                       #{puestosController.mes} &nbsp;&nbsp;
+                                                       del Año &nbsp;&nbsp;
+                                                       #{puestosController.anio} &nbsp;&nbsp;"/>
+                                    </p:column>                                        
+                                </p:row>
+
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3"></p:column>
+                                </p:row>
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3"></p:column>
+                                </p:row>
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3"></p:column>
+                                </p:row>
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3"></p:column>
+                                </p:row>
+
+                                <p:row style="text-align: center">
+                                    <p:column rowspan="0"></p:column>
+                                    <p:column colspan=""><h:outputLabel value="F._______________________________" /></p:column>
+                                    <p:column rowspan="0"></p:column>
+                                </p:row>
+                                <p:row style="text-align: center">
+                                    <p:column rowspan="0"></p:column>
+                                    <p:column colspan=""><h:outputLabel value="LIC. MORIS A. GUERRERO" /></p:column>
+                                    <p:column rowspan="0"></p:column>
+                                </p:row>
+                                <p:row style="text-align: center">
+                                    <p:column rowspan="0"></p:column>
+                                    <p:column colspan=""><h:outputLabel value="ADMINISTRADOR DE MERCADOS" /></p:column>
+                                    <p:column rowspan="0"></p:column>
+                                </p:row>
+                            </p:panelGrid> 
+
+                        </h:form>
+
+
+                        <h:form id="form2">  
+
+                            <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar arrendatario" widgetVar="dl_arrendatario"  modal="false" resizable="false"
+                                      showEffect="clip" hideEffect="fold">
+                                <p:panelGrid>
+                                    <p:row>
+                                        <p:column>
+                                            <h:outputLabel  value="Buscar:  " />  
+                                            <p:inputText value="#{arrendatarioController.busqueda}" label="Buscar: " size="15">
+                                                <p:ajax event="keyup" update=":form2:cars" listener="#{arrendatarioController.buscarArrendatario()}" />
+                                            </p:inputText>   
+                                            <p:commandButton id="btnBus" value="Ver Todo" update="cars" action="#{arrendatarioController.buscar()}"/>
+                                        </p:column>
+                                    </p:row> 
+                                </p:panelGrid>
+                                <p:dataTable id="cars" var="car" value="#{arrendatarioController.listaArrendatario}"
+                                             emptyMessage="No se encuentran datos"
+                                             paginator="true" paginatorPosition="bottom" rows="12">  
+
+
+                                    <p:column headerText="No. de Expediente"  style="width:150px">  
+                                        <h:outputText value="#{car.noExpediente}" />  
+                                    </p:column>
+                                    <p:column headerText="Nombre Completo" style="width:280px">
+                                        <h:outputText value="#{car.nombreCompleto}"/>  
+                                    </p:column>
+                                    <p:column headerText="DUI" style="width:100px">  
+                                        <h:outputText value="#{car.dui}"/>  
+                                    </p:column>                                                            
+                                    <p:column headerText="Departamento" style="width:120px">  
+                                        <h:outputText value="#{car.departamento}"/>  
+                                    </p:column>                                                            
+                                    <p:column headerText="Municipio" style="width:100px">  
+                                        <h:outputText value="#{car.municipio}"/>  
+                                    </p:column>
+                                    <p:column headerText="Teléfono" style="width:100px">  
+                                        <h:outputText value="#{car.telefono}"/>  
+                                    </p:column>                                                            
+                                    <p:column style="width:50px">
+                                        <p:commandButton id="selectButton" update=":form2:carsss" icon="ui-icon-search" 
+                                                         action="#{puestosController.buscar()}" title="View" style="width: 20px; height: 15px">
+                                            <f:setPropertyActionListener value="#{car}" target="#{arrendatarioController.itemSeleccionado}" />  
+                                        </p:commandButton>  
+                                    </p:column>                                                              
+
+                                </p:dataTable>
+                                <p:dataTable id="carsss" var="car1" value="#{puestosController.listaPuestos}"
+                                             emptyMessage="No se encuentran datos"
+                                             paginator="true" paginatorPosition="bottom" rows="5">  
+                                    <p:column headerText="No. de Puesto"  style="width:90px">  
+                                        <h:outputText value="#{car1.numPuesto}" />  
+                                    </p:column>                                        
+                                    <p:column headerText="Ubicación" style="width:200px">
+                                        <h:outputText value="#{car1.ubicacion}"/>  
+                                    </p:column>
+                                    <p:column headerText="Tipo" style="width:100px">  
+                                        <h:outputText value="#{car1.tipo}"/>  
+                                    </p:column>                                                            
+
+                                    <p:column style="width:50px">
+                                        <p:commandButton id="selectButton1" update="form1,form3,anio" action="#{puestosController.actualizarPeriodo()}" onclick="PF('dl_arrendatario').hide();" icon="ui-icon-search" 
+                                                         title="View" style="width: 20px; height: 15px">
+                                            <f:setPropertyActionListener value="#{car1}" target="#{puestosController.itemSeleccionado}" />
+                                        </p:commandButton>  
+                                    </p:column>                                                              
+                                    <f:facet name="footer">  
+                                        <p:outputPanel>                                                  
+                                            <p:commandButton id="dec11" value="Cerrar" onclick="PF('dl_arrendatario').hide();" type="button" />
+                                        </p:outputPanel>  
+                                    </f:facet>                 
+                                </p:dataTable>
+                            </p:dialog>
+
+
+                        </h:form>  
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

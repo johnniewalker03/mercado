@@ -51,7 +51,7 @@
                                 </p:row>
                                 <p:row>
                                     <p:column><h:outputLabel value="Contraseña:" /></p:column>
-                                    <p:column><p:password id="contra" value="#{usuarioController.itemNuevo.password}" required="true" label="Contraseña" validatorMessage="sfsdfaf"/></p:column>
+                                    <p:column><p:password id="contra" value="#{usuarioController.itemNuevo.password}" required="true" label="Contraseña"/></p:column>
 
 
                                 </p:row>
@@ -78,7 +78,7 @@
                                             <h2 class="h5 display">
 
                                                 <p:commandButton value="Guardar" actionListener="#{usuarioController.agregar()}" update="message" icon="ui-icon-disk">                                                        
-                                                    <p:confirm header="Confirmation" message="¿Desea guardar los datos?" icon="ui-icon-alert" />
+                                                    <p:confirm header="Confirmación" message="¿Desea guardar los datos?" icon="ui-icon-alert" />
                                                 </p:commandButton>
                                             </h2>
                                         </div>

@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"      
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<style type="text/css">
+.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
+.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
+.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
+.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header > tr.ui-widget-header, 
+.ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content,
+.ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content > td.ui-panelgrid-cell,
+.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
+    background: none !important;
+    border: none !important;
+}
+</style>
+    <h:body>
+        <ui:composition template="../plantilla/Plantilla.xhtml">
+            
+            <ui:define name="content">
+
+                <div class="breadcrumb-holder">
+                    <div class="container-fluid">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item h4"><a href="index.xhtml">Inicio</a></li>
+                            <li class="breadcrumb-item active h4">Reasignación de puestos</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="navbar navbar-default" style="//box-shadow: 2px 2px 2px 2px #888888;">
+                    
+                    <p:messages id="message" showDetail="true" showSummary="false" closable="true">
+                        
+                    </p:messages>
+                    <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+                        <div class="card-body">
+
+                            <h:form id="form1" class="form-horizontal">
+                                
+                                <p:panelGrid id="panel1" styleClass="ui-panelgrid-blank">
+
+                                    
+                                    <p:row>                                    
+                                        <p:column><h:outputLabel  value="Arrendatario vigente:" /></p:column>
+                                        <p:column colspan="3">
+                                            <p:commandButton id="iconOnly20" type="button" onclick="PF('dl_arrendatarioss').show();" icon="ui-icon-search" style="margin-left: 3px">
+                                                <h:outputText id="codigo_cli20" value="#{arrendatarioController.itemSeleccionado.nombreCompleto}" />
+                                            </p:commandButton>
+                                        </p:column>                                                          
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><h:outputLabel value="Puesto:" /></p:column>
+                                        <p:column colspan="3">
+                                            <h:outputText id="puesto" value="#{puestosController.itemSeleccionado.numPuesto}" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><h:outputLabel value="Ubicación:" /></p:column>
+                                        <p:column colspan="3">
+                                            <h:outputText id="ubicacion" value="#{puestosController.itemSeleccionado.ubicacion}" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><h:outputLabel value="Tipo de negocio:" /></p:column>
+                                        <p:column colspan="3"><h:outputText id="tipo" value="#{puestosController.itemSeleccionado.tipo}" /></p:column>
+                                    </p:row>
+                                    <p:row>                                    
+                                        <p:column><h:outputLabel  value="Nuevo Arrendatario:" /></p:column>
+                                        <p:column colspan="3">
+                                            <p:commandButton id="iconOnly" type="button" onclick="PF('dl_arrendatario').show();" icon="ui-icon-search" style="margin-left: 3px">
+                                                <h:outputText id="codigo_cli" value="#{arrendatarioController.itemSeleccionadoSegundo.nombreCompleto}" />
+                                            </p:commandButton>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><h:outputLabel  value="Fecha de traspaso:" />  </p:column>
+                                        <p:column>
+                                            <p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{trasladosController.itemNuevo.fechaTraslado}" showButtonPanel="true" navigator="true"
+                                                        id="trCal" size="8" required="true" label="Fecha de ingreso"/></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><h:outputLabel value="Recíbo #:" /></p:column>
+                                        <p:column><p:inputText size="12"  value="#{trasladosController.itemNuevo.numRecibo}" label="No. de recibo"/></p:column>
+                                        
+                                    </p:row> 
+
+                                    <p:row>
+                                        <p:column><h:outputLabel value="Comentarios:" />  </p:column>
+                                        <p:column colspan="3"><p:inputTextarea maxlength="240" cols="66" rows="2" value="#{trasladosController.itemNuevo.comentarios}" label="Comentarios" /></p:column>
+                                    </p:row>
+                                        
+                                    <p:row>
+                                        <p:column style="text-align: left!important">
+                                            <div class="card-header d-flex align-items-center">
+                                                <h2 class="h5 display">
+
+                                                    <p:commandButton value="Guardar" actionListener="#{trasladosController.agregar()}" 
+                                                                     update="message,panel1" icon="ui-icon-disk">
+                                                        <p:confirm header="Confirmación" message="¿Desea guardar los datos?" icon="ui-icon-alert" />
+                                                    </p:commandButton>
+                                                </h2>
+                                            </div>
+                                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" 
+                                                                 icon="ui-icon-check" />
+                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                            </p:confirmDialog>
+                                        </p:column>
+                                    </p:row>                                        
+                                </p:panelGrid>
+                            </h:form>                            
+                                                                                               
+                            <h:form id="form4">  
+
+                                <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar arrendatario" 
+                                          widgetVar="dl_arrendatarioss"  modal="false" resizable="false"
+                                          showEffect="clip" width="990px" draggable="true" hideEffect="fold" onShow="PF('dl_arrendatarioss').initPosition()">
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <h:outputLabel  value="Buscar:  " />  
+                                                <p:inputText value="#{arrendatarioController.busqueda}" label="Buscar: " size="15">
+                                                    <p:ajax event="keyup" update=":form4:cars" listener="#{arrendatarioController.buscarArrendatario()}" />
+                                                </p:inputText>   
+                                                <p:commandButton id="btnBus" value="Ver Todo" update="cars" action="#{arrendatarioController.buscar()}"/>
+                                            </p:column>
+                                        </p:row> 
+                                    </p:panelGrid>
+                                    <p:dataTable id="cars" var="car" value="#{arrendatarioController.listaArrendatario}"
+                                                 emptyMessage="No se encuentran datos"
+                                                 paginator="true" paginatorPosition="bottom" rows="12"
+                                                 >
+                                        <p:column headerText="No. de Expediente" style="width:150px">  
+                                            <h:outputText value="#{car.noExpediente}" />  
+                                        </p:column>
+                                        <p:column headerText="Nombre Completo" sortBy="#{car.nombreCompleto}" style="width:280px">
+                                            <h:outputText value="#{car.nombreCompleto}"/>  
+                                        </p:column>
+                                        <p:column headerText="DUI" style="width:100px">  
+                                            <h:outputText value="#{car.dui}"/>  
+                                        </p:column>                                                            
+                                        <p:column headerText="Departamento" sortBy="#{car.departamento}" style="width:145px">  
+                                            <h:outputText value="#{car.departamento}"/>  
+                                        </p:column>                                                            
+                                        <p:column headerText="Municipio" sortBy="#{car.municipio}" style="width:170px">  
+                                            <h:outputText value="#{car.municipio}"/>  
+                                        </p:column>
+                                        <p:column headerText="Teléfono" style="width:100px">  
+                                            <h:outputText value="#{car.telefono}"/>  
+                                        </p:column>                                                            
+                                        <p:column style="width:50px">
+                                            <p:commandButton id="selectButton" update=":form4:carsss" icon="ui-icon-search" 
+                                                             action="#{puestosController.buscar()}" title="View" style="width: 20px; height: 15px">
+                                                <f:setPropertyActionListener value="#{car}" target="#{arrendatarioController.itemSeleccionado}" />  
+                                            </p:commandButton>  
+                                        </p:column>                                                              
+
+                                    </p:dataTable>
+                                    <p:dataTable id="carsss" var="car1" value="#{puestosController.listaPuestos}"
+                                                 emptyMessage="No se encuentran datos"
+                                                 paginator="true" paginatorPosition="bottom" rows="5">  
+                                        <p:column headerText="No. de Puesto"  style="width:90px">  
+                                            <h:outputText value="#{car1.numPuesto}" />  
+                                        </p:column>                                        
+                                        <p:column headerText="Ubicación" style="width:200px">
+                                            <h:outputText value="#{car1.ubicacion}"/>  
+                                        </p:column>
+                                        <p:column headerText="Tipo" style="width:100px">  
+                                            <h:outputText value="#{car1.tipo}"/>  
+                                        </p:column>
+                                            <p:column style="width:50px">
+                                                <p:commandButton id="selectButton1" update=":form1" action="#{trasladosController.buscarTraslados()}" onclick="PF('dl_arrendatarioss').hide();" icon="ui-icon-search" 
+                                                                 title="View" style="width: 20px; height: 15px">
+                                                    <f:setPropertyActionListener value="#{car1}"  target="#{puestosController.itemSeleccionado}" />
+                                                </p:commandButton>
+                                            </p:column>                                        
+                                    </p:dataTable>
+                                </p:dialog>
+                            </h:form>     
+                            <ezcomp:busquedaArrendatarios actualizar=":form1:codigo_cli" item="#{arrendatarioController.itemSeleccionadoSegundo}" />
+                        </div>
+                </div>           
+
+                    
+            </ui:define>
+
+
+        </ui:composition>         
+                 
+    </h:body>
+
+</html>
+
+
+

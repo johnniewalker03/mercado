@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"      
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <style type="text/css">       
+        .ui-datatable.borderless thead th,
+        .ui-datatable.borderless tbody,
+        .ui-datatable.borderless tbody tr,
+        .ui-datatable.borderless tbody td {
+            border-style: none;
+        }
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header > tr.ui-widget-header, 
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content,
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content > td.ui-panelgrid-cell,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
+            background: none !important;
+            border: none !important;
+       }               
+    </style>
+    <h:body>
+        <ui:composition template="../plantilla/Plantilla.xhtml">          
+            <ui:define name="content">
+                <div class="breadcrumb-holder">
+                    <div class="container-fluid">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item h4"><a href="index.xhtml">Inicio</a></li>
+                            <li class="breadcrumb-item active h4">Zonas</li>
+                        </ul>
+                    </div>
+                </div>             
+                    <div class="navbar navbar-default">
+                    <p:messages id="message" showDetail="true" showSummary="false" closable="true">
+                        
+                    </p:messages>
+                    <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+                    <div id="targetPDF" class="card-body">
+
+                         <h:form id="form1" class="form-horizontal">
+                             <p:panelGrid id="panel1" styleClass="ui-panelgrid-blank">
+                                <p:row>
+                                    <p:column><h:outputLabel value="Nombre de la zona:" /></p:column>
+                                    <p:column><p:inputText id="nombre1" style="width: 200px" value="#{zonaController.itemNuevo.ubicacion}" required="true" label="Nombre de la zona"/></p:column>
+
+                                </p:row> 
+                                 <p:row>
+                                     <p:column><h:outputLabel value="Cobrador de zona:" /></p:column>
+                                     <p:column>
+                                         <h:selectOneMenu style="width: 200px" id="cat" immediate="true" required="true" label="Cobrador de zona"  
+                                                          validatorMessage="Debe seleccionar un cobrador"
+                                                          value="#{cobradorController.itemSeleccionado.ecodCobrador}">
+                                             <f:selectItems value="#{cobradorController.listaCobradores}"
+                                                            var="cuenta1" itemLabel="#{cuenta1.cnomCobra} #{cuenta1.capeCobra}"
+                                                            itemValue="#{cuenta1.ecodCobrador}" />
+                                             <f:ajax event="valueChange"  listener="#{cobradorController.buscar()}" render="cat" execute="@this" />
+                                         </h:selectOneMenu>
+                                     </p:column>
+                                 </p:row>
+                                        
+                                <p:row>
+                                    <p:column style="text-align: left!important">
+                                        
+
+                                        <div class="card-header d-flex align-items-center">
+                                            <h2 class="h5 display">
+
+                                                <p:commandButton value="Guardar" action="#{zonaController.agregar()}" update="message, form1" icon="ui-icon-disk">
+                                                    <p:confirm header="Confirmación" message="¿Desea guardar los datos?" icon="ui-icon-alert" />
+                                                </p:commandButton>
+                                               
+                                            </h2>
+                                        </div>
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" 
+                                                             icon="ui-icon-check" />
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        </p:confirmDialog>
+                                    </p:column>                                    
+                                 
+                                </p:row>    
+                             </p:panelGrid>
+                             <p:dataTable id="carsss" var="car1" value="#{zonaController.listaZonas}"
+                                          emptyMessage="No se encuentran datos"
+                                          selectionMode="single" rowKey="#{car1.ecodZona}"
+                                          paginator="true" editable="true" paginatorPosition="bottom" rows="16">  
+                                 <p:ajax event="rowEdit" listener="#{zonaController.onEdit}" update="message" />  
+                                 <p:ajax event="rowEditCancel" listener="#{zonaController.onCancel}" update="message" />
+                                 <p:ajax event="rowSelect" listener="#{zonaController.onRowSelect}" update="message"/>
+                                 <p:column headerText="Zona">  
+
+                                     <p:cellEditor>  
+                                         <f:facet name="output">  
+                                             <h:outputText value="#{car1.ubicacion}" />  
+                                         </f:facet>
+                                         <f:facet name="input">  
+                                             <p:inputText value="#{car1.ubicacion}" style="width:280px"/>  
+                                         </f:facet>  
+                                     </p:cellEditor>
+                                 </p:column>                                 
+                                 <p:column headerText="Nombre del cobrador" style="width:300px">
+                                                 <h:outputText value="#{car1.ecodCobrador.cnomCobra} #{car1.ecodCobrador.capeCobra}"/>                                         
+                                 </p:column>                                 
+                                 <p:column style="width:40px">
+                                     <p:rowEditor />  
+                                 </p:column> 
+                                 <p:column style="width:40px">
+                                     <p:commandButton id="selectButton" update="" icon="ui-icon-circle-close" 
+                                                             action="#{puestosController.buscar()}" title="View" style="width: 20px; height: 15px">
+                                                <f:setPropertyActionListener value="#{car}" target="" />  
+                                     </p:commandButton> 
+                                 </p:column> 
+                             </p:dataTable>
+
+                             <p:dataTable id="radioDT" var="car2" value="#{zonaController.listaZonas}" selection="#{zonaController.itemSeleccionado}" rowKey="#{car2.ecodZona}">
+                                 <f:facet name="header">
+                                     RadioButton
+                                 </f:facet>
+                                 <p:column selectionMode="single" style="width:36px;text-align:center"/>
+                                 <p:column headerText="Codigo">
+                                     <h:outputText value="#{car2.ecodZona}" />
+                                 </p:column>
+                                 <p:column headerText="Ubicación">
+                                     <h:outputText value="#{car2.ubicacion}" />
+                                 </p:column>                                 
+                                 <f:facet name="footer">
+                                     <p:commandButton process="radioDT" update="form1:carDetail" icon="ui-icon-search" value="View" oncomplete="PF('carDialog').show()" />
+                                 </f:facet>
+                             </p:dataTable>
+
+                             <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                 <p:outputPanel id="carDetail" style="text-align:center;">
+                                     <p:panelGrid  columns="2" rendered="#{not empty zonaController.itemSeleccionado}" columnClasses="label,value">
+                                         <f:facet name="header">
+                                             Imagen
+                                         </f:facet>
+
+                                         <h:outputText value="Codigo:" />
+                                         <h:outputText value="#{zonaController.itemSeleccionado.ecodZona}" />
+
+                                         <h:outputText value="Ubicacion" />
+                                         <h:outputText value="#{zonaController.itemSeleccionado.ubicacion}" />                                      
+                                     </p:panelGrid>
+                                 </p:outputPanel>
+                             </p:dialog>
+
+                             <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Cobradores de zona" widgetVar="dl_datos"  modal="false" resizable="false"
+                                       showEffect="clip" width="500px" draggable="true" hideEffect="fold" onShow="PF('dl_datos').initPosition()">                
+
+                                 <div class="container-fluid">                        
+                                     <h4><h:outputText value="Seleccionar cobrador de zona - #{zonaController.itemSeleccionado.ubicacion}" /></h4>
+                                 </div>
+                                 <p:dataTable id="cars" var="car" value="#{cobradorController.listaCobradores}"
+                                              emptyMessage="No se encuentran datos"                             
+                                              >
+                                     <p:column headerText="Nombre" style="width:160px">
+                                         <h:outputText value="#{car.cnomCobra}" />
+                                     </p:column>
+                                     <p:column headerText="Apellido" style="width:160px">
+                                         <h:outputText value="#{car.capeCobra}"/>
+                                     </p:column>
+                                     <p:column style="width:40px">
+                                         <p:commandButton id="selectButton" update="" onclick="PF('dl_datos').hide();" icon="ui-icon-search" title="View" style="width: 20px; height: 15px">
+                                             <f:setPropertyActionListener value="#{car}" target="#{impuestosController.itemSeleccionado}" />
+                                         </p:commandButton>
+                                     </p:column>
+                                 </p:dataTable>  
+                             </p:dialog>   
+                         </h:form>
+                        </div>
+                    </div>
+            </ui:define>
+        </ui:composition>         
+          
+      
+
+    </h:body>
+
+</html>
+
+
+

@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"      
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <style type="text/css">       
+        .ui-datatable.borderless thead th,
+        .ui-datatable.borderless tbody,
+        .ui-datatable.borderless tbody tr,
+        .ui-datatable.borderless tbody td {
+            border-style: none;
+        }
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header > tr.ui-widget-header, 
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content,
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content > td.ui-panelgrid-cell,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
+            background: none !important;
+            border: none !important;
+        }               
+    </style>   
+    <h:body>
+        <ui:composition template="../plantilla/Plantilla.xhtml">          
+            <ui:define name="content">
+                <div class="breadcrumb-holder">
+                    <div class="container-fluid">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item h4"><a href="index.xhtml">Inicio</a></li>
+                            <li class="breadcrumb-item active h4">Impuestos Municipales</li>
+                        </ul>
+                    </div>
+                </div>             
+                <div class="navbar navbar-default">
+                    <p:messages id="message" showDetail="true" showSummary="false" closable="true">
+
+                    </p:messages>
+                    <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+                    <div id="targetPDF" class="card-body">
+
+                        <h:form id="form1" class="form-horizontal">
+                            <p:panelGrid id="panel1" styleClass="ui-panelgrid-blank">
+                                <p:row>
+                                    <p:column><h:outputLabel value="Impuesto:" /></p:column>
+                                    <p:column><p:inputText id="monto" value="#{impuestosController.itemNuevo1.monto}" 
+                                                           required="true" label="Impuestos">                                          
+                                        </p:inputText>
+                                    </p:column>
+
+                                </p:row>
+                                <p:row>
+                                    <p:column><h:outputLabel value="Descripcion:" /></p:column>
+                                    <p:column><p:inputText id="descripcion" value="#{impuestosController.itemNuevo1.descripcion}" label="Descripción"/></p:column>
+
+
+                                </p:row>                                
+
+                                <p:row>
+                                    <p:column style="text-align: left!important">
+
+
+                                        <div class="card-header d-flex align-items-center">
+                                            <h2 class="h5 display">
+
+                                                <p:commandButton value="Guardar" actionListener="#{impuestosController.agregar()}" update="message, form1, form4" icon="ui-icon-disk">
+                                                    <p:confirm header="Confirmación" message="¿Desea guardar los datos?" icon="ui-icon-alert" />
+                                                </p:commandButton>
+                                            </h2>
+                                        </div>
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" 
+                                                             icon="ui-icon-check" />
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        </p:confirmDialog>
+                                    </p:column>
+                                </p:row>    
+                            </p:panelGrid>
+                        </h:form>
+                        <h:form id="form4" class="form-horizontal">                                                                
+
+                            <p:dataTable id="carsss" var="car1" editable="true" value="#{impuestosController.listaImpuestos}"
+                                         emptyMessage="No se encuentran datos"
+                                         paginator="true" paginatorPosition="bottom" rows="16">  
+                                <p:ajax event="rowEdit" listener="#{impuestosController.onEdit}" update="message" />  
+                                <p:ajax event="rowEditCancel" listener="#{impuestosController.onCancel}" update="message" />                                        
+                                <p:column headerText="Monto del impuesto" >                                            
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{car1.monto}"/>  
+                                        </f:facet>
+                                        <f:facet name="input">  
+                                            <p:inputText value="#{car1.monto}" style="width:250px"/>  
+                                        </f:facet>  
+                                    </p:cellEditor> 
+                                </p:column>
+                                <p:column headerText="Descripción" >
+
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{car1.descripcion}"/>  
+                                        </f:facet>
+                                        <f:facet name="input">  
+                                            <p:inputText value="#{car1.descripcion}" style="width:250px"/>  
+                                        </f:facet>  
+                                    </p:cellEditor> 
+                                </p:column>                                       
+                                <p:column style="width:40px">  
+                                    <p:rowEditor />  
+                                </p:column>
+                            </p:dataTable>                                                                                       
+
+                        </h:form>                                                                               
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>         
+
+
+
+    </h:body>
+
+</html>
+
+
+

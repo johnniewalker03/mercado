@@ -47,7 +47,8 @@
 
                                     <p:row>                                        
                                         <p:column><h:outputLabel value="Puesto N°:" /></p:column>
-                                        <p:column colspan="3"><p:inputText size="8"  value="#{puestosController.itemNuevo.numPuesto}" required="true" label="No. de Puesto"/></p:column>
+                                        <p:column><p:inputText size="8"  value="#{puestosController.itemNuevo.numPuesto}" required="true" label="No. de Puesto"/></p:column>
+                                        <p:column></p:column>
                                     </p:row>                                    
                                     <p:row>                                    
                                         <p:column><h:outputLabel  value="Arrendatario:" /></p:column>
@@ -55,25 +56,53 @@
                                             <p:commandButton id="iconOnly20" type="button" onclick="PF('dl_arrendatario').show();" icon="ui-icon-search" style="margin-left: 3px">
                                                 <h:outputText id="codigo_cli20" value="#{arrendatarioController.itemSeleccionado.nombreCompleto}" />
                                             </p:commandButton>
-                                        </p:column>                                                          
+                                        </p:column>                                        
                                     </p:row>
                                     <p:row>
                                         <p:column><h:outputLabel value="Ubicación:" /></p:column>
-                                        <p:column colspan="3"><p:inputText size="61"  value="#{puestosController.itemNuevo.ubicacion}" required="true" label="Ubicación"/></p:column>
+                                        <p:column colspan="3">
+                                            <h:selectOneMenu style="width: 240px" id="cat1" immediate="true" label="Ubicación"  
+                                                             validatorMessage="Debe seleccionar un Impuesto diario"
+                                                             value="#{zonaController.itemSeleccionado.ubicacion}">
+                                                <f:selectItems value="#{zonaController.listaZonas}"
+                                                               var="cuenta1" itemLabel="#{cuenta1.ubicacion}"
+                                                               itemValue="#{cuenta1.ubicacion}" />
+                                                <f:ajax event="valueChange"  listener="#{zonaController.busqueda()}" render="cat1" execute="@this" />
+                                            </h:selectOneMenu>
+                                        </p:column>
+                                        
                                         </p:row>
                                     <p:row>
                                         <p:column><h:outputLabel value="Tipo de negocio:" /></p:column>
                                         <p:column><p:inputText size="16"  value="#{puestosController.itemNuevo.tipo}" required="true" label="Tipo de negocio"/></p:column>
-
-                                        <p:column><h:outputLabel  value="Mixto:" /></p:column>
-                                        <p:column><p:inputText size="16"  value="#{puestosController.itemNuevo.mixto}" requiredMessage="Ingrese Mixto"/></p:column>
+                                        <p:column><h:outputLabel value="Tipo de puesto:" /></p:column>
+                                        <p:column colspan="2">
+                                            <p:selectOneMenu  value="#{puestosController.itemNuevo.tipoPuesto}" required="true" requiredMessage="Tipo de puesto" >
+                                                <f:selectItem itemLabel="Fijo" itemValue="Fijo" />
+                                                <f:selectItem itemLabel="Transitorio" itemValue="Transitorio" />
+                                                <f:selectItem itemLabel="Ambulante" itemValue="Ambulante" />
+                                        </p:selectOneMenu> 
+                                        </p:column>
                                     </p:row>                                    
-                                    <p:row>
+                                    <p:row>                                        
                                         <p:column><h:outputLabel value="Medida horinzontal:" /></p:column>
                                         <p:column><p:inputText size="16" value="#{puestosController.itemNuevo.medidaH}" required="true" label="Medida horizontal"/></p:column>
+                                        <p:column rowspan="4" style="text-align: right"><h:outputLabel value="Estructura:" /></p:column>
+                                        <p:column>
+                                            <h:outputText value="Galera: " />
+                                        </p:column>    
+                                        <p:column><p:selectBooleanCheckbox value="#{puestosController.galera}"/></p:column>                                        
+                                    </p:row>
+                                    <p:row>                                        
                                         <p:column><h:outputLabel value="Medida vertical:" /></p:column>
                                         <p:column><p:inputText size="16" value="#{puestosController.itemNuevo.medidaV}" required="true" label="Medida vertical"/></p:column>
+                                        
+                                        <p:column>
+                                            <h:outputText value="Cajón: " />
+                                        </p:column> 
+                                        <p:column><p:selectBooleanCheckbox value="#{puestosController.cajon}"/></p:column>
                                     </p:row>
+
                                     <p:row>
                                         <p:column><h:outputLabel value="Impuesto diario:" /></p:column>
                                         <p:column>
@@ -85,12 +114,69 @@
                                                                itemValue="#{cuenta1.codImpuestos}" />
                                                 <f:ajax event="valueChange"  listener="#{impuestosController.buscar()}" render="cat" execute="@this" />
                                             </h:selectOneMenu>
-                                        </p:column>
-                                        <p:column><h:outputLabel value="Estructura:" /></p:column>
-                                        <p:column><p:inputText size="16" value="#{puestosController.itemNuevo.estructura}" required="true" label="Estructura"/></p:column>
+                                        </p:column> 
+                                        
+                                        <p:column>
+                                            <h:outputText value="Madera: " />
+                                        </p:column>  
+                                        <p:column><p:selectBooleanCheckbox value="#{puestosController.madera}"/></p:column>
                                     </p:row>
+                                    
                                     <p:row>
-                                    </p:row>                                        
+                                    <p:column><h:outputLabel value="Última matrícula pagada:" /></p:column>
+                                    <p:column>
+                                        <p:selectOneMenu style="width: 80px" value="#{puestosController.itemNuevo.matriculaPagada}" requiredMessage="ültima matrícula pagada" >
+                                            <f:selectItem itemLabel="2004" itemValue="2004" />
+                                            <f:selectItem itemLabel="2005" itemValue="2005" />
+                                            <f:selectItem itemLabel="2006" itemValue="2006" />
+                                            <f:selectItem itemLabel="2007" itemValue="2007" />
+                                            <f:selectItem itemLabel="2008" itemValue="2008" />
+                                            <f:selectItem itemLabel="2009" itemValue="2009" />
+                                            <f:selectItem itemLabel="2010" itemValue="2010" />
+                                            <f:selectItem itemLabel="2011" itemValue="2011" />
+                                            <f:selectItem itemLabel="2012" itemValue="2012" />
+                                            <f:selectItem itemLabel="2013" itemValue="2013" />
+                                            <f:selectItem itemLabel="2014" itemValue="2014" />
+                                            <f:selectItem itemLabel="2015" itemValue="2015" />
+                                            <f:selectItem itemLabel="2016" itemValue="2016" />
+                                            <f:selectItem itemLabel="2017" itemValue="2017" />
+                                            <f:selectItem itemLabel="2018" itemValue="2018" />
+                                            <f:selectItem itemLabel="2019" itemValue="2019" />
+                                            <f:selectItem itemLabel="2020" itemValue="2020" />
+                                            <f:selectItem itemLabel="2021" itemValue="2021" />
+                                            <f:selectItem itemLabel="2022" itemValue="2022" />                                                
+                                            <f:selectItem itemLabel="2023" itemValue="2023" />
+                                            <f:selectItem itemLabel="2024" itemValue="2024" />
+                                            <f:selectItem itemLabel="2025" itemValue="2025" />
+                                        </p:selectOneMenu> 
+                                        </p:column>
+                                    <p:column>
+                                            <h:outputText value="Metal: " />
+                                        </p:column> 
+                                        <p:column><p:selectBooleanCheckbox value="#{puestosController.metal}"/></p:column>
+                                    
+                                    </p:row>
+                                     <p:row>                                        
+                                        <p:column><h:outputLabel value="Recíbo #:" /></p:column>
+                                        <p:column><p:inputText size="8"  value="#{puestosController.itemNuevo.numRecibo}" label="No. de recibo"/></p:column>
+                                        <p:column><h:outputLabel value="Energía eléctrica:" /></p:column>
+                                        <p:column>                                            
+                                            <p:selectBooleanCheckbox value="#{puestosController.energia}">
+                                                <p:ajax update="sino" listener="#{puestosController.chequeado()}" />
+                                            </p:selectBooleanCheckbox>
+                                            <h:outputText id="sino" value="&nbsp;#{puestosController.sino}" />
+                                        </p:column> 
+                                    </p:row> 
+                                     <p:row>                                        
+                                        <p:column><h:outputLabel value="Fecha de recibo:" /></p:column>                                        
+                                            <p:column>
+                                                <p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{puestosController.itemNuevo.fechaPago}" showButtonPanel="true" navigator="true"
+                                                            id="trCal5" size="16" label="Fecha de pago de recibo"/>
+                                            </p:column>                                                                                   
+                                        <p:column>                                            
+                                        </p:column> 
+                                        
+                                    </p:row> 
                                     <p:row>
                                         <p:column style="text-align: left!important">
                                             
@@ -99,7 +185,7 @@
                                                 <h2 class="h5 display">
 
                                                     <p:commandButton value="Guardar" actionListener="#{puestosController.agregar()}" update="message,form1" icon="ui-icon-disk">
-                                                        <p:confirm header="Confirmation" message="¿Desea guardar los datos?" icon="ui-icon-alert" />
+                                                        <p:confirm header="Confirmación" message="¿Desea guardar los datos?" icon="ui-icon-alert" />
                                                     </p:commandButton>
                                                 </h2>
                                             </div>
@@ -109,51 +195,15 @@
                                                 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                                             </p:confirmDialog>
                                         </p:column>
-                                    </p:row>                                        
+                                        <p:column></p:column>                                        
+                                        <p:column colspan="4" style="text-align: right; text-decoration: underline">
+                                            <h:link outcome="puestosEdit.xhtml" value="Actualizar puestos" />
+                                        </p:column>
+                                    </p:row>
                                 </p:panelGrid>
                             </h:form>
                             
-                            <h:form id="form2">  
-                                
-                                <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar arrendatario" widgetVar="dl_arrendatario"  modal="false" resizable="false"
-                                          showEffect="clip" hideEffect="fold">
-                                    <p:dataTable id="cars" var="car" value="#{arrendatarioController.listaArrendatario}"
-                                                 emptyMessage="No se encuentran datos"
-                                                 paginator="true" paginatorPosition="bottom" rows="5">  
-
-                                        <p:column headerText="No. de Expediente"  style="width:100px">  
-                                            <h:outputText value="#{car.noExpediente}" />  
-                                        </p:column>
-                                        <p:column headerText="Nombre Completo" style="width:200px">
-                                            <h:outputText value="#{car.nombreCompleto}"/>  
-                                        </p:column>
-                                        <p:column headerText="DUI" style="width:100px">  
-                                            <h:outputText value="#{car.dui}"/>  
-                                        </p:column>                                                            
-                                        <p:column headerText="Departamento" style="width:100px">  
-                                            <h:outputText value="#{car.departamento}"/>  
-                                        </p:column>                                                            
-                                        <p:column headerText="Municipio" style="width:100px">  
-                                            <h:outputText value="#{car.municipio}"/>  
-                                        </p:column>
-                                        <p:column headerText="Teléfono" style="width:100px">  
-                                            <h:outputText value="#{car.telefono}"/>  
-                                        </p:column>                                                            
-                                        <p:column style="width:50px">
-                                            <p:commandButton id="selectButton" update=":form1:codigo_cli20" onclick="PF('dl_arrendatario').hide();" icon="ui-icon-search" title="View" style="width: 20px; height: 15px">  
-                                                <f:setPropertyActionListener value="#{car}" target="#{arrendatarioController.itemSeleccionado}" />  
-                                            </p:commandButton>  
-                                        </p:column>                                                              
-                                        <f:facet name="footer">  
-                                            <p:outputPanel>  
-                                                <p:commandButton id="btnBus" value="Ver Todo" update="cars" action="#{arrendatarioController.buscar()}"/>
-                                                <p:commandButton id="dec" value="Cerrar" onclick="PF('dl_arrendatario').hide();" type="button" />
-                                            </p:outputPanel>  
-                                        </f:facet>                 
-                                    </p:dataTable>  
-                                </p:dialog>                                                                                                                                                                                                                                                                                                                                                                           
-
-                            </h:form>                                                                                                
+                            <ezcomp:busquedaArrendatarios actualizar=":form1:codigo_cli20" item="#{arrendatarioController.itemSeleccionado}" />
                         </div>
                 </div>           
 

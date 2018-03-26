@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="actualizar" type="java.lang.String" />                
+    </cc:interface>
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+
+
+        <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar arrendatario" 
+                  widgetVar="dl_arrendatarioss"  modal="false" resizable="false"
+                  showEffect="clip" hideEffect="fold">
+            <h:form id="formz">  
+
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <h:outputLabel  value="Buscar:  " />  
+                            <p:inputText value="#{arrendatarioController.busqueda}" label="Buscar: " size="15">
+                                <p:ajax event="keyup" update="cars" listener="#{arrendatarioController.buscarArrendatario()}" />
+                            </p:inputText>   
+                            <p:commandButton id="btnBus" value="Ver Todo" update="cars" action="#{arrendatarioController.buscar()}"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:dataTable id="cars" var="car" value="#{arrendatarioController.listaArrendatario}"
+                             emptyMessage="No se encuentran datos"
+                             paginator="true" paginatorPosition="bottom" rows="12">  
+                    <p:column headerText="No. de Expediente"  style="width:150px">  
+                        <h:outputText value="#{car.noExpediente}" />  
+                    </p:column>
+                    <p:column headerText="Nombre Completo" style="width:280px">
+                        <h:outputText value="#{car.nombreCompleto}"/>  
+                    </p:column>
+                    <p:column headerText="DUI" style="width:100px">  
+                        <h:outputText value="#{car.dui}"/>  
+                    </p:column>                                                            
+                    <p:column headerText="Departamento" style="width:120px">  
+                        <h:outputText value="#{car.departamento}"/>  
+                    </p:column>                                                            
+                    <p:column headerText="Municipio" style="width:100px">  
+                        <h:outputText value="#{car.municipio}"/>  
+                    </p:column>
+                    <p:column headerText="Teléfono" style="width:100px">  
+                        <h:outputText value="#{car.telefono}"/>  
+                    </p:column>                                                            
+                    <p:column style="width:50px">
+                        <p:commandButton id="selectButton" icon="ui-icon-search"  
+                                         action="#{puestosController.buscar()}" title="View" style="width: 20px; height: 15px"
+                                         update="Cars2">
+                            <f:setPropertyActionListener value="#{car}" target="#{arrendatarioController.itemSeleccionado}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                <p:dataTable id="Cars2" var="car1" value="#{puestosController.listaPuestos}"
+                             emptyMessage="No se encuentran datos"
+                             paginator="true" paginatorPosition="bottom" rows="5">  
+                    <p:column headerText="No. de Puesto"  style="width:90px">  
+                        <h:outputText value="#{car1.numPuesto}" />  
+                    </p:column>                                        
+                    <p:column headerText="Ubicación" style="width:200px">
+                        <h:outputText value="#{car1.ubicacion}"/>  
+                    </p:column>
+                    <p:column headerText="Tipo" style="width:100px">
+                        <h:outputText value="#{car1.tipo}"/>  
+                    </p:column>                                                            
+
+                    <p:column style="width:50px">
+                        <p:commandButton id="selectButton1" update="#{cc.attrs.actualizar}" onclick="PF('dl_arrendatarioss').hide();" icon="ui-icon-search" 
+                                         title="View" style="width: 20px; height: 15px">                                                  
+                            <f:setPropertyActionListener value="#{car1}" target="#{puestosController.itemSeleccionado}" />
+                        </p:commandButton>  
+                    </p:column>                                                              
+                    <f:facet name="footer">  
+                        <p:outputPanel>                                                  
+                            <p:commandButton id="dec11" value="Cerrar" onclick="PF('dl_arrendatarioss').hide();" type="button" />
+                        </p:outputPanel>  
+                    </f:facet>                 
+                </p:dataTable>
+            </h:form>
+            </p:dialog>                                                                         
+    </cc:implementation>
+</html>

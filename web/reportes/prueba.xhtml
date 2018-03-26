@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../plantilla/Plantilla.xhtml">
+
+            <ui:define name="content"> 
+                
+                
+                <h:form id="form3" class="form-horizontal">
+                    <div class="breadcrumb-holder">
+                        <div class="container-fluid">
+                            <ul class="breadcrumb">                            
+                                <li class="breadcrumb-item active h4">Arrendatarios</li>
+
+                                <li>
+                                    <p:commandButton id="iconOnly20" value="Arrendatario" type="button" onclick="PF('dl_arrendatario').show();" icon="ui-icon-search" style="margin-left: 3px">                                                
+                                    </p:commandButton>
+                                </li>
+                                <li>
+                                    <p:commandButton id="btn_imprimir" type="button" value="Imprimir" icon="ui-icon-print"  >
+                                        <p:printer target="form1"/>
+                                    </p:commandButton>
+                                </li>  
+                                <li>
+                                    <p:commandButton id="btn_pdf" type="button" value="Visor PDF" icon="ui-icon-print">
+                                        <p:dataExporter type="pdf" target="targetPDF" 
+                                                        fileName="Expediente" pageOnly="true" />
+                                    </p:commandButton>
+                                    <!--h:commandLink>Algo                                                
+                                        <p:dataExporter type="pdf" target="form1:tbl" fileName="tabla" pageOnly="true" />
+                                    </h:commandLink-->
+                                </li>  
+                            </ul>
+                        </div>
+                    </div>
+                </h:form>
+
+                <div class="navbar navbar-default">
+                    <p:messages id="message" showDetail="true" showSummary="false" closable="true">
+
+                    </p:messages>
+                    <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+                    <div id="targetPDF" class="card-body">
+
+                        <h:form id="form1" class="form-horizontal">
+                            
+                            Aqui iria los campos
+                            
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

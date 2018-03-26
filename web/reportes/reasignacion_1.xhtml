@@ -1,0 +1,295 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"      
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <style type="text/css">       
+        .ui-button{
+            color: #333;
+            border: none;
+            font-weight: bold;
+            margin-left: 10px;
+            text-shadow: none;
+
+            color:white;
+            text-shadow: 1px 1px 0px #000;
+            background: #44B34D !important;
+        }
+
+        .ui-datatable.borderless thead th,
+        .ui-datatable.borderless tbody,
+        .ui-datatable.borderless tbody tr,
+        .ui-datatable.borderless tbody td {
+            border-style: none;
+        }
+        .ui-dataScroller {
+            border : 0px !important;
+            border-bottom: 1px solid #A8A8A8;
+            padding: 25px 10px;
+        }
+        .ui-datascroller .ui-datascroller-item {
+
+        }
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header > tr.ui-widget-header, 
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content,
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content > td.ui-panelgrid-cell,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
+            background: none !important;
+            border: none !important;
+        }        
+        .pdfobject-container { height: 500px;}
+        .pdfobject { border: 1px solid #666; }
+
+    </style>
+
+    <h:body>
+        <ui:composition template="../plantilla/Plantilla.xhtml">
+
+            <ui:define name="content">
+
+                <h:form id="form3" class="form-horizontal">
+                    <div class="breadcrumb-holder">
+                        <div class="container-fluid">
+                            <ul class="breadcrumb">                            
+                                <li class="breadcrumb-item active h4">Reasignación de puestos</li>
+                                <li>
+                                    <p:splitButton
+                                        value="Buscar" icon="ui-icon-arrow-4">                                    
+                                        <p:menuitem>
+                                            <p:commandButton id="iconOnly20" value="Búsqueda" 
+                                                             onclick="PF('dl_reasignacion').show();" icon="ui-icon-search" style="border: none; text-align: left; background: none; width: 180px; margin-left: 0px"/>
+                                        </p:menuitem>
+                                        <p:separator />
+                                        <p:menuitem>
+                                            <p:commandButton id="btn_imprimir" style="border: none; text-align: left; background: none; width: 180px; margin-left: 0px" type="button" value="Imprimir" icon="ui-icon-print"  >
+                                                <p:printer target="form1"/>
+                                            </p:commandButton>                                        
+                                        </p:menuitem>
+                                    </p:splitButton>
+                                </li>
+                                <li>
+                                    <h:outputLabel value="Fecha: &nbsp;&nbsp;"/>
+                                    <p:calendar value="#{puestosController.fecha}" pattern="dd/MM/yyyy" locale="tr" showButtonPanel="true" navigator="true" id="Caldesde" size="8" required="true" label="desde">   
+                                        <p:ajax event="dateSelect" update="form1" listener="#{puestosController.fechaConvierte()}"/>
+                                    </p:calendar>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </h:form>
+
+                <div class="navbar navbar-default">
+                    <p:messages id="message" showDetail="true" showSummary="false" closable="true">
+
+                    </p:messages>
+                    <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+                    <div id="targetPDF" class="card-body">
+
+                        <h:form id="form1" class="form-horizontal">
+
+                            <p:panelGrid style="font-size:13px; width:100%; text-indent: 5px;;
+                                         border-style: solid; border-width: 0px" 
+                                         styleClass="ui-panelgrid-blank"   id="panel1">
+
+                                <p:row style="text-align: center">
+                                    <p:column rowspan="2" style="width: 40px">
+                                        <h:graphicImage id="imgx" url="../resources/images/alcaldiasv.jpg" height="90" width="90"/>
+                                    </p:column>
+                                    <p:column colspan="5"><h:outputLabel value="ALCALDIA MUNICIPAL DE SAN VICENTE" /></p:column>
+                                    <p:column rowspan="2" style="width: 50px">
+                                        <h:graphicImage id="img" url="../resources/images/escudo.png" height="90" width="100"/>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row style="text-align: center; font-size: 20px">
+                                    <p:column colspan="5"><h:outputLabel value="REASIGNACIÓN DE PUESTO" /></p:column>
+                                </p:row>
+                                <p:row style="height: 24px; text-align: center">
+                                    <p:column colspan="7">
+                                        <h:outputLabel value="San Vicente, &nbsp;&nbsp;
+                                                       #{puestosController.dia} &nbsp;&nbsp;
+                                                       de &nbsp;&nbsp;
+                                                       #{puestosController.mes} &nbsp;&nbsp;
+                                                       de &nbsp;&nbsp;
+                                                       #{puestosController.anio}" />
+                                    </p:column>
+                                </p:row>  
+                                <p:row style="height: 24px; text-align: center">
+
+                                </p:row> 
+                                <p:row>
+                                    <p:column colspan="6">
+                                        <h:outputLabel style="font-weight: normal" value="Yo:"/>
+                                        <h:outputText style="font-weight: bold" value="#{trasladosController.itemSeleccionado.ecodArrendaAnte.nombreCompleto}" />
+                                        <h:outputLabel style="font-weight: normal" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mayor de edad:"/>
+                                    </p:column>
+                                </p:row>                                    
+                                <p:row>
+                                    <p:column colspan="4"><h:outputLabel style="font-weight: normal" value="Con domicilio en" />
+                                        <h:outputText style="font-weight: bold" value="#{trasladosController.itemSeleccionado.ecodArrendaAnte.direccion}" /></p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column colspan="7"><h:outputLabel style="font-weight: normal" value="Portador(a) del Documento Único de Identidad DUI N°" />
+                                        <h:outputText style="font-weight: bold" value="#{trasladosController.itemSeleccionado.ecodArrendaAnte.dui}" /></p:column>
+                                </p:row>                                    
+                                    <p:row>                                        
+                                        <p:column colspan="6"><h:outputLabel style="font-weight: normal" value="Extendido en" />
+                                            <h:outputText  style="font-weight: bold" value="#{trasladosController.itemSeleccionado.ecodArrendaAnte.DUIExtendidoEn}"
+                                                           />
+                                        <h:outputLabel style="font-weight: normal" value=" el " />
+                                            <h:outputText  style="font-weight: bold" value="#{trasladosController.itemSeleccionado.ecodArrendaAnte.fechaExpedicion}">
+                                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                            </h:outputText>
+                                        </p:column>
+                                        
+                                        
+                                    </p:row>                                    
+                                    <p:row>                                        
+                                        <p:column colspan="2"><h:outputLabel style="font-weight: normal" value="Arrendatario(a) del puesto N°" />
+                                            <h:outputText style="font-weight: bold" value="#{trasladosController.itemSeleccionado.ecodPuesto.numPuesto}" /></p:column>
+                                        <p:column colspan="5"><h:outputLabel style="font-weight: normal" value="Ubicado en" />
+                                            <h:outputText style="font-weight: bold" value="#{trasladosController.itemSeleccionado.ecodPuesto.ubicacion}" /></p:column>
+                                    </p:row>
+                                 <p:row>                                        
+                                        <p:column colspan="4"><h:outputLabel style="font-weight: normal" value="A favor de" />
+                                            <h:outputText style="font-weight: bold" value="#{trasladosController.itemSeleccionado.ecodArrendaNuevo.nombreCompleto}" /></p:column>
+                                    </p:row>
+                                <p:row>
+                                    <p:column colspan="4"><h:outputLabel style="font-weight: normal" value="del domicilio de" />
+                                        <h:outputText style="font-weight: bold" value="#{trasladosController.itemSeleccionado.ecodArrendaNuevo.direccion}" /></p:column>
+                                </p:row>
+                                    <p:row>                                        
+                                        <p:column colspan="7"><h:outputLabel style="font-weight: normal" value="Portador(a) del Documento Único de Identidad DUI N°" />
+                                            <h:outputText style="font-weight: bold" value="#{trasladosController.itemSeleccionado.ecodArrendaNuevo.dui}" /></p:column>
+                                    </p:row>                                    
+                                    <p:row>                                        
+                                        <p:column colspan="6"><h:outputLabel style="font-weight: normal" value="Extendido en" />
+                                            <h:outputText  style="font-weight: bold" value="#{trasladosController.itemSeleccionado.ecodArrendaNuevo.DUIExtendidoEn}" /></p:column>
+                                    </p:row>                                    
+                                    <p:row>
+                                        <p:column style="text-align: left!important; text-indent: 0px; line-height: 250%" colspan="7">
+                                            <h:outputText  value="Quien se compromete a cumplir el Código y Ordenanzas Municipales que rigen
+                                                           el funcionamiento de los Mercados así como pagar puntualmente las especies municipales que le corresponden" />
+                                        </p:column>
+                                    </p:row> 
+                                <p:row style="height: 24px; text-align: center">
+
+                                </p:row> 
+                                 <p:row style="text-align: center">
+                                    <p:column colspan="4">
+                                        <h:outputLabel value="F._____________________________"/>
+                                    </p:column>
+                                     <p:column colspan="3">
+                                        <h:outputLabel value="F._____________________________"/>
+                                    </p:column>
+                                </p:row> 
+                                <p:row style="text-align: center">
+                                    <p:column colspan="4">                                        
+                                        <h:outputText style="font-weight: bold" value="#{trasladosController.itemSeleccionado.ecodArrendaAnte.nombreCompleto}" />
+                                    </p:column>
+                                    <p:column colspan="3">                                        
+                                        <h:outputText style="font-weight: bold" value="#{trasladosController.itemSeleccionado.ecodArrendaNuevo.nombreCompleto}" />
+                                    </p:column>
+                                </p:row>    
+                                <p:row style="text-align: center">
+                                    <p:column colspan="4">    
+                                        <h:outputLabel value="ENTREGA"/>                                        
+                                    </p:column>
+                                    <p:column colspan="3">    
+                                        <h:outputLabel value="RECIBE"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row style="text-align: center">
+                                    <p:column rowspan="0"><h:outputText value="ES CONFORME" /></p:column>
+                                    <p:column colspan="5"><h:outputLabel value="F._______________________________" /></p:column>
+                                    <p:column rowspan="0"></p:column>
+                                </p:row>
+                                <p:row style="text-align: center">
+                                    <p:column rowspan="0"></p:column>
+                                    <p:column colspan="5"><h:outputLabel value="LIC. MORIS A. GUERRERO" /></p:column>
+                                    <p:column rowspan="0"></p:column>
+                                </p:row>
+                                <p:row style="text-align: center">
+                                    <p:column rowspan="0"></p:column>
+                                    <p:column colspan="5"><h:outputLabel value="ADMINISTRADOR DE MERCADOS" /></p:column>
+                                    <p:column rowspan="0"></p:column>
+                                </p:row>
+                            </p:panelGrid>
+
+
+
+
+                        </h:form>
+
+
+                        <h:form id="form2">  
+
+                            <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar reasignacion" widgetVar="dl_reasignacion"  modal="false" resizable="false"
+                                      showEffect="clip" width="990px" draggable="true" hideEffect="fold" onShow="PF('dl_reasignacion').initPosition()">
+                                <p:panelGrid>
+                                    <p:row>
+                                        <p:column>
+                                            <h:outputLabel  value="Buscar:  " />
+                                            <p:inputText value="#{trasladosController.busqueda}" label="Buscar: " size="15">
+                                                <p:ajax event="keyup" update=":form2:cars" listener="#{trasladosController.buscarPorCampos()}" />
+                                                </p:inputText>
+                                            <p:commandButton id="btnBus" value="Ver Todo" update="cars" action="#{trasladosController.buscar()}"/>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                                <p:dataTable id="cars" var="car" value="#{trasladosController.listaTraslados}"
+                                             emptyMessage="No se encuentran datos"
+                                             paginator="true" paginatorPosition="bottom" rows="14"
+                                             > 
+                                    <p:column headerText="No. de puesto"  style="width:40px">  
+                                        <h:outputText value="#{car.ecodPuesto.numPuesto}" />  
+                                    </p:column>
+                                    <p:column headerText="Ubicación"  style="width:50px">  
+                                        <h:outputText value="#{car.ecodPuesto.ubicacion}" />  
+                                    </p:column>
+                                    <p:column headerText="Fecha traslado" style="width:50px" sortBy="#{car.fechaTraslado}">
+                                        <h:outputText value="#{car.fechaTraslado}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Nuevo arredatario" style="width:110px">  
+                                        <h:outputText value="#{car.ecodArrendaNuevo.nombreCompleto}"/>  
+                                    </p:column>                                                            
+                                    <p:column headerText="DUI" style="width:60px">  
+                                        <h:outputText value="#{car.ecodArrendaNuevo.dui}"/>  
+                                    </p:column>
+                                    <p:column headerText="Arrendatario anterior" style="width:110px">  
+                                        <h:outputText value="#{car.ecodArrendaAnte.nombreCompleto}"/>  
+                                    </p:column>                                                            
+                                    <p:column headerText="DUI" style="width:60px">  
+                                        <h:outputText value="#{car.ecodArrendaAnte.dui}"/>
+                                    </p:column>                                                                                                
+                                    <p:column style="width:30px">
+                                        <p:commandButton id="selectButton" update="form1" onclick="PF('dl_reasignacion').hide();" icon="ui-icon-search" title="View" style="width: 20px; height: 15px">  
+                                            <f:setPropertyActionListener value="#{car}" target="#{trasladosController.itemSeleccionado}" />  
+                                        </p:commandButton>  
+                                    </p:column>                                                                                                                    
+                                </p:dataTable>  
+                            </p:dialog>                                                                                                                                                                                                                                                                                                                                                                           
+
+                        </h:form>                                                                                                
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>         
+
+
+
+    </h:body>
+
+</html>
+
+
+

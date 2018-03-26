@@ -1,0 +1,282 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <script type="text/css">
+            .noHeader.ui-datatable table thead tr {
+                display: none; 
+            }
+        </script>
+
+    </h:head>
+    <h:body>
+        <ui:composition template="../plantilla/Plantilla.xhtml">
+
+            <ui:define name="content">
+                <h:form id="form3" class="form-horizontal">
+                    <div class="breadcrumb-holder">
+                        <div class="container-fluid">
+                            <ul class="breadcrumb">                            
+                                <li class="breadcrumb-item active h4">Mejoras de puestos</li>
+                                <li>
+                                    <p:splitButton
+                                        value="Mejoras" icon="ui-icon-arrow-4">                                    
+                                        <p:menuitem>
+                                            <p:commandButton id="iconOnly20" value="Búsqueda" 
+                                                             onclick="PF('dl_mejoras').show();" icon="ui-icon-search" style="border: none; text-align: left; background: none; width: 180px; margin-left: 0px"/>
+                                        </p:menuitem>
+                                        <p:separator />
+                                        <p:menuitem>
+                                            <p:commandButton id="btn_imprimir" style="border: none; text-align: left; background: none; width: 180px; margin-left: 0px" type="button" value="Imprimir" icon="ui-icon-print"  >
+                                                <p:printer target="form1"/>
+                                            </p:commandButton>
+                                        </p:menuitem>
+                                    </p:splitButton>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </h:form>
+
+                <div class="navbar navbar-default">
+                    <p:messages id="message" showDetail="true" showSummary="false" closable="true">
+
+                    </p:messages>
+                    <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+                    <div id="targetPDF" class="card-body">
+
+                        <h:form id="form1" class="form-horizontal">
+
+                            <p:panelGrid style="font-size:13px; width:100%; text-indent: 5px;;
+                                         border-style: solid; border-width: 0.0px" 
+                                         styleClass="ui-panelgrid-blank" id="panel1">
+
+
+                                <p:row style="text-align: center">
+                                    <p:column rowspan="2">
+                                        <h:graphicImage id="imgx" url="../resources/images/alcaldiasv.jpg" height="90" width="90"/>
+                                    </p:column>
+                                    <p:column colspan=""><h:outputLabel value="ALCALDIA MUNICIPAL DE SAN VICENTE" /></p:column>
+                                    <p:column rowspan="2">
+                                        <h:graphicImage id="img" url="../resources/images/escudo.png" height="90" width="90"/>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row style="text-align: center">
+                                    <p:column colspan=""><h:outputLabel style="text-decoration: underline" value='"UN GOBIERNO MUNICIPAL TRANSPARENTE"' /></p:column>
+                                </p:row> 
+                                <p:row style="height: 20px; text-align: center">
+                                    <p:column colspan="7">
+                                        <h:outputText value="San Vicente, &nbsp;&nbsp;
+                                                      #{puestosController.dia} &nbsp;&nbsp;
+                                                      de &nbsp;&nbsp;
+                                                      #{puestosController.mes} &nbsp;&nbsp;
+                                                      de &nbsp;&nbsp;
+                                                      #{puestosController.anio}" />
+                                    </p:column>
+                                </p:row>  
+                                
+
+                                <p:row style="height: 24px; text-indent: 0px">
+                                    <p:column colspan="3">
+                                        <h4><h:outputText style="font: bold" value="AUTORIZADO"/></h4>
+                                    </p:column>
+                                </p:row> 
+                                <p:row style="height: 24px; text-indent: 0px">
+                                    <p:column colspan="3" style="text-align: center">
+                                        <h4><h:outputText style="font: bold;" value="PERMISO DE INTRODUCCIÓN DE MEJORA A PUESTO"/></h4>
+                                    </p:column>                                        
+                                </p:row>                              
+
+                                <p:row style="height: 24px; text-height: auto; text-indent: 0px; line-height: 28px">
+                                    <p:column colspan="3">
+                                        <h:outputText value="El Administrador de Mercados, haciendo uso de sus facultades; "/>
+                                        <h:outputText style="font: bold" value="AUTORIZA"/>
+                                        <h:outputText value=" la introducción de mejoras al puesto: "/>
+                                        <h:outputLabel value="#{mejorasController.itemSeleccionado.ecodPuesto.numPuesto} "/>
+                                        <h:outputText value=" ubicado en: "/>
+                                        <h:outputLabel value="#{mejorasController.itemSeleccionado.ecodPuesto.ubicacion} "/>
+                                        <h:outputText value=" asignado a: "/>
+                                        <h:outputText style="font-weight: bold" value="#{mejorasController.itemSeleccionado.ecodPuesto.ecodArrenda.nombreCompleto}" />
+                                        <h:outputText value=" con DUI # "/>
+                                        <h:outputText style="font-weight: bold" value="#{mejorasController.itemSeleccionado.ecodPuesto.ecodArrenda.dui}"/>
+                                        <h:outputText value=" para la venta de: "/>
+                                        <h:outputText style="font-weight: bold" value="#{mejorasController.itemSeleccionado.ecodPuesto.tipo}"/>                                            
+                                    </p:column>                                        
+                                </p:row>      
+                                <p:row style="height: 24px; text-height: auto; text-indent: 0px; line-height: 28px">
+                                    <p:column colspan="3">                                                                                                                                
+                                        <h:outputText value="Las mejoras autorizadas consisten en:"/>
+                                    </p:column>                                        
+                                </p:row>      
+                                <p:row style="height: 24px; text-height: auto; text-indent: 0px; line-height: 28px">
+                                    <p:column colspan="3">                                                                                                                                
+
+                                        <p:dataScroller id="tbl" value="#{mejorasDetalleController.listaMejorasDetalle}" 
+                                                        var="mejoras" chunkSize="10">
+                                            <p:panelGrid style="font-size:13px; width:100%; padding: 0px; margin: 0px "
+                                                         styleClass="ui-panelgrid-blank" id="panel1">
+                                                <p:row>
+                                                    <p:column colspan="6">
+                                                        <h:outputLabel value="#{mejoras.cmejora}" />
+                                                    </p:column>
+                                                </p:row>
+                                            </p:panelGrid>
+                                        </p:dataScroller>
+
+                                    </p:column></p:row>
+                                <p:row style="height: 24px; text-indent: 0px; line-height: 28px">
+                                    <p:column colspan="3">
+                                        <h:outputText value="Comprometiéndose: "/>
+                                        <h:outputText style="font-weight: bold" value="#{mejorasController.itemSeleccionado.ecodPuesto.ecodArrenda.nombreCompleto}, " />
+                                        <h:outputText value=" a dar aviso 24 horas de anticipación el dia
+                                                      que iniciará la mejora, respetar las medidas del puesto, a realizar unicamente
+                                                      las mejoras Autorizadas en este documento. Teniendo el cuidado de no dañar cables del sistema
+                                                      eléctrico, tuberias de aguas y puestos aledaños, conservar la numeración de los puestos. "/>
+                                        <h:outputLabel value="En el caso de causar daños, o
+                                                       introducir mejoras no autorizadas; el arrendatario(a) del puesto en remodelación
+                                                       cancelará los gastos y multas aplicables"/>
+                                        <h:outputText value=" y deberá someterse a las correcciones sobre la remodelación
+                                                      efectuada sujeta a verificación de esta Administración"/>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row style="height: 24px; text-indent: 0px; line-height: 20px">
+                                    <p:column colspan="3">
+                                        <h:outputLabel value="NOTA"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row style="height: 24px; text-indent: 0px; line-height: 28px">
+                                    <p:column colspan="3">
+                                        <h:outputText value="- Permiso válido únicamente por 30 dias a partir de la fecha de emisión."/>
+                                    </p:column>
+                                </p:row>
+                                <p:row style="height: 24px; text-indent: 0px; line-height: 28px">
+                                    <p:column colspan="3">
+                                        <h:outputText value="- En caso de ser necesario el uso de energía eléctrica del mercado, deberá solicitarlo por escrito 
+                                                      y cancelar la tarifa correspondiente con anticipación, caso contrario presentará una
+                                                      nota con nombre completo del arrendatario y ubicación del puesto del que tomará
+                                                      la energía a utilizar.
+                                                      "/>
+                                    </p:column>
+                                </p:row>
+                                <p:row style="height: 24px; text-indent: 0px; line-height: 28px">
+                                    <p:column colspan="3">
+                                        <h:outputText value="- El trabajo de las mejoras debe ser iniciados a partir de las 4:00 pm
+                                                      en adelante, de lo contrario se hará acreedora de una multa.
+                                                      "/>
+                                    </p:column>
+                                </p:row>
+
+                                <p:row style="height: 24px; text-indent: 0px; line-height: 28px">
+                                    <p:column colspan="3">  
+                                        <h:outputLabel value="Acepto todas las condiciones descritas.
+                                                       "/>
+                                    </p:column>
+                                </p:row>
+                                <p:row style="height: 24px">
+                                    <p:column colspan="3"></p:column>
+                                </p:row>
+
+                                <p:panelGrid style="font-size:13px; width:100%; text-indent: 5px;;
+                                             border-style: solid; border-width: 0.0px" 
+                                             styleClass="ui-panelgrid-blank" id="panel12">
+
+
+                                    <p:row style="text-align: center">
+                                        <p:column colspan="2">
+                                            <h:outputLabel value="F._____________________________"/>
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <h:outputLabel value="F._____________________________"/>
+                                        </p:column>
+                                    </p:row> 
+
+                                    <p:row style="text-align: center">
+                                        <p:column colspan="2">                                        
+                                            <h:outputText style="font-weight: bold" value="Lic. Moris Guerrero" />
+                                        </p:column>
+                                        <p:column colspan="2">                                        
+                                            <h:outputText style="font-weight: bold" value="#{mejorasController.itemSeleccionado.ecodPuesto.ecodArrenda.nombreCompleto}" />
+                                        </p:column>
+                                    </p:row>    
+                                    <p:row style="text-align: center">
+                                        <p:column colspan="2">                                        
+                                            <h:outputText style="font-weight: bold" value="Administrador de Mercados Municipales" />
+                                        </p:column>
+                                        <p:column colspan="2">                                        
+                                            <h:outputText style="font-weight: bold" value="Arrendatario" />
+                                        </p:column>
+                                    </p:row>    
+                                </p:panelGrid>
+
+                            </p:panelGrid> 
+
+                        </h:form>
+
+
+                        <h:form id="form2">  
+
+                            <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar mejoras" widgetVar="dl_mejoras"  modal="false" resizable="false"
+                                      showEffect="clip" hideEffect="fold">
+                                <p:panelGrid>
+                                    <p:row>
+                                        <p:column>
+                                            <h:outputLabel  value="Buscar:  " />  
+                                            <p:inputText value="#{mejorasController.busqueda}" label="Buscar: " size="15">
+                                                <p:ajax event="keyup" update=":form2:cars" listener="#{mejorasController.buscarMejora()}" />
+                                            </p:inputText>   
+                                            <p:commandButton id="btnBus" value="Ver Todo" update="cars" action="#{mejorasController.buscar()}"/>
+                                        </p:column>
+                                    </p:row> 
+                                </p:panelGrid>
+                                <p:dataTable id="cars" var="car" value="#{mejorasController.listaMejoras}"
+                                             emptyMessage="No se encuentran datos"
+                                             paginator="true" paginatorPosition="bottom" rows="12">  
+
+                                    <p:column headerText="Fecha de solicitud"  style="width:100px">  
+                                        <h:outputText value="#{car.ffechaMejora}" >
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="No. de puesto" style="width:60px">
+                                        <h:outputText value="#{car.ecodPuesto.numPuesto}"/>  
+                                    </p:column>
+                                    <p:column headerText="Ubicación" style="width:180px">  
+                                        <h:outputText value="#{car.ecodPuesto.ubicacion}"/>  
+                                    </p:column>                                                            
+                                    <p:column headerText="DUI de arrendatario" style="width:100px">  
+                                        <h:outputText value="#{car.ecodPuesto.ecodArrenda.dui}"/>  
+                                    </p:column>                                                            
+                                    <p:column headerText="Nombre completo " style="width:280px">  
+                                        <h:outputText value="#{car.ecodPuesto.ecodArrenda.nombreCompleto}"/>  
+                                    </p:column>                                                                      
+                                    <p:column style="width:50px">
+                                        <p:commandButton id="selectButton" update="form1" action="#{mejorasDetalleController.buscar()}" onclick="PF('dl_mejoras').hide();" icon="ui-icon-search" 
+                                                         title="View" style="width: 20px; height: 15px">
+                                            <f:setPropertyActionListener value="#{car}" target="#{mejorasController.itemSeleccionado}" />  
+                                        </p:commandButton>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        <p:outputPanel>
+                                            <p:commandButton id="dec11" value="Cerrar" onclick="PF('dl_mejoras').hide();" type="button" />
+                                        </p:outputPanel>
+                                    </f:facet>
+                                </p:dataTable>
+
+                            </p:dialog>
+
+
+                        </h:form>  
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

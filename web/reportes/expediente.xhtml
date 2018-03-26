@@ -1,113 +1,346 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ui="http://java.sun.com/jsf/facelets"      
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <style type="text/css">       
-        .companyHeaderGrid td {
-            border-style: hidden !important;
+        .ui-datatable.borderless thead th,
+        .ui-datatable.borderless tbody,
+        .ui-datatable.borderless tbody tr,
+        .ui-datatable.borderless tbody td {
+            border-style: none;
         }
-        .companyHeaderGrid tr, .companyHeaderGrid td {
-            border: none;
+        .ui-dataScroller {
+            border : 0px !important;
+            border-bottom: 1px solid #A8A8A8;
+            padding: 25px 10px;
         }
-    </style> 
-
-    <body>
-        <ui:composition template="../plantilla/Plantilla.xhtml">
+        .ui-datascroller .ui-datascroller-item {
             
-            <ui:define name="content">                
+        }
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header > tr.ui-widget-header, 
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content,
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content > td.ui-panelgrid-cell,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
+            background: none !important;
+            border: none !important;
+        }        
+        .pdfobject-container { height: 500px;}
+        .pdfobject { border: 1px solid #666; }
 
-                <table id="datos" width="700" border="0" align="center" cellspacing="0" cellpadding="0">
-                    <tr>                                                             
-                        <td colspan="2">
-                            <table  border="0" cellspacing="0" cellpadding="0" align="center">
-                                <tr>
-                                    <td><div><span>                                        
+    </style>
+   
+    <h:body>
+        <ui:composition template="../plantilla/Plantilla.xhtml">
+           
+            <ui:define name="content">
 
-                                                <br/>
-                                                <br/>
-                                                <br/>
+                <h:form id="form3" class="form-horizontal">
+                <div class="breadcrumb-holder">
+                    <div class="container-fluid">
+                        <ul class="breadcrumb">                            
+                            <li class="breadcrumb-item active h4">Expediente de arrendatarios</li>
+                            <li>
+                                <p:splitButton
+                                    value="Arrendatarios" icon="ui-icon-arrow-4">                                    
+                                    <p:menuitem>
+                                        <p:commandButton id="iconOnly20" value="Búsqueda" 
+                                                         onclick="PF('dl_arrendatario').show();" icon="ui-icon-search" style="border: none; text-align: left; background: none; width: 180px; margin-left: 0px"/>
+                                    </p:menuitem>
+                                    <p:separator />
+                                    <p:menuitem>
+                                        <p:commandButton id="btn_imprimir" style="border: none; text-align: left; background: none; width: 180px; margin-left: 0px" type="button" value="Imprimir" icon="ui-icon-print"  >
+                                            <p:printer target="form1"/>
+                                        </p:commandButton>                                        
+                                    </p:menuitem>
+                                </p:splitButton>
+                            </li>                              
+                        </ul>
+                    </div>
+                </div>
+                </h:form>
+               
+                    <div class="navbar navbar-default">
+                    <p:messages id="message" showDetail="true" showSummary="false" closable="true">
+                        
+                    </p:messages>
+                    <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+                    <div id="targetPDF" class="card-body">
 
+                            <h:form id="form1" class="form-horizontal">
+                                
+                                <p:panelGrid style="font-size:13px; width:100%; text-indent: 5px;;
+                                             border-style: solid; border-width: 0.2px" 
+                                        styleClass="ui-panelgrid-blank"   id="panel1">
 
-                                                <br/><br/>
-                                                <p:panelGrid id="productos" style="width:600px" styleClass="companyHeaderGrid">
-                                                    <f:facet name="header"> 
-                                                        <p:row><p:column colspan="2">
-                                                                ASAESCLA DE R.L.
-                                                            </p:column></p:row>
-                                                    </f:facet>
+                                    <p:row>
+                                        <p:column>
+                                            <!--h:outputLabel  value="Usuario:  " />                                                                  
 
-                                                    <p:row>
-                                                        <p:column style="text-align: left">
-                                                            <h:graphicImage url="../resources/images/logo_asaescla.jpg" />
-                                                        </p:column>
-                                                        <p:column style="text-align: center">
-                                                            <h:outputLabel for="registro" value="GARANTIAS DE CREDITOS" />      
-                                                        </p:column>
-                                                    </p:row>
-
-                                                    <f:facet name="footer">                                                              
-                                                        <br/><br/>
-                                                        <p:row><p:column colspan="2">                               
-                                                                <p:dataTable var="cars" value="" style="width:800px">
-                                                                    <p:column>
-                                                                        <f:facet name="header">
-                                                                            <h:outputText value="Comunidad" />
-                                                                        </f:facet>
-                                                                        <h:outputText value="San Jeronimo" /><br/>
-                                                                        <h:outputText value="El Rosario" />
-                                                                    </p:column>
-                                                                    <p:column>
-                                                                        <f:facet name="header">
-                                                                            <h:outputText value="Escrituras" />
-                                                                        </f:facet>
-                                                                        <h:outputText value="1" /><br/>
-                                                                        <h:outputText value="9" />
-                                                                    </p:column>
-                                                                    <p:column>
-                                                                        <f:facet name="header">
-                                                                            <h:outputText value="Maiz QQ" />
-                                                                        </f:facet>
-                                                                        <h:outputText value="7" /><br/>
-                                                                        <h:outputText value="6" />
-                                                                    </p:column>
-                                                                    <p:column>
-                                                                        <f:facet name="header">
-                                                                            <h:outputText value="Sorgo" />
-                                                                        </f:facet>
-                                                                        <h:outputText value="0" /><br/>
-                                                                        <h:outputText value="12" />
-                                                                    </p:column>
-
-                                                                </p:dataTable>                                           
-                                                            </p:column></p:row>
-                                                    </f:facet> 
-
-                                                </p:panelGrid>  
-                                                <br/>
-                                                <h:outputLabel for="buscar" value="Buscar:  " />  
-                                                <p:inputText id="busqueda" value="" label="Buscar: " size="15" />&nbsp;  
-                                                <p:commandButton type="button" value="Buscar" icon="ui-icon-search"/>  
-                                                <p:commandButton id="btn_imprimir" type="button" value="Imprimir" icon="ui-icon-print"  >                                                                                                                                                                                                                                   
-                                                    <p:printer target="productos" />  
-                                                </p:commandButton>  
+                                            <h:selectOneMenu value="#//{biitacoraController.busqueda}">
+                                                <f:selectItem itemLabel="Seleccione un usuario" itemValue="ninguno" />
+                                                <f:selectItems value="#//{usuariosController.listaUsuarios}"
+                                                               var="cuenta1" itemLabel="#//{cuenta1.cnomUsuario}"
+                                                               itemValue="#//{cuenta1.cnomUsuario}" />                                                                    
+                                            </h:selectOneMenu>
 
 
-                                            </span></div></td>                                    
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>                    
-                </table>                             
+                                            <h:outputLabel  value=" Del: " />  
+                                            <p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{biitacoraController.fechaInicio}" showButtonPanel="true"  navigator="true" id="trCal1" size="9" required="true" requiredMessage="Ingrese una fecha de inicio"/>
+                                            <h:outputLabel  value=" Al: " />  
+                                            <p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{biitacoraController.fechaFin}" showButtonPanel="true"  navigator="true" id="trCal2" size="9" required="true" requiredMessage="Ingrese una fecha de finalización"/>
+                                                <p:commandButton id="btnB" value="Buscar" update=":form1" action="#{biitacoraController.buscaUsuario()}" icon="ui-icon-search"/>
+                                            <p:commandButton id="btn_imprimir" type="button" value="Imprimir" icon="ui-icon-print"  >
+                                                <p:printer target="empleados" />
+                                            </p:commandButton-->
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row style="text-align: center">
+                                        <p:column rowspan="2" style="width: 40px">
+                                            <h:graphicImage id="imgx" url="../resources/images/alcaldiasv.jpg" height="90" width="90"/>
+                                        </p:column>
+                                        <p:column colspan="4"><h:outputLabel value="ALCALDIA MUNICIPAL DE SAN VICENTE" /></p:column>
+                                        <p:column rowspan="2" style="width: 40px">
+                                            <h:graphicImage id="img" url="../resources/images/escudo.png" height="90" width="90"/>
+                                        </p:column>
+                                    </p:row>
+                                    
+                                    <p:row style="text-align: center">
+                                        <p:column colspan="4"><h:outputLabel value='"UN GOBIERNO MUNICIPAL TRANSPARENTE"' /></p:column>
+                                    </p:row>
+                                    <p:row style="height: 24px">
+                                        <p:column colspan="6"></p:column>                                        
+                                    </p:row> 
+                                    <p:row>
+                                        <p:column colspan="3"></p:column>
+                                        <p:column colspan="3" rowspan="2"><h:outputLabel value="EXPEDIENTE N°:   " />
+                                            <h:outputText style="font-weight: bold" value="#{arrendatarioController.itemSeleccionado.noExpediente} &nbsp;&nbsp;&nbsp;" />
+                                            <h:graphicImage id="img1" url="#{arrendatarioController.itemSeleccionado.foto}" alt="#{arrendatarioController.itemSeleccionado.foto}" height="80" width="90"/>
+                                        </p:column>                                        
+
+                                    </p:row>                                    
+                                    <p:row style="height: 24px">
+                                        <p:column colspan="3">
+                                            <h:outputLabel style="text-decoration: underline" value="DATOS PERSONALES" />
+                                        </p:column>                                        
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="6">
+                                            <h:outputLabel style="font-weight: normal" value="NOMBRE COMPLETO:&nbsp;&nbsp;&nbsp;"/>
+                                            <h:outputText style="font-weight: bold" value="#{arrendatarioController.itemSeleccionado.nombreCompleto}" />
+                                        </p:column>
+                                    </p:row>                                    
+                                    <p:row>
+                                        <p:column colspan="2"><h:outputLabel style="font-weight: normal" value="N° DUI:&nbsp;&nbsp;&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{arrendatarioController.itemSeleccionado.dui}" /></p:column>
+                                        <p:column colspan="4"><h:outputLabel style="font-weight: normal" value="N° NIT:&nbsp;&nbsp;&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{arrendatarioController.itemSeleccionado.nit}" /></p:column>
+                                    </p:row>                                    
+                                    <p:row>                                        
+                                        <p:column colspan="6"><h:outputLabel style="font-weight: normal" value="DIRECCION COMPLETA:&nbsp;&nbsp;&nbsp;" />
+                                            <h:outputText  style="font-weight: bold" value="#{arrendatarioController.itemSeleccionado.direccion}" /></p:column>
+                                    </p:row>                                    
+                                    <p:row>                                        
+                                        <p:column colspan="2"><h:outputLabel style="font-weight: normal" value="DOMICILIO: DEPARTAMENTO&nbsp;&nbsp;&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{arrendatarioController.itemSeleccionado.departamento}" /></p:column>
+                                        <p:column colspan="4"><h:outputLabel style="font-weight: normal" value="MUNICIPIO:&nbsp;&nbsp;&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{arrendatarioController.itemSeleccionado.municipio}" /></p:column>
+                                    </p:row>   
+                                    <p:row>                                        
+                                        <p:column colspan="6"><h:outputLabel style="font-weight: normal" value="TELEFONO:&nbsp;&nbsp;&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{arrendatarioController.itemSeleccionado.telefono}" /></p:column>
+                                    </p:row> 
+                                    <p:row>
+                                        <p:column style="text-align: left!important" colspan="6">
 
 
+                                        </p:column>
+                                    </p:row>   
+                                    <p:row>
+                                        <p:column colspan="6">
+                                            <h:outputLabel style="text-decoration: underline" value="DATOS DE PUESTO" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="2">
+                                            <h:outputLabel style="font-weight: normal" value="UBICACIÓN:&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.ubicacion}" />
+                                        </p:column>
+                                        <p:column colspan="1">
+                                            <h:outputLabel style="font-weight: normal" value="PUESTO N°:&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.numPuesto}" /></p:column>
+                                        <p:column colspan="3">
+                                            <h:outputLabel style="font-weight: normal" value="TIPO DE NEGOCIO:&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.tipo}" /></p:column>
+                                    </p:row>                                    
+                                    <p:row>                                        
+                                        <p:column colspan="2"><h:outputLabel style="font-weight: normal" value="IMPUESTO DIARIO $ &nbsp;"/>
+                                            <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.codImpuesto.monto}" />
+                                        </p:column>                                            
+                                        <p:column colspan="2"><h:outputLabel style="font-weight: normal" value="MEDIDA HORIZONTAL:&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.medidaH}" /></p:column>
+                                        <p:column colspan="2"><h:outputLabel style="font-weight: normal" value="MEDIDA VERTICAL:&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.medidaV}" /></p:column>
+                                    </p:row>                                    
+                                    <p:row>
+                                        <p:column colspan="7"><h:outputLabel style="font-weight: normal" value="TIPO DE PUESTO:&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.tipoPuesto}" />
+                                            <h:outputLabel style="font-weight: normal" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ESTRUCTURA:"/>
+                                            <h:outputLabel style="font-weight: normal" value="&nbsp;&nbsp;GALERA:&nbsp;"/>
+                                            <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.galera == 'true' ? 'X' : ''}" />
+                                            <h:outputLabel style="font-weight: normal" value="&nbsp;&nbsp;&nbsp;&nbsp;CAJÓN:&nbsp;"/>
+                                            <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.cajon == 'true' ? 'X' : ''}" />
+                                            <h:outputLabel style="font-weight: normal" value="&nbsp;&nbsp;&nbsp;&nbsp;MADERA:&nbsp;"/>
+                                            <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.madera == 'true' ? 'X' : ''}" />
+                                            <h:outputLabel style="font-weight: normal" value="&nbsp;&nbsp;&nbsp;&nbsp;METAL:&nbsp;"/>
+                                            <h:outputText style="font-weight: bold" value="#{puestosController.itemSeleccionado.metal == 'true' ? 'X' : ''}" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="6">
+                                    <p:dataScroller id="tbl" value="#{trasladosController.listaTraslados}" 
+                                                var="traslados" chunkSize="10">
+                                    <p:panelGrid style="font-size:13px; width:100%; padding: 0px; margin: 0px "
+                                                 styleClass="ui-panelgrid-blank" id="panel1">                                        
+                                    <p:row>
+                                        <p:column colspan="6">
+                                            <h:outputLabel style="text-decoration: underline" value="HISTORIAL" />
+                                        </p:column>
+                                    </p:row>
+                                     <p:row>                                                                                
+                                        <p:column colspan="6">
+                                            <h:outputLabel style="font-weight: normal" value="ARRENDATARIO ANTERIOR:&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{traslados.ecodArrendaAnte.nombreCompleto}" />
+                                        </p:column>
+                                    </p:row>  
+                                    <p:row>
+                                        
+                                        <p:column colspan="3">
+                                            <h:outputLabel style="font-weight: normal" value="FECHA DE TRASPASO°:&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{traslados.fechaTraslado}" >
+                                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                            </h:outputText>                                            
+                                        </p:column>
+                                        <p:column colspan="3">
+                                            <h:outputLabel style="font-weight: normal" value="RECIBO # :&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{traslados.numRecibo}" /></p:column>
+                                    </p:row>                                    
+                                    <p:row>                                                                                
+                                        <p:column colspan="6">
+                                            <h:outputLabel style="font-weight: normal" value="ARRENDATARIO ACTUAL:&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{traslados.ecodArrendaNuevo.nombreCompleto}" />
+                                        </p:column>
+                                    </p:row>  
+                                    <p:row>                                                                                
+                                        <p:column colspan="4"><h:outputLabel style="font-weight: normal" value="ULTIMA MATRICULA PAGADA:&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{traslados.ecodPuesto.matriculaPagada}" /></p:column>
+                                        <p:column colspan="2"><h:outputLabel style="font-weight: normal" value="RECIBO #:&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{traslados.ecodPuesto.numRecibo}" /></p:column>
+                                    </p:row>                                    
+                                    <p:row>                                                                                
+                                        <p:column colspan="6"><h:outputLabel style="font-weight: normal" value="FECHA DE PAGO DE MATRICULA:&nbsp;" />
+                                            <h:outputText style="font-weight: bold" value="#{traslados.ecodPuesto.fechaPago}" >
+                                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                            </h:outputText>
+                                        </p:column>
+                                    </p:row>                                    
+                                </p:panelGrid> 
+                                </p:dataScroller>
+                                            </p:column>
+                                        </p:row>
+                                        
+                            </p:panelGrid>
+
+
+
+                                   
+                            </h:form>
+                            
+                            <h:form id="form4">  
+                                
+                               <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar arrendatario" widgetVar="dl_arrendatario" 
+                                         modal="false" resizable="false"
+                                         showEffect="clip" width="990px" draggable="true" hideEffect="fold" onShow="PF('dl_arrendatario').initPosition()">
+                                    <p:panelGrid>
+                                      <p:row>
+                                            <p:column>
+                                                <h:outputLabel  value="Buscar:  " />  
+                                                <p:inputText value="#{arrendatarioController.busqueda}" label="Buscar: " size="15">
+                                                    <p:ajax event="keyup" update=":form4:cars" listener="#{arrendatarioController.buscarArrendatario()}" />
+                                                </p:inputText>   
+                                                <p:commandButton id="btnBus" value="Ver Todo" update="cars" action="#{arrendatarioController.buscar()}"/>
+                                            </p:column>
+                                        </p:row> 
+                                    </p:panelGrid>
+                                    <p:dataTable id="cars" var="car" value="#{arrendatarioController.listaArrendatario}"
+                                                 emptyMessage="No se encuentran datos"
+                                                 paginator="true" paginatorPosition="bottom" rows="12"
+                                                 >
+                                        <p:column headerText="No. de Expediente" style="width:150px">  
+                                            <h:outputText value="#{car.noExpediente}" />  
+                                        </p:column>
+                                        <p:column headerText="Nombre Completo" sortBy="#{car.nombreCompleto}" style="width:280px">
+                                            <h:outputText value="#{car.nombreCompleto}"/>  
+                                        </p:column>
+                                        <p:column headerText="DUI" style="width:100px">  
+                                            <h:outputText value="#{car.dui}"/>  
+                                        </p:column>                                                            
+                                        <p:column headerText="Departamento" sortBy="#{car.departamento}" style="width:120px">  
+                                            <h:outputText value="#{car.departamento}"/>  
+                                        </p:column>                                                            
+                                        <p:column headerText="Municipio" sortBy="#{car.municipio}" style="width:100px">  
+                                            <h:outputText value="#{car.municipio}"/>  
+                                        </p:column>
+                                        <p:column headerText="Teléfono" style="width:100px">  
+                                            <h:outputText value="#{car.telefono}"/>  
+                                        </p:column>                                                            
+                                        <p:column style="width:50px">
+                                            <p:commandButton id="selectButton" update=":form4:carsss" icon="ui-icon-search" 
+                                                             action="#{puestosController.buscar()}" title="View" style="width: 20px; height: 15px">
+                                                <f:setPropertyActionListener value="#{car}" target="#{arrendatarioController.itemSeleccionado}" />  
+                                            </p:commandButton>  
+                                        </p:column>                                                              
+                                                     
+                                    </p:dataTable>
+                                    <p:dataTable id="carsss" var="car1" value="#{puestosController.listaPuestos}"
+                                                 emptyMessage="No se encuentran datos"
+                                                 paginator="true" paginatorPosition="bottom" rows="5">  
+                                        <p:column headerText="No. de Puesto"  style="width:90px">  
+                                            <h:outputText value="#{car1.numPuesto}" />  
+                                        </p:column>                                        
+                                        <p:column headerText="Ubicación" style="width:200px">
+                                            <h:outputText value="#{car1.ubicacion}"/>  
+                                        </p:column>
+                                        <p:column headerText="Tipo" style="width:100px">  
+                                            <h:outputText value="#{car1.tipo}"/>  
+                                        </p:column>                                                            
+                                                                                                  
+                                        <p:column style="width:50px">
+                                            <p:commandButton id="selectButton1" update=":form1" action="#{trasladosController.buscarTraslados()}" onclick="PF('dl_arrendatario').hide();" icon="ui-icon-search" 
+                                                             title="View" style="width: 20px; height: 15px">                                                  
+                                                <f:setPropertyActionListener value="#{car1}"  target="#{puestosController.itemSeleccionado}" />
+                                            </p:commandButton>  
+                                        </p:column>                                        
+                                    </p:dataTable>
+                                </p:dialog>
+                            </h:form>                                                                                                                                                     
+                        </div>
+                    </div>
             </ui:define>
+        </ui:composition>         
+          
+      
 
-        </ui:composition>
-
-    </body>
+    </h:body>
 
 </html>
+
+
+

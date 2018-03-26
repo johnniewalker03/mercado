@@ -1,0 +1,303 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"      
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <style type="text/css">       
+        .ui-datatable.borderless thead th,
+        .ui-datatable.borderless tbody,
+        .ui-datatable.borderless tbody tr,
+        .ui-datatable.borderless tbody td {
+            border-style: none;
+        }
+        .ui-dataScroller {
+            border : 0px !important;
+            border-bottom: 1px solid #A8A8A8;
+            padding: 25px 10px;
+        }
+        .ui-datascroller .ui-datascroller-item {
+            
+        }
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header > tr.ui-widget-header, 
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content,
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content > td.ui-panelgrid-cell,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
+            background: none !important;
+            border: none !important;
+        }        
+        .pdfobject-container { height: 500px;}
+        .pdfobject { border: 1px solid #666; }
+
+    </style>
+   
+    <h:body>
+        <ui:composition template="../plantilla/Plantilla.xhtml">
+           
+            <ui:define name="content">
+
+                <h:form id="form3" class="form-horizontal">
+                <div class="breadcrumb-holder">
+                    <div class="container-fluid">
+                        <ul class="breadcrumb">                            
+                            <li class="breadcrumb-item active h4">Actualización de puestos</li>
+                            <li>
+                                <p:splitButton
+                                    value="Buscar puestos" icon="ui-icon-arrow-4">                                    
+                                    <p:menuitem>
+                                        <p:commandButton id="iconOnly20" value="Búsqueda" 
+                                                         onclick="PF('dl_arrendatario').show();" icon="ui-icon-search" style="border: none; text-align: left; background: none; width: 180px; margin-left: 0px"/>
+                                    </p:menuitem>
+                                    <p:separator />
+                                    <p:menuitem>
+                                        <p:commandButton id="btn_imprimir" style="border: none; text-align: left; background: none; width: 180px; margin-left: 0px" type="button" value="Imprimir" icon="ui-icon-print"  >
+                                            <p:printer target="form1"/>
+                                        </p:commandButton>                                        
+                                    </p:menuitem>
+                                </p:splitButton>
+                            </li>                              
+                        </ul>
+                    </div>
+                </div>
+                </h:form>
+               
+                    <div class="navbar navbar-default">
+                    <p:messages id="message" showDetail="true" showSummary="false" closable="true">
+                        
+                    </p:messages>
+                    <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+                    <div id="targetPDF" class="card-body">
+
+                            <h:form id="form1" class="form-horizontal">
+                                
+                                <p:panelGrid style="font-size:13px; width:100%; text-indent: 5px;;
+                                             border-style: solid; border-width: 0px" 
+                                        styleClass="ui-panelgrid-blank"   id="panel1">
+
+                                                            
+                                    <p:row>
+                                        <p:column colspan="6">
+                                            <h:outputLabel style="text-decoration: underline" value="DATOS DE PUESTO" />
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>                                        
+                                        <p:column><h:outputLabel value="Arrendatario:" /></p:column>
+                                        <p:column><h:outputText id="codigo_cli20" value="#{puestosController.itemSeleccionado.ecodArrenda.nombreCompleto}" /></p:column>
+                                    </p:row>
+                                    <p:row>                                        
+                                        <p:column><h:outputLabel value="No. de puesto:" /></p:column>
+                                        <p:column><p:inputText size="16" value="#{puestosController.itemSeleccionado.numPuesto}" required="true" label="Número de puesto"/></p:column>                                        
+                                    </p:row>
+                                    
+                                    <p:row>
+                                        <p:column><h:outputLabel value="Ubicación:" /></p:column>
+                                        <p:column colspan="3">
+                                            <p:inputText size="40" value="#{puestosController.itemSeleccionado.ubicacion}" required="true" label="Ubicación"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><h:outputLabel value="Tipo de negocio:" /></p:column>
+                                        <p:column><p:inputText size="40"  value="#{puestosController.itemSeleccionado.tipo}" required="true" label="Tipo de negocio"/>                                          
+                                    </p:column>
+                                        
+                                    <p:column><h:outputLabel value="Tipo de puesto:" /></p:column>
+                                    <p:column colspan="2">
+                                            <h:selectOneMenu  value="#{puestosController.itemSeleccionado.tipoPuesto}"  >
+                                                <f:selectItem itemLabel="Fijo" itemValue="Fijo" />
+                                                <f:selectItem itemLabel="Transitorio" itemValue="Transitorio" />
+                                                <f:selectItem itemLabel="Ambulante" itemValue="Ambulante" />
+                                            </h:selectOneMenu> 
+                                    </p:column>
+                                    </p:row>                                    
+                                    <p:row>                                        
+                                        <p:column><h:outputLabel value="Medida horinzontal:" /></p:column>
+                                        <p:column><p:inputText size="16" value="#{puestosController.itemSeleccionado.medidaH}" required="true" label="Medida horizontal"/></p:column>
+                                        <p:column rowspan="4" style="text-align: right"><h:outputLabel value="Estructura:" /></p:column>
+                                        <p:column>
+                                            <h:outputText value="Galera: " />
+                                        </p:column>    
+                                        <p:column><p:selectBooleanCheckbox value="#{puestosController.galera}"/></p:column>                                        
+                                    </p:row>
+                                    <p:row>                                        
+                                        <p:column><h:outputLabel value="Medida vertical:" /></p:column>
+                                        <p:column><p:inputText size="16" value="#{puestosController.itemSeleccionado.medidaV}" required="true" label="Medida vertical"/></p:column>
+                                        
+                                        <p:column>
+                                            <h:outputText value="Cajón: " />
+                                        </p:column> 
+                                        <p:column><p:selectBooleanCheckbox value="#{puestosController.cajon}"/></p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column><h:outputLabel value="Impuesto diario:" /></p:column>
+                                        <p:column>
+                                            <p:commandButton id="iconOnly20" type="button" onclick="PF('dl_impuestos').show();" icon="ui-icon-search" style="margin-left: 3px">
+                                                <h:outputText id="monto_impuesto" value="#{puestosController.itemSeleccionado.codImpuesto.monto}" />
+                                            </p:commandButton>
+                                        </p:column>
+                                        <p:column>
+                                            <h:outputText value="Madera: " />
+                                        </p:column>  
+                                        <p:column><p:selectBooleanCheckbox value="#{puestosController.madera}"/></p:column>
+                                    </p:row>
+                                    
+                                    <p:row>
+                                    <p:column><h:outputLabel value="Última matrícula pagada:" /></p:column>
+                                    <p:column>
+                                        <p:inputText size="16" value="#{puestosController.itemSeleccionado.matriculaPagada}" label="última matrícula">
+                                            <f:convertNumber pattern="#0000"></f:convertNumber>
+                                        </p:inputText>
+                                    </p:column>
+                                    <p:column>
+                                            <h:outputText value="Metal: " />
+                                        </p:column> 
+                                        <p:column><p:selectBooleanCheckbox value="#{puestosController.metal}"/></p:column>
+                                    
+                                    </p:row>
+                                     <p:row>                                        
+                                        <p:column><h:outputLabel value="Recíbo #:" /></p:column>
+                                        <p:column><p:inputText size="8"  value="#{puestosController.itemSeleccionado.numRecibo}" label="No. de recibo"/></p:column>
+                                        <p:column></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><h:outputLabel value="Fecha de recibo:" /></p:column>
+                                        <p:column colspan="4" style="text-align: left"><p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{puestosController.itemSeleccionado.fechaPago}" showButtonPanel="true" navigator="true"
+                                                            id="trCal5" size="14" /></p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column style="text-align: left!important">
+                                            <div class="card-header d-flex align-items-center">
+                                                <h2 class="h5 display">
+                                                    <p:commandButton value="Actualizar" action="#{puestosController.actualizar()}" 
+                                                                     update="form1, message" icon="ui-icon-disk">
+                                                        <p:confirm header="Confirmación" message="¿Desea actualizar los datos?" icon="ui-icon-alert" />
+                                                    </p:commandButton>
+                                                </h2>
+                                            </div>
+                                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" 
+                                                                 icon="ui-icon-check" />
+                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                            </p:confirmDialog>
+
+                                        </p:column>
+                                        <p:column colspan="4" style="text-align: right; text-decoration: underline">
+                                            <h:link outcome="puestos.xhtml" value="Ingresar puestos" />
+                                        </p:column>
+                                    </p:row>  
+                            </p:panelGrid>
+
+
+
+                                   
+                            </h:form>
+                            
+                            <h:form id="form4">  
+                                
+                               <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar arrendatario" widgetVar="dl_arrendatario"  modal="false" resizable="false"
+                                          showEffect="clip" width="990px" draggable="true" hideEffect="fold" onShow="PF('dl_arrendatario').initPosition()">
+                                    <p:panelGrid>
+                                      <p:row>
+                                            <p:column>
+                                                <h:outputLabel  value="Buscar:  " />  
+                                                <p:inputText value="#{arrendatarioController.busqueda}" label="Buscar: " size="15">
+                                                    <p:ajax event="keyup" update=":form4:cars" listener="#{arrendatarioController.buscarArrendatario()}" />
+                                                </p:inputText>   
+                                                <p:commandButton id="btnBus" value="Ver Todo" update="cars" action="#{arrendatarioController.buscar()}"/>
+                                            </p:column>
+                                        </p:row> 
+                                    </p:panelGrid>
+                                    <p:dataTable id="cars" var="car" value="#{arrendatarioController.listaArrendatario}"
+                                                 emptyMessage="No se encuentran datos" 
+                                                 paginator="true" paginatorPosition="bottom" rows="12"
+                                                 >
+                                        <p:column headerText="No. de Expediente" style="width:150px">  
+                                            <h:outputText value="#{car.noExpediente}" />  
+                                        </p:column>
+                                        <p:column headerText="Nombre Completo" sortBy="#{car.nombreCompleto}" style="width:280px">
+                                            <h:outputText value="#{car.nombreCompleto}"/>  
+                                        </p:column>
+                                        <p:column headerText="DUI" style="width:100px">  
+                                            <h:outputText value="#{car.dui}"/>  
+                                        </p:column>                                                            
+                                        <p:column headerText="Departamento" sortBy="#{car.departamento}" style="width:120px">  
+                                            <h:outputText value="#{car.departamento}"/>  
+                                        </p:column>                                                            
+                                        <p:column headerText="Municipio" sortBy="#{car.municipio}" style="width:100px">  
+                                            <h:outputText value="#{car.municipio}"/>  
+                                        </p:column>
+                                        <p:column headerText="Teléfono" style="width:100px">  
+                                            <h:outputText value="#{car.telefono}"/>  
+                                        </p:column>                                                            
+                                        <p:column style="width:50px">
+                                            <p:commandButton id="selectButton" update=":form4:carsss" icon="ui-icon-search" 
+                                                             action="#{puestosController.buscar()}" title="View" style="width: 20px; height: 15px">
+                                                <f:setPropertyActionListener value="#{car}" target="#{arrendatarioController.itemSeleccionado}" />  
+                                            </p:commandButton>  
+                                        </p:column>                                                              
+                                                     
+                                    </p:dataTable>
+                                    <p:dataTable id="carsss" var="car1" value="#{puestosController.listaPuestos}"
+                                                 emptyMessage="No se encuentran datos"
+                                                 paginator="true" paginatorPosition="bottom" rows="5">  
+                                        <p:column headerText="No. de Puesto"  style="width:90px">  
+                                            <h:outputText value="#{car1.numPuesto}" />  
+                                        </p:column>                                        
+                                        <p:column headerText="Ubicación" style="width:200px">
+                                            <h:outputText value="#{car1.ubicacion}"/>  
+                                        </p:column>
+                                        <p:column headerText="Tipo" style="width:100px">  
+                                            <h:outputText value="#{car1.tipo}"/>  
+                                        </p:column>                                                                                                                                                              
+                                        <p:column style="width:50px">
+                                            <p:commandButton id="selectButton1" update=":form1" action="#{puestosController.buscaEstructura()}" onclick="PF('dl_arrendatario').hide();" icon="ui-icon-search" 
+                                                             title="View" style="width: 20px; height: 15px">
+                                                <f:setPropertyActionListener value="#{car1}"  target="#{puestosController.itemSeleccionado}" />
+                                            </p:commandButton>  
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:dialog>
+                            </h:form>  
+                        
+                         <h:form id="form5">
+
+            <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Impuestos municipales" widgetVar="dl_impuestos"  modal="false" resizable="false"
+                      showEffect="clip" width="400px" draggable="true" hideEffect="fold" onShow="PF('dl_impuestos').initPosition()">                
+                <p:dataTable id="cars" var="car" value="#{impuestosController.listaImpuestos}"
+                             emptyMessage="No se encuentran datos"                             
+                             >
+
+                    <p:column headerText="Monto" sortBy="#{car.monto}" style="width:100px"> 
+                        <h:outputText value="#{car.monto}" />   
+                    </p:column>
+                    <p:column headerText="Descripción" style="width:155px">
+                        <h:outputText value="#{car.descripcion}"/>  
+                    </p:column>                    
+                    <p:column style="width:30px">
+                        <p:commandButton id="selectButton" update="form1:monto_impuesto" action="#{puestosController.pasarValor()}" onclick="PF('dl_impuestos').hide();" icon="ui-icon-search" title="View" style="width: 20px; height: 15px">
+                            <f:setPropertyActionListener value="#{car}" target="#{impuestosController.itemSeleccionado}" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>  
+            </p:dialog>                                                                                                                                                                                                                                                                                                                                                                           
+
+        </h:form>   
+                        </div>
+                    </div>
+            </ui:define>
+        </ui:composition>         
+          
+      
+
+    </h:body>
+
+</html>
+
+
+

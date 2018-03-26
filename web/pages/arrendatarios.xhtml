@@ -41,6 +41,7 @@
 
                             <h:form id="form1" class="form-horizontal">
                                 
+                                <p:growl id="growl"/>  
                                 <p:messages id="message" showDetail="true" showSummary="false" closable="true">
                                 </p:messages>
                                 <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
@@ -55,28 +56,68 @@
                                     </p:row>
                                     <p:row>
                                         <p:column><h:outputLabel value="Nombre completo:" /></p:column>
-                                        <p:column colspan="3"><p:inputText size="66"  value="#{arrendatarioController.itemNuevo.nombreCompleto}" required="true" requiredMessage="Ingrese Nombre completo"/></p:column>
+                                        <p:column colspan="3"><p:inputText style="width: 100%"  value="#{arrendatarioController.itemNuevo.nombreCompleto}" required="true" requiredMessage="Ingrese Nombre completo"/></p:column>
                                         
                                         </p:row>
                                     <p:row>
-                                        <p:column><h:outputLabel value="DUI:" /></p:column>
-                                        <p:column><p:inputMask mask="99999999-9"  value="#{arrendatarioController.itemNuevo.dui}" required="true" requiredMessage="Ingrese DUI"/></p:column>
+                                        <p:column><h:outputLabel value="DUI:" />                                                                                        
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputMask mask="99999999-9" id="dui"  value="#{arrendatarioController.itemNuevo.dui}" required="true" requiredMessage="Ingrese DUI">
+                                                <p:ajax event="keyup" update="growl" listener="#{arrendatarioController.buscarDUI()}" />
+                                            </p:inputMask>
+                                        </p:column>                                                                                
+                                        
+                                        
+                                        <p:column><h:outputLabel  value="Fecha de nacimiento:" />  </p:column>
+                                        <p:column>
+                                            <p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{arrendatarioController.itemNuevo.fechaNacimiento}" 
+                                                        showButtonPanel="true" size="30" navigator="true"
+                                                        id="trCal3" required="true"  label="Fecha de nacimiento"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column><h:outputLabel  value="Fecha de expedición (DUI):" />  </p:column>
+                                        <p:column>
+                                            <p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{arrendatarioController.itemNuevo.fechaExpedicion}" showButtonPanel="true" navigator="true"
+                                               id="trCal2" required="true" label="Fecha de expedición"/></p:column>
+                                    </p:row>
+                                     <p:row>
+                                         
+                                        <p:column><h:outputLabel value="Lugar de expedición (DUI):" /></p:column>
+                                        <p:column>       
+                                            <h:selectOneMenu style="width: 150px" value="#{arrendatarioController.itemNuevo.DUIExtendidoEn}">
+                                                <f:selectItems value="#{departamentosController.listaDepartamentos}"
+                                                               var="cuenta1" itemLabel="#{cuenta1.departamento}"
+                                                               itemValue="#{cuenta1.departamento}" />                                                
+                                            </h:selectOneMenu>  
 
+                                        </p:column>
+                                        
                                         <p:column><h:outputLabel  value="NIT:" /></p:column>
-                                        <p:column><p:inputMask mask="9999-999999-999-9" size="21"  value="#{arrendatarioController.itemNuevo.nit}" required="true" requiredMessage="Ingrese un NIT" /></p:column>
+                                        <p:column><p:inputMask mask="9999-999999-999-9" style="width: 100%"  value="#{arrendatarioController.itemNuevo.nit}" required="true" requiredMessage="Ingrese un NIT" /></p:column>
                                     </p:row>
                                     <p:row>
                                             <p:column><h:outputLabel value="Dirección:" />  </p:column>
-                                            <p:column colspan="3"><p:inputTextarea cols="66" rows="2" value="#{arrendatarioController.itemNuevo.direccion}" label="Dirección"  required="true" requiredMessage="Ingrese una dirección válida" /></p:column>
-                                        </p:row>
+                                            <p:column colspan="3"><p:inputTextarea style="width: 100%" rows="2" value="#{arrendatarioController.itemNuevo.direccion}" label="Dirección"  required="true" requiredMessage="Ingrese una dirección válida" /></p:column>
+                                    </p:row>
                                     
                                     <p:row>
                                         <p:column><h:outputLabel value="Departamento:" /></p:column>
-                                        <p:column><p:inputText value="#{arrendatarioController.itemNuevo.departamento}" required="true" label="Departamento"/></p:column>
+                                        <p:column>       
+                                            <h:selectOneMenu style="width: 150px" value="#{departamentosController.itemDepartamentos.departamento}">                                                
+                                                <f:selectItems value="#{departamentosController.listaDepartamentos}"
+                                                               var="cuenta1" itemLabel="#{cuenta1.departamento}"
+                                                               itemValue="#{cuenta1.departamento}" />
+                                                <f:ajax event="valueChange"  listener="#{departamentosController.cargarMunicipios()}" render="mun" execute="@this" />
+                                            </h:selectOneMenu>  
+
+                                        </p:column>
                                         
                                         <p:column rowspan="3">
-                                            <h:graphicImage id="img" url="#{arrendatarioController.ruta}" height="100" width="90"/>
+                                            <h:graphicImage id="img" url="#{arrendatarioController.ruta}" height="80" width="90"/>
                                         </p:column>
+
                                         <p:column rowspan="2"><p:fileUpload                    
                                                 mode="advanced"                                                                                      
                                                 label="Seleccionar imagen"
@@ -90,29 +131,39 @@
                                     </p:row>
                                     <p:row>
                                         <p:column><h:outputLabel value="Municipio:" /></p:column>
-                                        <p:column><p:inputText value="#{arrendatarioController.itemNuevo.municipio}" required="true" label="Municipio"/></p:column>
+                                        <p:column>
+                                            <h:selectOneMenu id="mun"  value="#{departamentosController.itemMunicipios.municipio}" style="width: 100%" >
+                                                <f:selectItems value="#{departamentosController.listaMunicipios}"
+                                                               var="cuenta1" itemLabel="#{cuenta1.municipio}"
+                                                               itemValue="#{cuenta1.municipio}" />
+                                                <!--f:ajax event="valueChange"  listener="#//{departamentosController.municipioSeleccionado()}" execute="@this" /-->
+                                            </h:selectOneMenu>
+                                        </p:column>
                                     </p:row>
                                     <p:row>
                                         <p:column><h:outputLabel  value="Fecha de ingreso:" />  </p:column>
-                                        <p:column><p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{arrendatarioController.itemNuevo.fechaIngreso}" showButtonPanel="true" navigator="true" id="trCal" size="8" required="true" label="Fecha de ingreso"/></p:column>
+                                        <p:column>
+                                            <p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{arrendatarioController.itemNuevo.fechaIngreso}" showButtonPanel="true" navigator="true"
+                                               id="trCal"  required="true" label="Fecha de ingreso"/></p:column>
                                     </p:row>
                                     <p:row>
                                         <p:column><h:outputLabel  value="Teléfono:" /></p:column>
-                                        <p:column><p:inputMask mask="9999-9999"  value="#{arrendatarioController.itemNuevo.telefono}" required="true" label="Teléfono" /></p:column>
-                                    </p:row>                                    
+                                        <p:column><p:inputMask mask="9999-9999"  value="#{arrendatarioController.itemNuevo.telefono}" label="Teléfono" /></p:column>
+                                    </p:row>  
+                                    <p:row>
+                                        <p:column><h:outputLabel value="Email:" /></p:column>
+                                        <p:column><p:inputText style="width: 100%" value="#{arrendatarioController.itemNuevo.correoElectronico}" label="Email"/></p:column>
+                                    </p:row>
                                     <p:row>
                                     </p:row>
                                         
                                     <p:row>
-                                        <p:column style="text-align: left!important">
-                                            
-
+                                        <p:column style="text-align: left!important">                                            
                                             <div class="card-header d-flex align-items-center">
                                                 <h2 class="h5 display">
-
                                                     <p:commandButton value="Guardar" actionListener="#{arrendatarioController.agregar()}" update="form1" icon="ui-icon-disk">
-                                                        <p:confirm header="Confirmation" message="¿Desea guardar los datos?" icon="ui-icon-alert" />
-                                                    </p:commandButton>
+                                                        <p:confirm header="Confirmación" message="¿Desea guardar los datos?" icon="ui-icon-alert" />
+                                                    </p:commandButton>                                                    
                                                 </h2>
                                             </div>
                                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -121,6 +172,9 @@
                                                 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                                             </p:confirmDialog>
 
+                                        </p:column>
+                                        <p:column colspan="4" style="text-align: right; text-decoration: underline">
+                                            <h:link outcome="arrendatariosEdit.xhtml" value="Actualizar datos" />
                                         </p:column>
                                     </p:row>    
                                     
