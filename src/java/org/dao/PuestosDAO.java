@@ -44,6 +44,21 @@ public class PuestosDAO {
         lista = q.getResultList();
         return lista;
     }
+     public List<TPuesto> getBuscarPuesto(String busqueda) {
+        List<TPuesto> lista = null;     //new ArrayList<Address>();
+        //try {
+        Query q = em.createNamedQuery("TPuesto.findByDatos");
+        q.setParameter("nombre", "%".concat(busqueda).concat("%"));
+        q.setParameter("puesto", "%".concat(busqueda).concat("%"));
+        q.setParameter("dui", "%".concat(busqueda).concat("%"));
+        q.setParameter("fecha",busqueda);
+        lista = q.getResultList();
+        //System.out.println();
+        //} catch (Exception e) {
+        //  System.out.println(e.getMessage());
+        //}
+        return lista;
+    }
     public List<TPuesto> getFindByTodo() {
         List<TPuesto> lista = null;     //new ArrayList<Address>();                
         Query q = em.createNamedQuery("TPuesto.findAll");

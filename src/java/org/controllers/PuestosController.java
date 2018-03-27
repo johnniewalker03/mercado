@@ -47,6 +47,7 @@ public class PuestosController {
     private String mes;
     private String anio;
     private String sino;
+    private String busqueda;
     private boolean cajon, madera, galera, metal, energia;
 
     public PuestosController() {
@@ -119,7 +120,16 @@ public class PuestosController {
         }
         return "";
     }
-
+public String buscarPuesto() {
+        List<TPuesto> lista1 = puestosDAO.getBuscarPuesto(busqueda);
+        ListDataModel<TPuesto> modeloLista = new ListDataModel<>(lista1);
+        setListaPuestos(modeloLista);
+        //System.out.println("Datos guardados con éxito");
+        //} catch (Exception e) {
+        //System.out.println("ERROR: " + e.getMessage());
+        ///}
+        return "";
+    }
     public String buscar() {
         try {
             System.out.println("Buscar Arrendatarios");
@@ -403,6 +413,14 @@ public class PuestosController {
 
     public String getSino() {
         return sino;
+    }
+
+    public String getBusqueda() {
+        return busqueda;
+    }
+
+    public void setBusqueda(String busqueda) {
+        this.busqueda = busqueda;
     }
 
     public void setSino(String sino) {
