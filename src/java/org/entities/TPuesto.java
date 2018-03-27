@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TPuesto.findByNumRecibo", query = "SELECT t FROM TPuesto t WHERE t.numRecibo = :numRecibo"),
     @NamedQuery(name = "TPuesto.findByEnergia", query = "SELECT t FROM TPuesto t WHERE t.energia = :energia"),
     @NamedQuery(name = "TPuesto.findByFechaPago", query = "SELECT t FROM TPuesto t WHERE t.fechaPago = :fechaPago"),
- @NamedQuery(name = "TPuesto.findByDatos", query = "SELECT t FROM TPuesto t WHERE t.numPuesto LIKE :puesto OR t.ecodArrenda.dui LIKE :dui OR t.ecodArrenda.nombreCompleto LIKE :nombre OR SUBSTRING(t.fechaPago, 1, 4)= :fecha")})
+    @NamedQuery(name = "TPuesto.findByDatos", query = "SELECT t FROM TPuesto t WHERE t.numPuesto LIKE :puesto OR SUBSTRING(t.matriculaPagada, 1, 4) LIKE :fecha OR t.ecodArrenda.dui LIKE :dui OR t.ecodArrenda.nombreCompleto LIKE :nombre")})
 public class TPuesto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

@@ -267,7 +267,7 @@
                                 
                                <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar arrendatario" widgetVar="dl_arrendatario" 
                                          modal="false" resizable="false"
-                                         showEffect="clip" width="990px" draggable="true" hideEffect="fold" onShow="PF('dl_arrendatario').initPosition()">
+                                         showEffect="clip" draggable="false" hideEffect="fold" onShow="PF('dl_arrendatario').initPosition()">
                                     <p:panelGrid>
                                       <p:row>
                                             <p:column>
@@ -283,7 +283,7 @@
                                                  emptyMessage="No se encuentran datos"
                                                  paginator="true" paginatorPosition="bottom" rows="12"
                                                  >
-                                        <p:column headerText="No. de Expediente" style="width:150px">  
+                                        <p:column headerText="Expediente" style="width:160px">  
                                             <h:outputText value="#{car.noExpediente}" />  
                                         </p:column>
                                         <p:column headerText="Nombre Completo" sortBy="#{car.nombreCompleto}" style="width:280px">

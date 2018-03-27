@@ -47,11 +47,15 @@ public class PuestosDAO {
      public List<TPuesto> getBuscarPuesto(String busqueda) {
         List<TPuesto> lista = null;     //new ArrayList<Address>();
         //try {
-        Query q = em.createNamedQuery("TPuesto.findByDatos");
+        Query q = em.createNamedQuery("TPuesto.findByDatos");        
+        //System.out.println("Fecha " + busqueda);
+        //Query q = em.createQuery("SELECT t FROM TPuesto t WHERE SUBSTRING(t.matriculaPagada, 1, 4) LIKE :fecha");
+        //Query q = em.createNativeQuery("SELECT * FROM t_puesto p WHERE YEAR(p.fechaPago)=?");        
         q.setParameter("nombre", "%".concat(busqueda).concat("%"));
         q.setParameter("puesto", "%".concat(busqueda).concat("%"));
         q.setParameter("dui", "%".concat(busqueda).concat("%"));
-        q.setParameter("fecha",busqueda);
+        q.setParameter("fecha","%".concat(busqueda).concat("%"));
+        //q.setParameter(1, busqueda);
         lista = q.getResultList();
         //System.out.println();
         //} catch (Exception e) {
