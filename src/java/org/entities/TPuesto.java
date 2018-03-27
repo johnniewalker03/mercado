@@ -20,15 +20,16 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Yo
+ * @author migue
  */
 @Entity
-@Table(name = "t_puesto", catalog =  "mercado")
+@Table(name = "t_puesto", catalog = "mercado")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TPuesto.findAll", query = "SELECT t FROM TPuesto t"),
@@ -46,7 +47,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TPuesto.findByMatriculaPagada", query = "SELECT t FROM TPuesto t WHERE t.matriculaPagada = :matriculaPagada"),
     @NamedQuery(name = "TPuesto.findByNumRecibo", query = "SELECT t FROM TPuesto t WHERE t.numRecibo = :numRecibo"),
     @NamedQuery(name = "TPuesto.findByEnergia", query = "SELECT t FROM TPuesto t WHERE t.energia = :energia"),
-    @NamedQuery(name = "TPuesto.findByFechaPago", query = "SELECT t FROM TPuesto t WHERE t.fechaPago = :fechaPago")})
+    @NamedQuery(name = "TPuesto.findByFechaPago", query = "SELECT t FROM TPuesto t WHERE t.fechaPago = :fechaPago"),
+ @NamedQuery(name = "TPuesto.findByDatos", query = "SELECT t FROM TPuesto t WHERE t.numPuesto LIKE :puesto OR t.ecodArrenda.dui LIKE :dui OR t.ecodArrenda.nombreCompleto LIKE :nombre OR SUBSTRING(t.fechaPago, 1, 4)= :fecha")})
 public class TPuesto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -93,7 +95,9 @@ public class TPuesto implements Serializable {
     @Column(name = "FechaPago")
     @Temporal(TemporalType.DATE)
     private Date fechaPago;
-    @Size(max = 6)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 6)
     @Column(name = "energia")
     private String energia;
     @JoinColumn(name = "EcodArrenda", referencedColumnName = "EcodArrenda")
@@ -108,6 +112,11 @@ public class TPuesto implements Serializable {
 
     public TPuesto(Integer correlativo) {
         this.correlativo = correlativo;
+    }
+
+    public TPuesto(Integer correlativo, String energia) {
+        this.correlativo = correlativo;
+        this.energia = energia;
     }
 
     public Integer getCorrelativo() {
