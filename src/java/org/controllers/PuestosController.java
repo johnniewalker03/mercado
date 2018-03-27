@@ -168,7 +168,7 @@ public class PuestosController {
         //System.out.println("energia " +itemSeleccionado.getEnergia());
         if ("Si".equals(itemSeleccionado.getEnergia())) {
             this.energia = true;
-            sino = "Sí";
+            sino = "Si";
         }
 
         System.out.println("Pasa la conversion de estructuras");
