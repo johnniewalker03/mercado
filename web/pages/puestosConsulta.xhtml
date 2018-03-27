@@ -43,7 +43,13 @@
                     <div id="targetPDF" class="card-body">
                             <h:form id="form4" class="form-horizontal">
                                 <p:panelGrid styleClass="ui-panelgrid-blank">
-                                      <p:row>
+                                    <p:row>
+                                            <p:column>
+                                                <h:outputLabel  value="Buscar:  " />  
+                                                <p:inputText value="#{puestosController.busqueda}" label="Buscar: " size="15">
+                                                    <p:ajax event="keyup" update="carsss" listener="#{puestosController.buscarPuesto()}" />
+                                                </p:inputText>   
+                                            </p:column>
                                             <p:column>                                                
                                                 <p:commandButton id="btnB" value="Ver Todo" update="carsss" action="#{puestosController.buscarTodo()}"/>
                                             </p:column>
@@ -55,11 +61,14 @@
                                     <p:column headerText="No. de puesto" sortBy="#{car1.numPuesto}" style="width:100px">
                                         <h:outputText value="#{car1.numPuesto}"/>
                                     </p:column>
-                                    <p:column headerText="Ubicación" sortBy="#{car1.ubicacion}" style="width:300px">
+                                    <p:column headerText="Ubicación" sortBy="#{car1.ubicacion}" style="width:250px">
                                         <h:outputText value="#{car1.ubicacion}"/>
                                     </p:column>
-                                    <p:column headerText="Arrendatario" sortBy="#{car1.ecodArrenda.nombreCompleto}" style="width:250px">
+                                    <p:column headerText="Arrendatario" sortBy="#{car1.ecodArrenda.nombreCompleto}" style="width:300px">
                                         <h:outputText value="#{car1.ecodArrenda.nombreCompleto}"/>
+                                    </p:column>
+                                    <p:column headerText="DUI" sortBy="#{car1.ecodArrenda.dui}" style="width:150px">
+                                        <h:outputText value="#{car1.ecodArrenda.dui}"/>
                                     </p:column>
                                     <p:column headerText="Última matrícula pagada" sortBy="#{car1.matriculaPagada}" style="width:150px; text-align: center" >
                                         <h:outputText value="#{car1.matriculaPagada}">
