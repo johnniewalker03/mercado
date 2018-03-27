@@ -251,6 +251,7 @@ public class PuestosController {
         itemSeleccionado.setGalera(String.valueOf(galera));
         itemSeleccionado.setMadera(String.valueOf(madera));
         itemSeleccionado.setMetal(String.valueOf(metal));
+        itemSeleccionado.setEnergia("Si");
         boolean resultado = puestosDAO.modificaPuesto(itemSeleccionado);
         mensajeClass mensaje = new mensajeClass();
         if (resultado) {
@@ -260,6 +261,8 @@ public class PuestosController {
             this.galera = false;
             this.madera = false;
             this.cajon = false;
+            this.energia = false;
+            this.sino="No";
         } else {
             mensaje.DatosError("Mensaje de error", "No se pueden actualizar los datos");
         }
@@ -269,7 +272,7 @@ public class PuestosController {
     public String chequeado() {
         System.out.println("Chequeado: " + energia);
         if (energia == true) {
-            sino = "Sí";
+            sino = "Si";
         } else {
             sino = "No";
         }
