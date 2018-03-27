@@ -138,6 +138,8 @@ public class PuestosController {
         this.galera = false;
         this.madera = false;
         this.cajon = false;
+        this.energia=false;
+        this.sino="No";
         System.out.println("Entra a la conversion de estructuras");
         if (Boolean.valueOf(itemSeleccionado.getMetal()) == true) {
             this.metal = true;
@@ -151,6 +153,12 @@ public class PuestosController {
         if (Boolean.valueOf(itemSeleccionado.getCajon()) == true) {
             this.cajon = true;
         }
+        //System.out.println("energia " +itemSeleccionado.getEnergia());
+        if ("Si".equals(itemSeleccionado.getEnergia())) {
+            this.energia = true;
+            sino = "Sí";
+        }
+        
         System.out.println("Pasa la conversion de estructuras");
         return "";
     }
