@@ -113,14 +113,15 @@ public class PuestosController {
             galera = false;
             madera = false;
             metal = false;
-            energia=false; //Para que el checkbox de energía quede unchecked cuando se guarde
+            energia = false; //Para que el checkbox de energía quede unchecked cuando se guarde
             mensaje.DatosGuardados();
         } catch (Exception e) {
             System.out.println("Error " + e.getMessage());
         }
         return "";
     }
-public String buscarPuesto() {
+
+    public String buscarPuesto() {
         List<TPuesto> lista1 = puestosDAO.getBuscarPuesto(busqueda);
         ListDataModel<TPuesto> modeloLista = new ListDataModel<>(lista1);
         setListaPuestos(modeloLista);
@@ -130,6 +131,7 @@ public String buscarPuesto() {
         ///}
         return "";
     }
+
     public String buscar() {
         try {
             System.out.println("Buscar Arrendatarios");
@@ -148,8 +150,8 @@ public String buscarPuesto() {
         this.galera = false;
         this.madera = false;
         this.cajon = false;
-        this.energia=false;
-        this.sino="No";
+        this.energia = false;
+        this.sino = "No";
         System.out.println("Entra a la conversion de estructuras");
         if (Boolean.valueOf(itemSeleccionado.getMetal()) == true) {
             this.metal = true;
@@ -168,7 +170,7 @@ public String buscarPuesto() {
             this.energia = true;
             sino = "Sí";
         }
-        
+
         System.out.println("Pasa la conversion de estructuras");
         return "";
     }
@@ -237,7 +239,7 @@ public String buscarPuesto() {
         if (itemSeleccionado != null) {
             itemSeleccionado.setMatriculaPagada(itemSeleccionado.getMatriculaPagada() + 1);
             hasta = desde;
-            periodoPago();            
+            periodoPago();
             //periodopago = (hasta - pagada) + 1;
         }
         return "";
@@ -263,13 +265,14 @@ public String buscarPuesto() {
         }
         return "";
     }
-    public String chequeado(){
+
+    public String chequeado() {
         System.out.println("Chequeado: " + energia);
-        if (energia==true){
+        if (energia == true) {
             sino = "Sí";
-        }else{
+        } else {
             sino = "No";
-        }                
+        }
         return "";
     }
 
@@ -409,7 +412,7 @@ public String buscarPuesto() {
 
     public void setEnergia(boolean energia) {
         this.energia = energia;
-    }   
+    }
 
     public String getSino() {
         return sino;
