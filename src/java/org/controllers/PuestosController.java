@@ -68,6 +68,8 @@ public class PuestosController {
         mes = String.valueOf(cal.get(Calendar.MONTH) + 1);
         mes = new SimpleDateFormat("MMMM").format(cal.getTime());
         dia = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+        energia = false;
+        sino = "No";
     }
 
     @PostConstruct
@@ -79,42 +81,27 @@ public class PuestosController {
     public String agregar() {
         mensajeClass mensaje = new mensajeClass();
         try {
-            //System.out.println("Estructura: "+ );
             itemNuevo.setEcodArrenda(ArrendatarioController.itemSeleccionado);
             itemNuevo.setCodImpuesto(ImpuestosController.itemSeleccionado);
-            /*EstructurasController ec = new EstructurasController();
-             ec.agregar(itemNuevo, String.valueOf(madera), 
-             String.valueOf(cajon),
-             String.valueOf(galera),
-             String.valueOf(metal)); // Agrega las estructuras del puesto           
-             */
-            /*TEstructura t = new TEstructura();
-             t.setCajon(String.valueOf(cajon));
-             t.setGalera(String.valueOf(galera));
-             t.setMadera(String.valueOf(madera));
-             t.setMetal(String.valueOf(metal));
-             t.setEcodPuesto(itemNuevo);*/
-            //itemEstructura.setId(Integer.SIZE);
             itemNuevo.setUbicacion(ZonaController.itemSeleccionado.getUbicacion());
             itemNuevo.setCajon(String.valueOf(cajon));
             itemNuevo.setGalera(String.valueOf(galera));
             itemNuevo.setMadera(String.valueOf(madera));
             itemNuevo.setMetal(String.valueOf(metal));
             itemNuevo.setEnergia(sino);
-            //estructurasDAO.persist(itemEstructura); // Para guardar las estructuras
-        /*System.out.println("madera" + isMadera());
-             System.out.println("Cajon" + isCajon());
-             System.out.println("galera " + isGalera());
-             System.out.println("metal" + isMetal());*/
-            puestosDAO.persist(itemNuevo);
-            System.out.println("Insert exitoso");
-            itemNuevo = new TPuesto();
-            cajon = false;
-            galera = false;
-            madera = false;
-            metal = false;
-            energia = false; //Para que el checkbox de energía quede unchecked cuando se guarde
-            mensaje.DatosGuardados();
+            System.out.println("Datos:" + itemNuevo.getNumPuesto() + "" + itemNuevo.getUbicacion());
+            if (puestosDAO.getPuestoUbicacion(itemNuevo.getNumPuesto(), itemNuevo.getUbicacion())==true) {
+                puestosDAO.persist(itemNuevo);
+                itemNuevo = new TPuesto();
+                cajon = false;
+                galera = false;
+                madera = false;
+                metal = false;
+                energia = false; //Para que el checkbox de energía quede unchecked cuando se guarde
+                mensaje.DatosGuardados();
+            }else {
+                mensaje.DatosError("Mensaje", "El número de puesto en " + itemNuevo.getUbicacion() + " ya existe");
+            }
         } catch (Exception e) {
             System.out.println("Error " + e.getMessage());
         }
@@ -262,7 +249,7 @@ public class PuestosController {
             this.madera = false;
             this.cajon = false;
             this.energia = false;
-            this.sino="No";
+            this.sino = "No";
         } else {
             mensaje.DatosError("Mensaje de error", "No se pueden actualizar los datos");
         }
