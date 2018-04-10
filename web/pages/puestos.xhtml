@@ -7,23 +7,25 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<style type="text/css">
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header > tr.ui-widget-header, 
-.ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content,
-.ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content > td.ui-panelgrid-cell,
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
-    background: none !important;
-    border: none !important;
-}
-</style>
+    <style type="text/css">
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header > tr.ui-widget-header, 
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content,
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content > td.ui-panelgrid-cell,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
+            background: none !important;
+            border: none !important;
+        }
+    </style>
     <h:body>
         <ui:composition template="../plantilla/Plantilla.xhtml">
-            
-            <ui:define name="content">
 
+            <ui:define name="content">
+                <f:metadata>
+                    <f:viewAction action="#{usuarioController.redirec()}" onPostback="true"/>
+                </f:metadata>
                 <div class="breadcrumb-holder">
                     <div class="container-fluid">
                         <ul class="breadcrumb">
@@ -32,97 +34,97 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="navbar navbar-default" style="//box-shadow: 2px 2px 2px 2px #888888;">
-                    
+
                     <p:messages id="message" showDetail="true" showSummary="false" closable="true">
-                        
+
                     </p:messages>
                     <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
-                        <div class="card-body">
+                    <div class="card-body">
 
-                            <h:form id="form1" class="form-horizontal">
-                                
-                                <p:panelGrid id="panel1" styleClass="ui-panelgrid-blank">
+                        <h:form id="form1" class="form-horizontal">
 
-                                    <p:row>                                        
-                                        <p:column><h:outputLabel value="Puesto N°:" /></p:column>
-                                        <p:column><p:inputText size="8"  value="#{puestosController.itemNuevo.numPuesto}" required="true" label="No. de Puesto"/></p:column>
-                                        <p:column></p:column>
-                                    </p:row>                                    
-                                    <p:row>                                    
-                                        <p:column><h:outputLabel  value="Arrendatario:" /></p:column>
-                                        <p:column colspan="3">
-                                            <p:commandButton id="iconOnly20" type="button" onclick="PF('dl_arrendatario').show();" icon="ui-icon-search" style="margin-left: 3px">
-                                                <h:outputText id="codigo_cli20" value="#{arrendatarioController.itemSeleccionado.nombreCompleto}" />
-                                            </p:commandButton>
-                                        </p:column>                                        
-                                    </p:row>
-                                    <p:row>
-                                        <p:column><h:outputLabel value="Ubicación:" /></p:column>
-                                        <p:column colspan="3">
-                                            <h:selectOneMenu style="width: 240px" id="cat1" immediate="true" label="Ubicación"  
-                                                             validatorMessage="Debe seleccionar un Impuesto diario"
-                                                             value="#{zonaController.itemSeleccionado.ubicacion}">
-                                                <f:selectItems value="#{zonaController.listaZonas}"
-                                                               var="cuenta1" itemLabel="#{cuenta1.ubicacion}"
-                                                               itemValue="#{cuenta1.ubicacion}" />
-                                                <f:ajax event="valueChange"  listener="#{zonaController.busqueda()}" render="cat1" execute="@this" />
-                                            </h:selectOneMenu>
-                                        </p:column>
-                                        
-                                        </p:row>
-                                    <p:row>
-                                        <p:column><h:outputLabel value="Tipo de negocio:" /></p:column>
-                                        <p:column><p:inputText size="16"  value="#{puestosController.itemNuevo.tipo}" required="true" label="Tipo de negocio"/></p:column>
-                                        <p:column><h:outputLabel value="Tipo de puesto:" /></p:column>
-                                        <p:column colspan="2">
-                                            <p:selectOneMenu  value="#{puestosController.itemNuevo.tipoPuesto}" required="true" requiredMessage="Tipo de puesto" >
-                                                <f:selectItem itemLabel="Fijo" itemValue="Fijo" />
-                                                <f:selectItem itemLabel="Transitorio" itemValue="Transitorio" />
-                                                <f:selectItem itemLabel="Ambulante" itemValue="Ambulante" />
+                            <p:panelGrid id="panel1" styleClass="ui-panelgrid-blank">
+
+                                <p:row>                                        
+                                    <p:column><h:outputLabel value="Puesto N°:" /></p:column>
+                                    <p:column><p:inputText size="8"  value="#{puestosController.itemNuevo.numPuesto}" required="true" label="No. de Puesto"/></p:column>
+                                    <p:column></p:column>
+                                </p:row>                                    
+                                <p:row>                                    
+                                    <p:column><h:outputLabel  value="Arrendatario:" /></p:column>
+                                    <p:column colspan="3">
+                                        <p:commandButton id="iconOnly20" type="button" onclick="PF('dl_arrendatario').show();" icon="ui-icon-search" style="margin-left: 3px">
+                                            <h:outputText id="codigo_cli20" value="#{arrendatarioController.itemSeleccionado.nombreCompleto}" />
+                                        </p:commandButton>
+                                    </p:column>                                        
+                                </p:row>
+                                <p:row>
+                                    <p:column><h:outputLabel value="Ubicación:" /></p:column>
+                                    <p:column colspan="3">
+                                        <h:selectOneMenu style="width: 240px" id="cat1" immediate="true" label="Ubicación"  
+                                                         validatorMessage="Debe seleccionar un Impuesto diario"
+                                                         value="#{zonaController.itemSeleccionado.ubicacion}">
+                                            <f:selectItems value="#{zonaController.listaZonas}"
+                                                           var="cuenta1" itemLabel="#{cuenta1.ubicacion}"
+                                                           itemValue="#{cuenta1.ubicacion}" />
+                                            <f:ajax event="valueChange"  listener="#{zonaController.busqueda()}" render="cat1" execute="@this" />
+                                        </h:selectOneMenu>
+                                    </p:column>
+
+                                </p:row>
+                                <p:row>
+                                    <p:column><h:outputLabel value="Tipo de negocio:" /></p:column>
+                                    <p:column><p:inputText size="16"  value="#{puestosController.itemNuevo.tipo}" required="true" label="Tipo de negocio"/></p:column>
+                                    <p:column><h:outputLabel value="Tipo de puesto:" /></p:column>
+                                    <p:column colspan="2">
+                                        <p:selectOneMenu  value="#{puestosController.itemNuevo.tipoPuesto}" required="true" requiredMessage="Tipo de puesto" >
+                                            <f:selectItem itemLabel="Fijo" itemValue="Fijo" />
+                                            <f:selectItem itemLabel="Transitorio" itemValue="Transitorio" />
+                                            <f:selectItem itemLabel="Ambulante" itemValue="Ambulante" />
                                         </p:selectOneMenu> 
-                                        </p:column>
-                                    </p:row>                                    
-                                    <p:row>                                        
-                                        <p:column><h:outputLabel value="Medida horinzontal:" /></p:column>
-                                        <p:column><p:inputText size="16" value="#{puestosController.itemNuevo.medidaH}" required="true" label="Medida horizontal"/></p:column>
-                                        <p:column rowspan="4" style="text-align: right"><h:outputLabel value="Estructura:" /></p:column>
-                                        <p:column>
-                                            <h:outputText value="Galera: " />
-                                        </p:column>    
-                                        <p:column><p:selectBooleanCheckbox value="#{puestosController.galera}"/></p:column>                                        
-                                    </p:row>
-                                    <p:row>                                        
-                                        <p:column><h:outputLabel value="Medida vertical:" /></p:column>
-                                        <p:column><p:inputText size="16" value="#{puestosController.itemNuevo.medidaV}" required="true" label="Medida vertical"/></p:column>
-                                        
-                                        <p:column>
-                                            <h:outputText value="Cajón: " />
-                                        </p:column>                                         
-                                        <p:column><p:selectBooleanCheckbox value="#{puestosController.cajon}"/></p:column>                                        
-                                        
-                                    </p:row>
+                                    </p:column>
+                                </p:row>                                    
+                                <p:row>                                        
+                                    <p:column><h:outputLabel value="Medida horizontal:" /></p:column>
+                                    <p:column><p:inputText size="16" value="#{puestosController.itemNuevo.medidaH}" required="true" label="Medida horizontal"/></p:column>
+                                    <p:column rowspan="4" style="text-align: right"><h:outputLabel value="Estructura:" /></p:column>
+                                    <p:column>
+                                        <h:outputText value="Galera: " />
+                                    </p:column>    
+                                    <p:column><p:selectBooleanCheckbox value="#{puestosController.galera}"/></p:column>                                        
+                                </p:row>
+                                <p:row>                                        
+                                    <p:column><h:outputLabel value="Medida vertical:" /></p:column>
+                                    <p:column><p:inputText size="16" value="#{puestosController.itemNuevo.medidaV}" required="true" label="Medida vertical"/></p:column>
 
-                                    <p:row>
-                                        <p:column><h:outputLabel value="Impuesto diario:" /></p:column>
-                                        <p:column>
-                                            <h:selectOneMenu style="width: 60px" id="cat" immediate="true" required="true" label="Impuesto diario"  
-                                                             validatorMessage="Debe seleccionar un Impuesto diario"
-                                                              value="#{impuestosController.itemSeleccionado.codImpuestos}">
-                                                <f:selectItems value="#{impuestosController.listaImpuestos}"
-                                                               var="cuenta1" itemLabel="#{cuenta1.monto}"
-                                                               itemValue="#{cuenta1.codImpuestos}" />
-                                                <f:ajax event="valueChange"  listener="#{impuestosController.buscar()}" render="cat" execute="@this" />
-                                            </h:selectOneMenu>
-                                        </p:column> 
-                                        
-                                        <p:column>
-                                            <h:outputText value="Madera: " />
-                                        </p:column>  
-                                        <p:column><p:selectBooleanCheckbox value="#{puestosController.madera}"/></p:column>
-                                    </p:row>                                    
-                                    <p:row>
+                                    <p:column>
+                                        <h:outputText value="Cajón: " />
+                                    </p:column>                                         
+                                    <p:column><p:selectBooleanCheckbox value="#{puestosController.cajon}"/></p:column>                                        
+
+                                </p:row>
+
+                                <p:row>
+                                    <p:column><h:outputLabel value="Impuesto diario:" /></p:column>
+                                    <p:column>
+                                        <h:selectOneMenu style="width: 60px" id="cat" immediate="true" required="true" label="Impuesto diario"  
+                                                         validatorMessage="Debe seleccionar un Impuesto diario"
+                                                         value="#{impuestosController.itemSeleccionado.codImpuestos}">
+                                            <f:selectItems value="#{impuestosController.listaImpuestos}"
+                                                           var="cuenta1" itemLabel="#{cuenta1.monto}"
+                                                           itemValue="#{cuenta1.codImpuestos}" />
+                                            <f:ajax event="valueChange"  listener="#{impuestosController.buscar()}" render="cat" execute="@this" />
+                                        </h:selectOneMenu>
+                                    </p:column> 
+
+                                    <p:column>
+                                        <h:outputText value="Madera: " />
+                                    </p:column>  
+                                    <p:column><p:selectBooleanCheckbox value="#{puestosController.madera}"/></p:column>
+                                </p:row>                                    
+                                <p:row>
                                     <p:column><h:outputLabel value="Última matrícula pagada:" /></p:column>
                                     <p:column>
                                         <p:selectOneMenu style="width: 80px" value="#{puestosController.itemNuevo.matriculaPagada}" requiredMessage="ültima matrícula pagada" >
@@ -149,70 +151,70 @@
                                             <f:selectItem itemLabel="2024" itemValue="2024" />
                                             <f:selectItem itemLabel="2025" itemValue="2025" />
                                         </p:selectOneMenu> 
-                                        </p:column>
+                                    </p:column>
                                     <p:column>
-                                            <h:outputText value="Metal: " />
-                                        </p:column> 
-                                        <p:column><p:selectBooleanCheckbox value="#{puestosController.metal}"/></p:column>
-                                    
-                                    </p:row>
-                                     <p:row>                                        
-                                        <p:column><h:outputLabel value="Recíbo #:" /></p:column>
-                                        <p:column><p:inputText size="8"  value="#{puestosController.itemNuevo.numRecibo}" label="No. de recibo"/></p:column>
-                                        <p:column><h:outputLabel value="Energía eléctrica:" /></p:column>
-                                        <p:column>                                            
-                                            <p:selectBooleanCheckbox value="#{puestosController.energia}">
-                                                <p:ajax update="sino" listener="#{puestosController.chequeado()}" />
-                                            </p:selectBooleanCheckbox>
-                                            <h:outputText id="sino" value="&nbsp;#{puestosController.sino}" />
-                                        </p:column> 
-                                    </p:row> 
-                                     <p:row>                                        
-                                        <p:column><h:outputLabel value="Fecha de recibo:" /></p:column>                                        
-                                            <p:column>
-                                                <p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{puestosController.itemNuevo.fechaPago}" showButtonPanel="true" navigator="true"
-                                                            id="trCal5" size="16" label="Fecha de pago de recibo"/>
-                                            </p:column>                                                                                   
-                                        <p:column>                                            
-                                        </p:column> 
-                                        
-                                    </p:row> 
-                                    <p:row>
-                                        <p:column style="text-align: left!important">
-                                            
+                                        <h:outputText value="Metal: " />
+                                    </p:column> 
+                                    <p:column><p:selectBooleanCheckbox value="#{puestosController.metal}"/></p:column>
 
-                                            <div class="card-header d-flex align-items-center">
-                                                <h2 class="h5 display">
+                                </p:row>
+                                <p:row>                                        
+                                    <p:column><h:outputLabel value="Recíbo #:" /></p:column>
+                                    <p:column><p:inputText size="8"  value="#{puestosController.itemNuevo.numRecibo}" label="No. de recibo"/></p:column>
+                                    <p:column><h:outputLabel value="Energía eléctrica:" /></p:column>
+                                    <p:column>                                            
+                                        <p:selectBooleanCheckbox value="#{puestosController.energia}">
+                                            <p:ajax update="sino" listener="#{puestosController.chequeado()}" />
+                                        </p:selectBooleanCheckbox>
+                                        <h:outputText id="sino" value="&nbsp;#{puestosController.sino}" />
+                                    </p:column> 
+                                </p:row> 
+                                <p:row>                                        
+                                    <p:column><h:outputLabel value="Fecha de recibo:" /></p:column>                                        
+                                    <p:column>
+                                        <p:calendar pattern="dd/MM/yyyy" locale="tr" value="#{puestosController.itemNuevo.fechaPago}" showButtonPanel="true" navigator="true"
+                                                    id="trCal5" size="16" label="Fecha de pago de recibo"/>
+                                    </p:column>                                                                                   
+                                    <p:column>                                            
+                                    </p:column> 
 
-                                                    <p:commandButton value="Guardar" actionListener="#{puestosController.agregar()}" update="message,form1" icon="ui-icon-disk">
-                                                        <p:confirm header="Confirmación" message="¿Desea guardar los datos?" icon="ui-icon-alert" />
-                                                    </p:commandButton>
-                                                </h2>
-                                            </div>
-                                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" 
-                                                                 icon="ui-icon-check" />
-                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                                            </p:confirmDialog>
-                                        </p:column>
-                                        <p:column></p:column>                                        
-                                        <p:column colspan="4" style="text-align: right; text-decoration: underline">
-                                            <h:link outcome="puestosEdit.xhtml" value="Actualizar puestos" />
-                                        </p:column>
-                                    </p:row>
-                                </p:panelGrid>
-                            </h:form>
-                            
-                            <ezcomp:busquedaArrendatarios actualizar=":form1:codigo_cli20" item="#{arrendatarioController.itemSeleccionado}" />
-                        </div>
+                                </p:row> 
+                                <p:row>
+                                    <p:column style="text-align: left!important">
+
+
+                                        <div class="card-header d-flex align-items-center">
+                                            <h2 class="h5 display">
+
+                                                <p:commandButton value="Guardar" actionListener="#{puestosController.agregar()}" update="message,form1" icon="ui-icon-disk">
+                                                    <p:confirm header="Confirmación" message="¿Desea guardar los datos?" icon="ui-icon-alert" />
+                                                </p:commandButton>
+                                            </h2>
+                                        </div>
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" 
+                                                             icon="ui-icon-check" />
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        </p:confirmDialog>
+                                    </p:column>
+                                    <p:column></p:column>                                        
+                                    <p:column colspan="4" style="text-align: right; text-decoration: underline">
+                                        <h:link outcome="puestosEdit.xhtml" value="Actualizar puestos" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </h:form>
+
+                        <ezcomp:busquedaArrendatarios actualizar=":form1:codigo_cli20" item="#{arrendatarioController.itemSeleccionado}" />
+                    </div>
                 </div>           
 
-                    
+
             </ui:define>
 
 
         </ui:composition>         
-                 
+
     </h:body>
 
 </html>

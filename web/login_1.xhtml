@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
+    <style type="text/css">       
+        .companyHeaderGrid td {
+            border-style: hidden !important;
+        }
+        .companyHeaderGrid tr, .companyHeaderGrid td {
+            border: none;
+        }
+    </style>
+    <h:body>
+
+        <br/><br/><br/><br/>
+
+<div class="breadcrumb-holder">
+                    <div class="container-fluid">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item h4"><a href="index.xhtml">Inicio</a></li>
+                            <li class="breadcrumb-item active h4">MERCADO MUNICIPAL DE SAN VICENTE</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="navbar navbar-default" style="//box-shadow: 2px 2px 2px 2px #888888;">
+                                        
+
+                    <div class="card-body" style="text-align: center; border-width: 2px" >
+                        <h:form id="form1" class="form-horizontal">
+                            <p:panelGrid id="panel1" columns="2" style="width: 460px">  
+                        <f:facet name="header">  
+                            Iniciar sesión
+                        </f:facet>  
+
+                        <h:outputLabel value="Usuario:" />                                                              
+                        <p:inputText value="#{usuarioController.user}" size="20" required="true" requiredMessage="El nombre de usuario no es correcto"/>
+                        <h:outputLabel value="Contraseña:" />
+                        <p:password value="#{usuarioController.pass}" required="true" requiredMessage="La contraseña ingresada no es correcta"/>  
+
+                        <f:facet name="footer">  
+                            <p:row>
+                                <p:column style="text-align: left!important">
+                                    <!--p:commandButton onclick="window.location.href='administracion/inicio.xhtml'; return false;" type="button" value="Iniciar sesión" icon="ui-icon-extlink"  /-->
+                                    <p:commandButton update="form1" value="Iniciar sesión" action="#{usuarioController.login()}"  icon="ui-icon-extlink"   />
+                                </p:column>
+                            </p:row>
+                        </f:facet>  
+                    </p:panelGrid>  
+                            
+                            
+                        </h:form>
+                    </div>
+                </div>   
+
+
+
+       
+
+
+
+    </h:body>
+
+</html>

@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"      
       xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=1,initial-scale=1,user-scalable=1" />
@@ -21,18 +20,26 @@
         <![endif]-->
     </h:head>
     <h:body>
-        <f:metadata>
-            <f:viewAction action="#{usuarioController.irLogin()}" onPostback="true"/>
-        </f:metadata>
+
         <section class="container">
             <section class="login-form">                
-
-
+                
+             
                 <h:form role="login" id="formx">                  
-                    <img src="pages/assets/images/mercadosv.png" style="width: 300px" class="img-responsive" alt="" />                                       
+                    <img src="assets/images/mercadosv.png" style="width: 300px" class="img-responsive" alt="" />                    
+                    <h:outputLabel value="Usuario:" />                                                              
+                    <p:inputText value="#{usuarioController.user}" id="usuario" size="20" class="form-control input-lg" required="true" requiredMessage="Ingrese un usuario válido"/>                                        
+                    <h:outputLabel value="Contraseña:" />
+                    <p:password value="#{usuarioController.pass}" id="Contraseña" promptLabel="Contraseña" required="true" class="form-control input-lg" requiredMessage="Ingrese una contraseña válida"/>                    
+                    <div>
+                        <p:messages id="message" showDetail="true" showSummary="false" closable="true"/>
+                    <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
+                        <p:commandButton value="Iniciar sesión" action="#{usuarioController.login()}" 
+                                         update="message"  class="btn btn-lg btn-primary btn-block"/> 
+                    </div>
                 </h:form>
                 <div class="form-links">
-                    <h:link outcome="faces/pages/login.xhtml" value="Iniciar sesión" />
+
                 </div>
             </section>
         </section>

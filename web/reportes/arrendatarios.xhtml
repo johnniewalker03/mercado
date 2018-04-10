@@ -52,6 +52,9 @@
         <ui:composition template="../plantilla/Plantilla.xhtml">
            
             <ui:define name="content">
+                <f:metadata>
+                    <f:viewAction action="#{usuarioController.redirec()}" onPostback="true"/>
+                </f:metadata>
 
                 <h:form id="form3" class="form-horizontal">
                 <div class="breadcrumb-holder">

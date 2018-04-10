@@ -31,7 +31,7 @@
                     <div class="container-fluid">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item h4"><a href="index.xhtml">Inicio</a></li>
-                            <li class="breadcrumb-item active h4">Registro de usuarios</li>
+                            <li class="breadcrumb-item active h4">Cambiar contraseña</li>
                         </ul>
                     </div>
                 </div>
@@ -45,32 +45,20 @@
 
                     <div class="card-body">
                         <h:form id="form1" class="form-horizontal">
-                            <p:panelGrid id="panel1" styleClass="ui-panelgrid-blank">
+                            <p:panelGrid id="panel1" styleClass="ui-panelgrid-blank">                                
                                 <p:row>
-                                    <p:column><h:outputLabel value="Nombre de usuario:" /></p:column>
-                                    <p:column><p:inputText id="nombre1" value="#{usuarioController.itemNuevo.user}" required="true" label="Nombre de usuario"/></p:column>
-
+                                    <p:column><h:outputLabel value="Contraseña actual:" /></p:column>
+                                    <p:column><p:password id="contra" value="#{usuarioController.contraActual}" required="true" label="Contraseña actual"/></p:column>
                                 </p:row>
                                 <p:row>
-                                    <p:column><h:outputLabel value="Contraseña:" /></p:column>
-                                    <p:column><p:password id="contra" value="#{usuarioController.itemNuevo.password}" required="true" label="Contraseña"/></p:column>
-
-
+                                    <p:column><h:outputLabel value="Nueva contraseña:" /></p:column>
+                                    <p:column><p:password id="contranueva" value="#{usuarioController.itemNuevo.password}" required="true" label="nueva contraseña"/></p:column>
                                 </p:row>
                                 <p:row>
-                                    <p:column><h:outputLabel value="Contraseña nuevamente:" />  </p:column>
-                                    <p:column><p:password id="contraa" value="#{usuarioController.contraAgain}" required="true" label="Repetir contraseña"/></p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column><h:outputLabel value="Privilegios:" /></p:column>
-                                    <p:column>
-                                        <p:selectOneMenu value="#{usuarioController.itemNuevo.rol}" > 
-                                            <f:selectItem itemLabel="Administrador" itemValue="Administrador" />
-                                            <f:selectItem itemLabel="Usuario" itemValue="Usuario" />
-                                        </p:selectOneMenu> 
-
-                                    </p:column>
-                                </p:row>
+                                    <p:column><h:outputLabel value="Repetir nueva contraseña:" />  </p:column>
+                                    <p:column><p:password id="contranueva2" value="#{usuarioController.contraAgain}" required="true"
+                                                          label="Repetir nueva contraseña"/></p:column>
+                                </p:row>                                
 
                                 <p:row>
                                     <p:column style="text-align: left!important">
@@ -79,7 +67,7 @@
                                         <div class="card-header d-flex align-items-center">
                                             <h2 class="h5 display">
 
-                                                <p:commandButton value="Guardar" actionListener="#{usuarioController.agregar()}" update="form1,message" icon="ui-icon-disk">                                                        
+                                                <p:commandButton value="Guardar" actionListener="#{usuarioController.cambiarContra()}" update="form1,message" icon="ui-icon-disk">                                                        
                                                     <p:confirm header="Confirmación" message="¿Desea guardar los datos?" icon="ui-icon-alert" />
                                                 </p:commandButton>
                                             </h2>

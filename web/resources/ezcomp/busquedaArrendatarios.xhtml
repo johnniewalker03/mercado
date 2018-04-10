@@ -17,8 +17,10 @@
         
         <h:form id="form2">
 
-            <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar arrendatario" widgetVar="dl_arrendatario"  modal="false" resizable="false"
-                      showEffect="clip" width="990px" draggable="true" hideEffect="fold" onShow="PF('dl_arrendatario').initPosition()">
+            <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar arrendatario" widgetVar="dl_arrendatario"  
+                      modal="false" resizable="false" closeOnEscape="true"
+                                      draggable="false" minimizable="true" maximizable="true"
+                                      showEffect="clip" hideEffect="fold" >
                 <p:panelGrid>
                     <p:row>
                         <p:column>
@@ -32,7 +34,7 @@
                 </p:panelGrid>
                 <p:dataTable id="cars" var="car" value="#{arrendatarioController.listaArrendatario}"
                              emptyMessage="No se encuentran datos"
-                             paginator="true" paginatorPosition="bottom" rows="12">
+                             paginator="true" paginatorPosition="bottom"  rows="14">
                              >
 
                     <p:column headerText="No. Expediente" style="width:100px">  
@@ -50,10 +52,10 @@
                     <p:column headerText="Municipio" sortBy="#{car.municipio}" style="width:160px">  
                         <h:outputText value="#{car.municipio}"/>  
                     </p:column>
-                    <p:column headerText="Teléfono" style="width:80px">  
+                    <p:column headerText="Teléfono" style="width:100px">  
                         <h:outputText value="#{car.telefono}"/>  
                     </p:column>                                                            
-                    <p:column style="width:30px">
+                    <p:column style="width:40px">
                         <p:commandButton id="selectButton" action="#{arrendatarioController.actualizar()}" update="#{cc.attrs.actualizar}" onclick="PF('dl_arrendatario').hide();" icon="ui-icon-search" title="View" style="width: 20px; height: 15px">  
                             <f:setPropertyActionListener value="#{car}" target="#{cc.attrs.item}" />  
                         </p:commandButton>  

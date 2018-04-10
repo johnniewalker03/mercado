@@ -6,25 +6,27 @@
       xmlns:p="http://primefaces.org/ui"      
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ezcomp="http://java.sun.com/jsf/composite/ezcomp">
-   
-<style type="text/css">
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header > tr.ui-widget-header, 
-.ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content,
-.ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content > td.ui-panelgrid-cell,
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
-    background: none !important;
-    border: none !important;
-}
 
-</style>
+    <style type="text/css">
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header > tr.ui-widget-header, 
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content,
+        .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content > td.ui-panelgrid-cell,
+        .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
+            background: none !important;
+            border: none !important;
+        }
+
+    </style>
     <h:body>
         <ui:composition template="../plantilla/Plantilla.xhtml">
-            
-            <ui:define name="content">   
 
+            <ui:define name="content">   
+                <f:metadata>
+                    <f:viewAction action="#{usuarioController.redirec()}" onPostback="true"/>
+                </f:metadata>
                 <div class="breadcrumb-holder">
                     <div class="container-fluid">
                         <ul class="breadcrumb">
@@ -33,26 +35,26 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="navbar navbar-default" style="//box-shadow: 2px 2px 2px 2px #888888;">
-                    
+
                     <p:messages id="message" showDetail="true" showSummary="false" closable="true">
-                        
+
                     </p:messages>
                     <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
-                    
+
                     <div class="card-body">
                         <h:form id="form1" class="form-horizontal">
                             <p:panelGrid id="panel1" styleClass="ui-panelgrid-blank">
                                 <p:row style="text-align: center">
                                     <p:column style="width: 150px">
-                                    
+
                                     </p:column>
                                     <p:column style="text-align: center">
                                         <h:graphicImage id="imgx" url="../resources/images/alcaldiasv.jpg" height="90" width="90"/>
                                     </p:column>
                                     <p:column>
-                                    <h:outputText style="font-weight: bold" value="BIENVENIDOS" />
+                                        <h:outputText style="font-weight: bold" value="BIENVENIDOS" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -61,9 +63,9 @@
                 </div>           
             </ui:define>
         </ui:composition>         
-                 
+
     </h:body>
- 
+
 </html>
 
 

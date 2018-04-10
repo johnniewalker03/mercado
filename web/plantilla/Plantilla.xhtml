@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>        
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -11,7 +12,7 @@
         <!-- Bootstrap CSS CDN -->
 
         <link rel="stylesheet" href="../resources/css/bootstrap.min.css"/>
-                <link rel="stylesheet" href="../resources/css/style4.css"/>         
+        <link rel="stylesheet" href="../resources/css/style4.css"/>         
         <!-- Our Custom CSS -->
         <style type="text/css">
             /*.navbar-default {
@@ -36,6 +37,7 @@
 
         <div class="wrapper">
             <!-- Sidebar Holder -->
+
             <nav id="sidebar">
                 <div class="sidebar-header">
                     <h3>Menú</h3>
@@ -49,12 +51,45 @@
                             Inicio
                         </a>
                         <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="../pages/usuarios.xhtml">Usuarios</a></li>
-                            <li><a href="../pages/cobradores.xhtml">Cobradores</a></li>
-                            <li><a href="../pages/zonas.xhtml">Zonas</a></li>
-                            <li><a href="../pages/Impuestos.xhtml">Impuestos municipales</a></li>
-                            <li><a href="#">Cerrar sesión</a></li>
-                            <li><a href="#">Salir</a></li>
+                            <h:form>
+                                <li>                                    
+                                    <h:commandLink  rendered="#{usuarioController.administrador}"  
+                                                    action="#{usuarioController.irURL()}"
+                                                    value="Usuarios"  >                                        
+                                        <f:setPropertyActionListener target="#{usuarioController.url}" value="../pages/usuarios.xhtml" />
+                                    </h:commandLink>                                                                        
+                                </li>                                
+                                <li><a href="../pages/usuariosCambiarContra.xhtml">Cambiar contraseña</a></li>
+                                <li>                                    
+                                    <h:commandLink  rendered="#{usuarioController.administrador}"  
+                                                    action="#{usuarioController.irURL()}"
+                                                    value="Bitácora"  >                                        
+                                        <f:setPropertyActionListener target="#{usuarioController.url}" value="../pages/bitacoraConsulta.xhtml" />
+                                    </h:commandLink>                                                                        
+                                </li>
+                                <li>                                    
+                                    <h:commandLink  rendered="#{usuarioController.administrador}"  
+                                                    action="#{usuarioController.irURL()}"
+                                                    value="Comisión de mercado"  >                                        
+                                        <f:setPropertyActionListener target="#{usuarioController.url}" value="../pages/rolesmercado.xhtml" />
+                                    </h:commandLink>                                                                        
+                                </li>                                
+                                <li><a href="../pages/cobradores.xhtml">Cobradores</a></li>
+                                <li><a href="../pages/zonas.xhtml">Zonas</a></li>                                
+
+                                <li>                                    
+                                    <h:commandLink  rendered="#{usuarioController.administrador}"
+                                                    action="#{usuarioController.irURL()}"
+                                                    value="Impuestos municipales">
+                                        <f:setPropertyActionListener target="#{usuarioController.url}" value="../pages/Impuestos.xhtml" />
+                                    </h:commandLink>
+                                </li>
+                                <li>
+
+                                    <h:commandLink action="#{usuarioController.cerrarSesion()}" 
+                                                   value="Cerrar sesión" />
+                                </li>                            
+                            </h:form>
                         </ul>
                     </li>
                     <li>
@@ -120,8 +155,18 @@
                 </ul>
 
                 <ul class="list-unstyled CTAs">
-                    <!--li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li-->
-                    <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Iniciar sesión</a></li>
+                    <h:form>
+                        <!--li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li-->
+                        <li style="text-align: center">
+                            <h:outputText  style="font-weight: normal" value="Bienvenido: #{usuarioController.user}" />
+                        </li>
+                        <li>
+
+                            <h:commandLink class="article" action="#{usuarioController.cerrarSesion()}" 
+                                           value="Cerrar sesión" />
+
+                        </li>
+                    </h:form>
                 </ul>
             </nav>
 

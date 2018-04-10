@@ -27,6 +27,11 @@
     <h:body>
         <ui:composition template="../plantilla/Plantilla.xhtml">          
             <ui:define name="content">
+                
+                <f:metadata>
+                    <f:viewAction action="#{usuarioController.redirec()}" onPostback="true"/>
+                </f:metadata>
+                
                 <div class="breadcrumb-holder">
                     <div class="container-fluid">
                         <ul class="breadcrumb">

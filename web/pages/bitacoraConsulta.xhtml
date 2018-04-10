@@ -34,7 +34,7 @@
                     <div class="container-fluid">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item h4"><a href="index.xhtml">Inicio</a></li>
-                            <li class="breadcrumb-item active h4">Matrícula de puestos</li>
+                            <li class="breadcrumb-item active h4">Bitácora</li>
                         </ul>
                     </div>
                 </div>             
@@ -49,35 +49,31 @@
                                 <p:row>
                                     <p:column>
                                         <h:outputLabel  value="Buscar:  " />  
-                                        <p:inputText value="#{puestosController.busqueda}" label="Buscar: " size="15">
-                                            <p:ajax event="keyup" update="carsss" listener="#{puestosController.buscarPuesto()}" />
+                                        <p:inputText value="#{bitacoraController.busqueda}" label="Buscar: " size="15">
+                                            <p:ajax event="keyup" update="carsss" listener="#{bitacoraController.buscarIngreso()}" />
                                         </p:inputText>   
                                     </p:column>
                                     <p:column>                                                
-                                        <p:commandButton id="btnB" value="Ver Todo" update="carsss" action="#{puestosController.buscarTodo()}"/>
+                                        <p:commandButton id="btnB" value="Ver Todo" update="carsss" action="#{bitacoraController.buscar()}"/>
                                     </p:column>
                                 </p:row> 
                             </p:panelGrid>
-                            <p:dataTable id="carsss" var="car1" editable="true" value="#{puestosController.listaPuestos}"
+                            <p:dataTable id="carsss" var="car1" editable="true" value="#{bitacoraController.listaBitacora}"
                                          emptyMessage="No se encuentran datos" 
                                          >
-                                <p:column headerText="No. de puesto" sortBy="#{car1.numPuesto}" style="width:100px">
-                                    <h:outputText value="#{car1.numPuesto}"/>
+                                <p:column headerText="Usuario" sortBy="#{car1.codUsuario.user}" style="width:200px">
+                                    <h:outputText value="#{car1.codUsuario.user}"/>
                                 </p:column>
-                                <p:column headerText="Ubicación" sortBy="#{car1.ubicacion}" style="width:250px">
-                                    <h:outputText value="#{car1.ubicacion}"/>
-                                </p:column>
-                                <p:column headerText="Arrendatario" sortBy="#{car1.ecodArrenda.nombreCompleto}" style="width:300px">
-                                    <h:outputText value="#{car1.ecodArrenda.nombreCompleto}"/>
-                                </p:column>
-                                <p:column headerText="DUI" sortBy="#{car1.ecodArrenda.dui}" style="width:150px">
-                                    <h:outputText value="#{car1.ecodArrenda.dui}"/>
-                                </p:column>
-                                <p:column headerText="Última matrícula pagada" sortBy="#{car1.matriculaPagada}" style="width:150px; text-align: center" >
-                                    <h:outputText value="#{car1.matriculaPagada}">
-                                        <f:convertNumber pattern="#0000"></f:convertNumber>
+                                <p:column headerText="Fecha de ingreso" sortBy="#{car1.fechaIngreso}" style="width:250px">
+                                    <h:outputText value="#{car1.fechaIngreso}">                                    
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </h:outputText>
-                                </p:column>
+                                </p:column> 
+                                <p:column headerText="Hora de ingreso" sortBy="#{car1.fechaIngreso}" style="width:250px">
+                                    <h:outputText value="#{car1.fechaIngreso}">
+                                        <f:convertDateTime pattern="hh:mm"/>
+                                    </h:outputText>
+                                </p:column> 
                             </p:dataTable>
                         </h:form>                                                                               
                     </div>

@@ -40,6 +40,9 @@
         <ui:composition template="../plantilla/Plantilla.xhtml">
            
             <ui:define name="content">
+                <f:metadata>
+                    <f:viewAction action="#{usuarioController.redirec()}" onPostback="true"/>
+                </f:metadata>
 
                 <h:form id="form3" class="form-horizontal">
                 <div class="breadcrumb-holder">
@@ -262,9 +265,11 @@
                             
                             <h:form id="form4">  
                                 
-                               <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar arrendatario" widgetVar="dl_arrendatario" 
-                                         modal="false" resizable="false" 
-                                         showEffect="clip" draggable="false" minimizable="true" maximizable="true" hideEffect="fold" onShow="PF('dl_arrendatario').initPosition()">
+                               <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar arrendatario" 
+                                         widgetVar="dl_arrendatario" 
+                                         modal="false" resizable="false" position="center" closeOnEscape="true"
+                                         showEffect="clip" draggable="false" minimizable="true" maximizable="true" 
+                                         hideEffect="fold" onShow="PF('dl_arrendatario').initPosition()">
                                     <p:panelGrid>
                                       <p:row>
                                             <p:column>
@@ -278,7 +283,7 @@
                                     </p:panelGrid>
                                     <p:dataTable id="cars" var="car" value="#{arrendatarioController.listaArrendatario}"
                                                  emptyMessage="No se encuentran datos"
-                                                 paginator="true" paginatorPosition="bottom" rows="12"
+                                                 paginator="true" paginatorPosition="bottom" rows="10"
                                                  >
                                         <p:column headerText="Expediente" style="width:160px">  
                                             <h:outputText value="#{car.noExpediente}" />  

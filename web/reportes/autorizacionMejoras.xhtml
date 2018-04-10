@@ -18,6 +18,9 @@
         <ui:composition template="../plantilla/Plantilla.xhtml">
 
             <ui:define name="content">
+                <f:metadata>
+                    <f:viewAction action="#{usuarioController.redirec()}" onPostback="true"/>
+                </f:metadata>
                 <h:form id="form3" class="form-horizontal">
                     <div class="breadcrumb-holder">
                         <div class="container-fluid">
@@ -80,7 +83,7 @@
                                                       #{puestosController.anio}" />
                                     </p:column>
                                 </p:row>  
-                                
+
 
                                 <p:row style="height: 24px; text-indent: 0px">
                                     <p:column colspan="3">
@@ -222,8 +225,11 @@
 
                         <h:form id="form2">  
 
-                            <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar mejoras" widgetVar="dl_mejoras"  modal="false" resizable="false"
-                                      showEffect="clip" hideEffect="fold">
+                            <p:dialog id="modalDialogBuscar2" style="text-align: left!important" header="Buscar mejoras" 
+                                      widgetVar="dl_mejoras"  
+                                      modal="false" resizable="false" closeOnEscape="true"
+                                      draggable="false" minimizable="true" maximizable="true"
+                                      showEffect="clip" hideEffect="fold" >
                                 <p:panelGrid>
                                     <p:row>
                                         <p:column>
@@ -237,7 +243,7 @@
                                 </p:panelGrid>
                                 <p:dataTable id="cars" var="car" value="#{mejorasController.listaMejoras}"
                                              emptyMessage="No se encuentran datos"
-                                             paginator="true" paginatorPosition="bottom" rows="12">  
+                                             paginator="true" paginatorPosition="bottom" rows="14">  
 
                                     <p:column headerText="Fecha de solicitud"  style="width:100px">  
                                         <h:outputText value="#{car.ffechaMejora}" >
@@ -247,13 +253,13 @@
                                     <p:column headerText="No. de puesto" style="width:60px">
                                         <h:outputText value="#{car.ecodPuesto.numPuesto}"/>  
                                     </p:column>
-                                    <p:column headerText="Ubicación" style="width:180px">  
+                                    <p:column headerText="Ubicación" style="width:240px">  
                                         <h:outputText value="#{car.ecodPuesto.ubicacion}"/>  
                                     </p:column>                                                            
                                     <p:column headerText="DUI de arrendatario" style="width:100px">  
                                         <h:outputText value="#{car.ecodPuesto.ecodArrenda.dui}"/>  
                                     </p:column>                                                            
-                                    <p:column headerText="Nombre completo " style="width:280px">  
+                                    <p:column headerText="Nombre completo " style="width:300px">  
                                         <h:outputText value="#{car.ecodPuesto.ecodArrenda.nombreCompleto}"/>  
                                     </p:column>                                                                      
                                     <p:column style="width:50px">

@@ -22,11 +22,14 @@
         .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
             background: none !important;
             border: none !important;
-       }               
+        }               
     </style>   
     <h:body>
         <ui:composition template="../plantilla/Plantilla.xhtml">          
             <ui:define name="content">
+                <f:metadata>
+                    <f:viewAction action="#{usuarioController.redirec()}" onPostback="true"/>
+                </f:metadata>
                 <div class="breadcrumb-holder">
                     <div class="container-fluid">
                         <ul class="breadcrumb">
@@ -35,54 +38,54 @@
                         </ul>
                     </div>
                 </div>             
-                    <div class="navbar navbar-default">
+                <div class="navbar navbar-default">
                     <p:messages id="message" showDetail="true" showSummary="false" closable="true">
-                        
+
                     </p:messages>
                     <p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages').slideUp(); }, 5000)" />
                     <div id="targetPDF" class="card-body">
 
-                                                    
-                            <h:form id="form4" class="form-horizontal">                                                                
- <p:panelGrid styleClass="ui-panelgrid-blank">
-                                      <p:row>
-                                            <p:column>                                                
-                                                <p:commandButton id="btnB" value="Ver Todo" update="carsss" action="#{sancionesController.buscar()}"/>
-                                            </p:column>
-                                        </p:row> 
-                                    </p:panelGrid>
-                                <p:dataTable id="carsss" var="car1" editable="true" value="#{sancionesController.listaSanciones}"
-                                             emptyMessage="No se encuentran datos"
-                                             paginator="true" paginatorPosition="bottom" rows="20">                                          
-                                    <p:column headerText="No. de puesto" style="width:100px">                                                                                    
-                                        <h:outputText value="#{car1.ecodPuesto.numPuesto}"/>
-                                    </p:column>
-                                    <p:column headerText="Ubicación"  style="width:150px">                                            
-                                        <h:outputText value="#{car1.ecodPuesto.ubicacion}"/>                                          
-                                    </p:column>
-                                    <p:column headerText="Arrendatario" style="width:220px">                                            
-                                        <h:outputText value="#{car1.ecodPuesto.ecodArrenda.nombreCompleto}"/>
-                                    </p:column>
-                                    <p:column headerText="Tipo de sanción" style="width:250px" >
-                                        <h:outputText value="#{car1.ctipoSancion}"/>    
-                                    </p:column>
-                                    <p:column headerText="Fecha de aplicación" style="width:100px" >
-                                        <h:outputText value="#{car1.FFechaAplica}">
-                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                        </h:outputText>
-                                    </p:column>                                        
-                                    <p:column headerText="Observaciones" style="width:295px"> 
-                                        <h:outputText value="#{car1.cobservaciones}"/>                                            
-                                    </p:column>                                       
-                                </p:dataTable>                                                                                       
 
-                            </h:form>                                                                               
-                        </div>
+                        <h:form id="form4" class="form-horizontal">                                                                
+                            <p:panelGrid styleClass="ui-panelgrid-blank">
+                                <p:row>
+                                    <p:column>                                                
+                                        <p:commandButton id="btnB" value="Ver Todo" update="carsss" action="#{sancionesController.buscar()}"/>
+                                    </p:column>
+                                </p:row> 
+                            </p:panelGrid>
+                            <p:dataTable id="carsss" var="car1" editable="true" value="#{sancionesController.listaSanciones}"
+                                         emptyMessage="No se encuentran datos"
+                                         paginator="true" paginatorPosition="bottom" rows="20">                                          
+                                <p:column headerText="No. de puesto" style="width:100px">                                                                                    
+                                    <h:outputText value="#{car1.ecodPuesto.numPuesto}"/>
+                                </p:column>
+                                <p:column headerText="Ubicación"  style="width:150px">                                            
+                                    <h:outputText value="#{car1.ecodPuesto.ubicacion}"/>                                          
+                                </p:column>
+                                <p:column headerText="Arrendatario" style="width:220px">                                            
+                                    <h:outputText value="#{car1.ecodPuesto.ecodArrenda.nombreCompleto}"/>
+                                </p:column>
+                                <p:column headerText="Tipo de sanción" style="width:250px" >
+                                    <h:outputText value="#{car1.ctipoSancion}"/>    
+                                </p:column>
+                                <p:column headerText="Fecha de aplicación" style="width:100px" >
+                                    <h:outputText value="#{car1.FFechaAplica}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </p:column>                                        
+                                <p:column headerText="Observaciones" style="width:295px"> 
+                                    <h:outputText value="#{car1.cobservaciones}"/>                                            
+                                </p:column>                                       
+                            </p:dataTable>                                                                                       
+
+                        </h:form>                                                                               
                     </div>
+                </div>
             </ui:define>
         </ui:composition>         
-          
-      
+
+
 
     </h:body>
 
