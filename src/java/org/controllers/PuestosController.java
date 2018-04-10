@@ -17,11 +17,14 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import org.clases.mensajeClass;
+import static org.controllers.UsuarioController.rolAdmin;
 import org.dao.EstructurasDAO;
 import org.dao.PuestosDAO;
+import org.dao.UsuariosDAO;
 import org.entities.TArrendatario;
 import org.entities.TEstructura;
 import org.entities.TPuesto;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -35,6 +38,8 @@ public class PuestosController {
     private PuestosDAO puestosDAO;
     @EJB
     private EstructurasDAO estructurasDAO;
+    @EJB
+    private UsuariosDAO usuariosDAO;
     static TPuesto itemNuevo;
     private Integer desde;
     private Integer hasta;
@@ -90,7 +95,7 @@ public class PuestosController {
             itemNuevo.setMetal(String.valueOf(metal));
             itemNuevo.setEnergia(sino);
             System.out.println("Datos:" + itemNuevo.getNumPuesto() + "" + itemNuevo.getUbicacion());
-            if (puestosDAO.getPuestoUbicacion(itemNuevo.getNumPuesto(), itemNuevo.getUbicacion())==true) {
+            if (puestosDAO.getPuestoUbicacion(itemNuevo.getNumPuesto(), itemNuevo.getUbicacion()) == true) {
                 puestosDAO.persist(itemNuevo);
                 itemNuevo = new TPuesto();
                 cajon = false;
@@ -99,7 +104,7 @@ public class PuestosController {
                 metal = false;
                 energia = false; //Para que el checkbox de energía quede unchecked cuando se guarde
                 mensaje.DatosGuardados();
-            }else {
+            } else {
                 mensaje.DatosError("Mensaje", "El número de puesto en " + itemNuevo.getUbicacion() + " ya existe");
             }
         } catch (Exception e) {
@@ -188,7 +193,6 @@ public class PuestosController {
     }
 
     public String control() {
-
         try {
             System.out.println("Buscar Arrendatarios");
             System.out.println(itemSeleccionado.getNumPuesto());
@@ -232,25 +236,52 @@ public class PuestosController {
         return "";
     }
 
-    public String actualizar() {
-        System.out.println("Entra a actualizar");
-        itemSeleccionado.setCajon(String.valueOf(cajon));
-        itemSeleccionado.setGalera(String.valueOf(galera));
-        itemSeleccionado.setMadera(String.valueOf(madera));
-        itemSeleccionado.setMetal(String.valueOf(metal));
-        itemSeleccionado.setEnergia("Si");
-        boolean resultado = puestosDAO.modificaPuesto(itemSeleccionado);
-        mensajeClass mensaje = new mensajeClass();
-        if (resultado) {
-            mensaje.DatosActualizados();
-            itemSeleccionado = new TPuesto();
-            this.metal = false;
-            this.galera = false;
-            this.madera = false;
-            this.cajon = false;
-            this.energia = false;
-            this.sino = "No";
+    public String verificaActualizar() {
+        RequestContext context = RequestContext.getCurrentInstance();
+        //context.execute("conf.show()");
+        if (rolAdmin) { // Si es administrador, no deberia pedir las contraseñas, por lo tanto es de llamar actualizar
+            actualizar(); //
         } else {
+            context.execute("PF('conf').show();");
+            System.out.println("Entra a validar admin");
+        }
+        return "";
+    }
+
+    public String actualizar() {
+        //System.out.println("Es administrador: "+UsuarioController.validarAdministrador());
+        mensajeClass mensaje = new mensajeClass();
+        //if (user.validarAdmin()) {
+        RequestContext context = RequestContext.getCurrentInstance();
+        System.out.println("Valores " + UsuarioController.rolAdmin);
+        if (rolAdmin || usuariosDAO.validarAministrador(UsuarioController.userUpdate, UsuarioController.passUpdate)) {
+            System.out.println("ubicacion " + itemSeleccionado.getUbicacion());
+            System.out.println("Entra a actualizar " + itemSeleccionado.getNumPuesto() + itemSeleccionado.getTipoPuesto());
+            itemSeleccionado.setCajon(String.valueOf(cajon));
+            itemSeleccionado.setGalera(String.valueOf(galera));
+            itemSeleccionado.setMadera(String.valueOf(madera));
+            itemSeleccionado.setMetal(String.valueOf(metal));
+            itemSeleccionado.setEnergia(sino);
+            System.out.println("itemseleccionado " + itemSeleccionado);
+            boolean resultado = puestosDAO.modificaPuesto(itemSeleccionado);
+            System.out.println("Pasa actualizacion");
+            if (resultado) {
+                itemSeleccionado = new TPuesto();
+                this.metal = false;
+                this.galera = false;
+                this.madera = false;
+                this.cajon = false;
+                this.energia = false;
+                this.sino = "No";
+                UsuarioController.userUpdate = null;
+                UsuarioController.passUpdate = null;
+                context.execute("PF('conf').hide();");
+                mensaje.DatosActualizados();
+            } else {
+                mensaje.DatosError("Mensaje de error", "No se pueden actualizar los datos");
+            }
+        } else {
+            context.execute("PF('conf').hide();");
             mensaje.DatosError("Mensaje de error", "No se pueden actualizar los datos");
         }
         return "";

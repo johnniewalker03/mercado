@@ -19,6 +19,7 @@ import org.dao.MejorasDetalleDAO;
 import org.entities.TCobrador;
 import org.entities.TMejoras;
 import org.entities.TMejorasdetalle;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -47,7 +48,21 @@ public class MejorasController {
 
     @PostConstruct
     public void init() { // metodo init que se ejecuta
+        if (UsuarioController.bandera == false) {
+            RequestContext context = RequestContext.getCurrentInstance();
+            //String dir = "administracion/inicio.xhtml";
+            context.execute("window.location.href='../login.xhtml'; return false;");
+        }
         //buscar(); // carga los datos de fondo una vez iniciado el facelet     
+    }
+
+    public String redirec() {
+        if (UsuarioController.bandera == false) {
+            RequestContext context = RequestContext.getCurrentInstance();
+            //String dir = "administracion/inicio.xhtml";
+            context.execute("window.location.href='../login.xhtml'; return false;");
+        }
+        return "";
     }
 
     public String agregar() {
@@ -68,7 +83,7 @@ public class MejorasController {
                 }
                 msj.DatosGuardados();
                 itemNuevo = new TMejoras();
-                itemDetalle = new TMejorasdetalle();                
+                itemDetalle = new TMejorasdetalle();
                 items = null;
                 //buscar(); // Llama al método buscar, para que cargue la lista de cobradores
                 //save();
@@ -78,6 +93,7 @@ public class MejorasController {
         }
         return "";
     }
+
     public String buscar() {
         try {
             List<TMejoras> lista = MejorasDAO.getFindAll();
@@ -87,7 +103,9 @@ public class MejorasController {
             System.out.println("ERROR: " + e.getMessage());
         }
         return "";
-    }public String buscarMejora() {
+    }
+
+    public String buscarMejora() {
         try {
             List<TMejoras> lista = MejorasDAO.getBuscarMejoras(busqueda);
             ListDataModel<TMejoras> modeloListaMejoras = new ListDataModel<>(lista);
@@ -97,6 +115,7 @@ public class MejorasController {
         }
         return "";
     }
+
     public TMejorasdetalle getItemDetalle() {
         return itemDetalle;
     }
@@ -149,5 +168,5 @@ public class MejorasController {
     public void setBusqueda(String busqueda) {
         this.busqueda = busqueda;
     }
-    
+
 }
